@@ -7,6 +7,7 @@ https://github.com/cmkuo/ggAnalysis
 ### Recipe for ggNtuples Code
 #### TAG: V08_00_26_07 (2016 Data)
 ```
+cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src 
 cmsenv 
 export CMSSW_GIT_REFERENCE=/cvmfs/cms.cern.ch/cmssw.git.daily 
@@ -32,6 +33,7 @@ wget http://home.fnal.gov/~verzetti//DeepFlavour/training/DeepFlavourNoSL.json
 cd $CMSSW_BASE/src 
 git clone https://github.com/cmkuo/HiggsAnalysis.git 
 git clone -b V08_00_26_07 https://github.com/cmkuo/ggAnalysis.git 
+scram b -j 20
 ```
 
 
