@@ -48,15 +48,18 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 ## Data
 - DAS: https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2016*-03Feb2017*%2FMINIAOD
 - ggNutples: /eos/cms/store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/
-- More Info: https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
+- JSON: https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
 
 | Sample       | NJobs           | Lumi (/fb)  | Location @ EOS  |
 | ------------- |:-------------:| -----:| -----:|
-| /MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD |	---- |	2.925 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016B_FebReminiAOD |
-| /MuonEG/Run2016C-03Feb2017-v1/MINIAOD |		---- |	1.082 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016C_FebReminiAOD |
-| /MuonEG/Run2016D-03Feb2017-v1/MINIAOD |	---- |	1.436 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016D_FebReminiAOD |
-| /MuonEG/Run2016E-03Feb2017-v1/MINIAOD |	---- |	2.127 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016E_FebReminiAOD |
-| /MuonEG/Run2016F-03Feb2017-v1/MINIAOD |	---- |	1.161 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016F_FebReminiAOD1 |
-| /MuonEG/Run2016G-03Feb2017-v1/MINIAOD |	---- |	3.935 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016G_FebReminiAOD |
-| /MuonEG/Run2016H-03Feb2017_ver2-v1/MINIAOD |	---- |	4.528 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016H_FebReminiAODv2 |
-| /MuonEG/Run2016H-03Feb2017_ver3-v1/MINIAOD |	---- |	0.142 |	/eos/cms/store/group/phys_smp/ggNtuples/13TeV/data/V08_00_26_01/job_MuEG_Run2016H_FebReminiAODv3 |
+| /MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD |	---- |	2.925 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016B-03Feb2017_ver2-v2_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016C-03Feb2017-v1/MINIAOD |		---- |	1.082 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016D-03Feb2017-v1/MINIAOD |	---- |	1.436 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016D-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016E-03Feb2017-v1/MINIAOD |	---- |	2.127 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016E-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016F-03Feb2017-v1/MINIAOD |	---- |	1.161 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016F-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016G-03Feb2017-v1/MINIAOD |	---- |	3.935 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016G-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016H-03Feb2017_ver2-v1/MINIAOD |	---- |	4.528 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver2-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+| /MuonEG/Run2016H-03Feb2017_ver3-v1/MINIAOD |	---- |	0.142 |	/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver3-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/ |
+
+- Other nTuples versions: https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
+
