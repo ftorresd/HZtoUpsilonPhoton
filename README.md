@@ -51,11 +51,13 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ZToUpsilon2SGamma_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_ggNtuples_V08_00_26_07_Upsilon_v06```   |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ZToUpsilon3SGamma_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_ggNtuples_V08_00_26_07_Upsilon_v06```   |		```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 
-| **Sample**         | **xSec (pb)**  | **Filter Efficiency**  |  **Filter Efficiency Error**  |
+| **Sample**         | **xSec (pb)(*)**  | **Filter Efficiency(*)**  |  **Filter Efficiency Error(*)**  |
 | ------ |:--------:|:-------:|:------:|
 | ```ZToUpsilon1SGamma```   |	2.022 | 0.7222 | 0.03733 |
 | ```ZToUpsilon2SGamma```   |	2.071 | 0.6667 | 0.04811 |
 | ```ZToUpsilon3SGamma```   |	1.696 | 0.6146 | 0.04967 |
+
+**(*)**: From McM (https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00178&page=0&shown=127; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00179&page=0&shown=127; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00180&page=0&shown=127). 
 
 
 
@@ -89,5 +91,5 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
  
 
 
-- **Other ggNtuples versions: ** https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
+- **Other ggNtuples versions:** https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
 
