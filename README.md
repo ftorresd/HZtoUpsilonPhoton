@@ -54,10 +54,9 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 ## Data
 - **DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2016*-03Feb2017*%2FMINIAOD
-- **ggNutples:** /eos/cms/store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/
 - **JSON:** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
 - **Total Recorded Lumi:** 17.336 /fb
-
+- **ggNutples:**
 | **Sample**        | **Lumi (/fb)**  | **Location @ EOS**  |
 | ------------- |:-------------:| :-----| 
 | ```/MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD```  |	2.925 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016B-03Feb2017_ver2-v2_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
