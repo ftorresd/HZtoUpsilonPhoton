@@ -55,7 +55,6 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 ## Data
 - **DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2016*-03Feb2017*%2FMINIAOD
 - **JSON:** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
-- **Total Recorded Lumi:** 17.336 /fb
 - **ggNutples:**
 
 | **Sample**        | **Lumi (/fb)**  | **Location @ EOS**  |
@@ -68,6 +67,9 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | ```/MuonEG/Run2016G-03Feb2017-v1/MINIAOD```  |	3.935 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016G-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016H-03Feb2017_ver2-v1/MINIAOD```  |	4.528 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver2-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016H-03Feb2017_ver3-v1/MINIAOD```  |	0.142 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver3-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
+| **Total Recorded Lumi:**  |	17.336 /fb |	  |
+
+
 
 - Other nTuples versions: https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
 
