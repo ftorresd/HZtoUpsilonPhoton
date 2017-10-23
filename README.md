@@ -57,6 +57,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 - **JSON:** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
 - **Total Recorded Lumi:** 17.336 /fb
 - **ggNutples:**
+
 | **Sample**        | **Lumi (/fb)**  | **Location @ EOS**  |
 | ------------- |:-------------:| :-----| 
 | ```/MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD```  |	2.925 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016B-03Feb2017_ver2-v2_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
