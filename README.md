@@ -79,7 +79,7 @@ scram b -j 10
 
 ## 2016 Samples
 ### MC 
-- DAS: https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma-TuneCUETP8M1_13TeV-pythia8*%2F*%2F*
+- DAS: https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma-TuneCUETP8M1_13TeV-pythia8*%2F*%2FMINIAODSIM
 - ggNutples: ???
 
 ## Data
