@@ -38,45 +38,6 @@ scram b -j 20
 
 
 
-[//]: # #### TAG: V08_00_26_01 (2016 Data)
-[//]: # ```
-[//]: # export SCRAM_ARCH=slc6_amd64_gcc530
-[//]: # cmsrel CMSSW_8_0_26_patch1
-[//]: # cd CMSSW_8_0_26_patch1/src 
-[//]: # cmsenv 
-
-
-[//]: # export CMSSW_GIT_REFERENCE="/cvmfs/cms.cern.ch/cmssw.git.daily"
-[//]: # git cms-init
-[//]: # git remote add btv-cmssw https://github.com/cms-btv-pog/cmssw.git
-[//]: # git fetch --tags btv-cmssw
-[//]: # git cms-merge-topic -u cms-btv-pog:BoostedDoubleSVTaggerV4-WithWeightFiles-v1_from-CMSSW_8_0_21
-
-
-
-[//]: # git cms-merge-topic rafaellopesdesa:EgammaAnalysis80_EGMSmearer_Moriond17_23Jan 
-[//]: # cd EgammaAnalysis/ElectronTools/data 
-[//]: # git clone git@github.com:ECALELFS/ScalesSmearings.git 
-[//]: # cd ../../../ 
-[//]: # git cms-merge-topic cms-met:METRecipe_8020 -u 
-[//]: # git cms-merge-topic cms-met:METRecipe_80X_part2 -u 
-
-[//]: # git cms-merge-topic Sam-Harper:HEEPV70VID_8010_ReducedCheckout #error
-
-
-[//]: # git cms-merge-topic Sam-Harper:PackedCandNoPuppi 
-[//]: # git cms-merge-topic ikrav:egm_id_80X_v2 
-[//]: # git cms-merge-topic ikrav:egm_id_80X_v3_photons 
-
-[//]: # git clone https://github.com/cmkuo/HiggsAnalysis.git 
-
-[//]: # git clone -b V08_00_26_01 https://github.com/cmkuo/ggAnalysis.git 
-
-[//]: # scram b -j 10 
-[//]: # ```
-
-
-
 
 ## 2016 Samples
 ### MC 
