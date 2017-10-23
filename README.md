@@ -36,6 +36,7 @@ git clone -b V08_00_26_07 https://github.com/cmkuo/ggAnalysis.git
 scram b -j 20
 ```
 
+Maybe one or two more ```scram b -j 20``` might be required in order to get clean compilation process.
 
 
 
