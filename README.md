@@ -54,8 +54,8 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | **Sample**         | **xSec (pb)**  | **Filter Efficiency**  |  **Filter Efficiency Error**  |
 | ------ |:--------:|:-------:|:------:|
 | ```ZToUpsilon1SGamma```   |	2.022 | 0.7222 | 0.03733 |
-| ```ZToUpsilon2SGamma```   |	2.071 | 0.6667 | 0.6146 |
-| ```ZToUpsilon3SGamma```   |	1.696 | 0.04811 | 0.04967 |
+| ```ZToUpsilon2SGamma```   |	2.071 | 0.6667 | 0.04811 |
+| ```ZToUpsilon3SGamma```   |	1.696 | 0.6146 | 0.04967 |
 
 
 
