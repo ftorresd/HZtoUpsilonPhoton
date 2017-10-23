@@ -59,7 +59,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 - Total Recorded Lumi: 17.336 /fb
 
 | Sample        | Lumi (/fb)  | Location @ EOS  |
-| ------------- |:-------------:| -----:| 
+| ------------- |:-------------:| :-----| 
 | ```/MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD```  |	2.925 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016B-03Feb2017_ver2-v2_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016C-03Feb2017-v1/MINIAOD```  |	1.082 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016D-03Feb2017-v1/MINIAOD```  |	1.436 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016D-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
