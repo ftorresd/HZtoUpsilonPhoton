@@ -76,10 +76,10 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
   - **it should be ([ref](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM)):**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i [...]processedLumis.json```
 
-- **ggNMtuples Production Workspace Backup:** ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ggNtuplizer_CMSSW_8_0_26_patch1_V08_00_26_07.tar.gz```
+- **ggNtuples Production Workspace Backup:** ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ggNtuplizer_CMSSW_8_0_26_patch1_V08_00_26_07.tar.gz```
 
  
 
 
-- Other nTuples versions: https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
+- Other ggNtuples versions: https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
 
