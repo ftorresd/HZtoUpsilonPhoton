@@ -73,7 +73,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
   - **brilcalc command used:**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i [...]processedLumis.json```
 
-  - **it should be [Ref](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM):**
+  - **it should be ([ref](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM)):**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i [...]processedLumis.json```
 
  
