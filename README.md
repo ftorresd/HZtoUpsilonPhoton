@@ -51,7 +51,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 - **CMS DAS:** 
   - https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2017*PromptReco*%2FMINIAOD
   - https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=%2FDoubleMuon%2FRun2017C-PromptReco*%2FMINIAOD
-- **JSON ([Ref](https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2017Analysis)):** TBD
+- **JSON ([Ref](https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2017Analysis)):** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions17/13TeV/PromptReco/Cert_294927-303825_13TeV_PromptReco_Collisions17_JSON.txt
 - **ggNutples:**
 
 | **Sample**        | **Dataset Lumi (/fb)** | **Proceced Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
