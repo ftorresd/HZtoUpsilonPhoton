@@ -2,37 +2,23 @@
 ZtoUpsilonPhoton @ CMS
 
 ## ggNtuples Code
-https://github.com/cmkuo/ggAnalysis
+https://github.com/cmkuo/ggAnalysis/tree/92X
 
 ### Recipe for ggNtuples Code
 #### BRANCH: 92X (2017 Data)
 ```
-cmsrel CMSSW_8_0_26_patch1
-cd CMSSW_8_0_26_patch1/src 
+cmsrel CMSSW_9_2_9
+
+cd CMSSW_9_2_9/src 
 cmsenv 
 export CMSSW_GIT_REFERENCE=/cvmfs/cms.cern.ch/cmssw.git.daily 
 git cms-init 
-git remote add btv-cmssw https://github.com/cms-btv-pog/cmssw.git 
-git fetch --tags btv-cmssw 
-git cms-merge-topic -u cms-btv-pog:BoostedDoubleSVTaggerV4-WithWeightFiles-v1_from-CMSSW_8_0_21 
-git cms-merge-topic rafaellopesdesa:RegressionCheckNegEnergy 
-git cms-merge-topic cms-egamma:EGM_gain_v1 
-cd EgammaAnalysis/ElectronTools/data 
-git clone -b Moriond17_gainSwitch_unc https://github.com/ECALELFS/ScalesSmearings.git 
-cd $CMSSW_BASE/src 
-git cms-merge-topic cms-met:METRecipe_8020 -u 
-git cms-merge-topic cms-met:METRecipe_80X_part2 -u 
-git cms-merge-topic Sam-Harper:HEEPV70VID_8010_ReducedCheckout 
-git cms-merge-topic Sam-Harper:PackedCandNoPuppi 
-git cms-merge-topic ikrav:egm_id_80X_v2 
-git cms-merge-topic ikrav:egm_id_80X_v3_photons 
-git cms-merge-topic -u mverzett:DeepFlavour-from-CMSSW_8_0_21 
-mkdir RecoBTag/DeepFlavour/data/ 
-cd RecoBTag/DeepFlavour/data/ 
-wget http://home.fnal.gov/~verzetti//DeepFlavour/training/DeepFlavourNoSL.json 
-cd $CMSSW_BASE/src 
+
+git cms-addpkg RecoEgamma/EgammaIsolationAlgos 
+git cms-merge-topic rgoldouz:TrkIsoFix -u 
 git clone https://github.com/cmkuo/HiggsAnalysis.git 
-git clone -b V08_00_26_07 https://github.com/cmkuo/ggAnalysis.git 
+git clone -b 92X https://github.com/cmkuo/ggAnalysis.git 
+
 scram b -j 20
 ```
 
@@ -40,7 +26,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 
 
-## 2016 Samples
+## 2017 Samples
 ### MC 
 - **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma-TuneCUETP8M1_13TeV-pythia8*%2F*%2FMINIAODSIM
 - **ggNutples:**
@@ -80,13 +66,12 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | **Total Recorded Lumi:**  |	17.336 /fb |	  |
 
 - **ATTENTION: To be understood.**
-  - **brilcalc command used:**
+  - **brilcalc command TO BE used:**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i [...]processedLumis.json```
 
-  - **it should be ([ref](https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM)):**
-```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_PHYSICS.json -i [...]processedLumis.json```
 
-- **ggNtuples Production Workspace Backup:** ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ggNtuplizer_CMSSW_8_0_26_patch1_V08_00_26_07.tar.gz```
+
+
 
  
 
