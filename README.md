@@ -70,7 +70,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | ```/MuonEG/Run2017D-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x]  |	TO BE PRODUCED |
 | ```/MuonEG/Run2017E-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x] |	TO BE PRODUCED |
 | ```/MuonEG/Run2017F-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x]  |	TO BE PRODUCED |
-| **Total Recorded Lumi:**  |	???? /fb |	  |
+| **Total Recorded Lumi:**  |	???? /fb |	???? /fb |	  |
 
 - **brilcalc command TO BE used:**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i [...]processedLumis.json```
