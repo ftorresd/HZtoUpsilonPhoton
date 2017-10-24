@@ -64,7 +64,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 ## Data
 - **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2016*-03Feb2017*%2FMINIAOD
-- **JSON:** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
+- **JSON ([Ref](https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2016Analysis#Re_reco_datasets)):** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
 - **ggNutples:**
 
 | **Sample**        | **Lumi (/fb)**  | **Location @ EOS**  |
