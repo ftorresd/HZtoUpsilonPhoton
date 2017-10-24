@@ -2,12 +2,20 @@
 ZtoUpsilonPhoton @ CMS
 
 ## Analysis Code
+
+### Setup
 ```
 cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src
 git clone git@github.com:ftorresd/ZtoUpsilonPhoton.git
 cd ZtoUpsilonPhoton/
 git checkout 2016Data
+```
+
+### Pushing
+After ```git add``` and ```git commit -m```:
+```
+git push origin 2016Data
 ```
 
 ## ggNtuples Code
