@@ -5,7 +5,7 @@ ZtoUpsilonPhoton @ CMS
 https://github.com/cmkuo/ggAnalysis
 
 ### Recipe for ggNtuples Code
-#### TAG: V08_00_26_07 (2016 Data)
+#### BRANCH: 92X (2017 Data)
 ```
 cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src 
