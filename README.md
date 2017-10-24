@@ -33,9 +33,9 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 | **Sample**         | **Location @ EOS**  |
 | ------- |:-------|
-| ```/ZToUpsilon3SGamma-TuneCUETP8M1_13TeV-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/MINIAODSIM```   |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ZToUpsilon1SGamma_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_ggNtuples_V08_00_26_07_Upsilon_v06``` |
-| ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ZToUpsilon2SGamma_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_ggNtuples_V08_00_26_07_Upsilon_v06```   |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/ZToUpsilon3SGamma_RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_ggNtuples_V08_00_26_07_Upsilon_v06```   |		```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
+| ```/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
+| ```/ZToUpsilon2SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
+| ```/ZToUpsilon3SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |		TO BE PRODUCED |
 
 | **Sample**         | **xSec (pb)(*)**  | **Filter Efficiency(*)**  |  **Filter Efficiency Error(*)**  |
 | ------ |:--------:|:-------:|:------:|
