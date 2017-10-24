@@ -28,7 +28,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 ## 2017 Samples
 ### MC 
-- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma*%2F*%2FMINIAODSIM
+- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
 - **ggNutples:**
 
 | **Sample**         | **Location @ EOS**  |
@@ -39,11 +39,11 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 | **Sample**         | **xSec (pb)(*)**  | **Filter Efficiency(*)**  |  **Filter Efficiency Error(*)**  |
 | ------ |:--------:|:-------:|:------:|
-| ```ZToUpsilon1SGamma```   |	2.022 | 0.7222 | 0.03733 |
-| ```ZToUpsilon2SGamma```   |	2.071 | 0.6667 | 0.04811 |
-| ```ZToUpsilon3SGamma```   |	1.696 | 0.6146 | 0.04967 |
+| ```ZToUpsilon1SGamma```   |	2.144  | 0.7056 | 0.01201 |
+| ```ZToUpsilon2SGamma```   |	2.281 | 0.7118 | 0.1194 |
+| ```ZToUpsilon3SGamma```   |	2.269 | 0.7389 | 0.1157 |
 
-**(*)**: From McM (https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00178&page=0&shown=127; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00179&page=0&shown=127; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIISummer15GS-00180&page=0&shown=127). 
+**(*)**: From McM (https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00001&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00002&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00003&page=0). 
 
 
 
