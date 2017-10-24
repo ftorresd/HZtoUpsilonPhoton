@@ -54,22 +54,22 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 - **JSON ([Ref](https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2017Analysis)):** TBD
 - **ggNutples:**
 
-| **Sample**        | **Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
-| ------------- |:-------------:| :-------------:|:-------------:|:-----| 
-| ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017B-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017B-PromptReco-v2/MINIAOD```  | ???? |	[x] |	[ ] |	TO BE PRODUCED |
-| ```/MuonEG/Run2017C-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017C-PromptReco-v2/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017C-PromptReco-v3/MINIAOD```  | ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/DoubleMuon/Run2017C-PromptReco-v1/MINIAOD```  | ???? |	[ ] |	[x]  |	TO BE PRODUCED |
-| ```/DoubleMuon/Run2017C-PromptReco-v2/MINIAOD```  | ???? |	[ ] |	[x]  |	TO BE PRODUCED |
-| ```/DoubleMuon/Run2017C-PromptReco-v3/MINIAOD```  | ???? |	[ ] |	[x]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017D-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[x]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017E-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[x] |	TO BE PRODUCED |
-| ```/MuonEG/Run2017F-PromptReco-v1/MINIAOD```  | ???? |	[x] |	[x]  |	TO BE PRODUCED |
+| **Sample**        | **Dataset Lumi (/fb)** | **Proceced Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
+| ------------- |:-------------:|:-------------:| :-------------:|:-------------:|:-----| 
+| ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017B-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017B-PromptReco-v2/MINIAOD```  | ????| ???? |	[x] |	[ ] |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v2/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v3/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/DoubleMuon/Run2017C-PromptReco-v1/MINIAOD```  | ????| ???? |	[ ] |	[x]  |	TO BE PRODUCED |
+| ```/DoubleMuon/Run2017C-PromptReco-v2/MINIAOD```  | ????| ???? |	[ ] |	[x]  |	TO BE PRODUCED |
+| ```/DoubleMuon/Run2017C-PromptReco-v3/MINIAOD```  | ????| ???? |	[ ] |	[x]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017D-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017E-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x] |	TO BE PRODUCED |
+| ```/MuonEG/Run2017F-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[x]  |	TO BE PRODUCED |
 | **Total Recorded Lumi:**  |	???? /fb |	  |
 
 - **brilcalc command TO BE used:**
