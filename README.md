@@ -53,7 +53,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 - **ggNutples:**
 
 | **Sample**        | **Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
-| ------------- |:-------------:| :-----| 
+| ------------- |:-------------:| :-------------:|:-------------:|:-----| 
 | ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  |	???? |	???? | ???? |	TO BE PRODUCED |
 | ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  |	???? |	???? | ???? |	TO BE PRODUCED |
 | ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  |	???? |	???? | ???? |	TO BE PRODUCED |
