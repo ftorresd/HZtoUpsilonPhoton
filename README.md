@@ -56,9 +56,9 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 | **Sample**        | **Dataset Lumi (/fb)** | **Processed Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
 | ------------- |:-------------:|:-------------:| :-------------:|:-------------:|:-----| 
-| ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
-| ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  | ????| ???? |	- [x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  | ????| ???? |	- [x] |	[ ]  |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  | ????| ???? |	- [x] |	[ ]  |	TO BE PRODUCED |
 | ```/MuonEG/Run2017B-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
 | ```/MuonEG/Run2017B-PromptReco-v2/MINIAOD```  | ????| ???? |	[x] |	[ ] |	TO BE PRODUCED |
 | ```/MuonEG/Run2017C-PromptReco-v1/MINIAOD```  | ????| ???? |	[x] |	[ ]  |	TO BE PRODUCED |
