@@ -28,7 +28,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 ## 2017 Samples
 ### MC 
-- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma-TuneCUETP8M1_13TeV-pythia8*%2F*%2FMINIAODSIM
+- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon*SGamma*%2F*%2FMINIAODSIM
 - **ggNutples:**
 
 | **Sample**         | **Location @ EOS**  |
@@ -47,33 +47,29 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 
 
-
 ## Data
-- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2016*-03Feb2017*%2FMINIAOD
-- **JSON:** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt
+- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2017*PromptReco*%2FMINIAOD
+- **JSON:** TBD
 - **ggNutples:**
 
 | **Sample**        | **Lumi (/fb)**  | **Location @ EOS**  |
 | ------------- |:-------------:| :-----| 
-| ```/MuonEG/Run2016B-03Feb2017_ver2-v2/MINIAOD```  |	2.925 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016B-03Feb2017_ver2-v2_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016C-03Feb2017-v1/MINIAOD```  |	1.082 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016C-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016D-03Feb2017-v1/MINIAOD```  |	1.436 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016D-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016E-03Feb2017-v1/MINIAOD```  |	2.127 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016E-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016F-03Feb2017-v1/MINIAOD```  |	1.161 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016F-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016G-03Feb2017-v1/MINIAOD```  |	3.935 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016G-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016H-03Feb2017_ver2-v1/MINIAOD```  |	4.528 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver2-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| ```/MuonEG/Run2016H-03Feb2017_ver3-v1/MINIAOD```  |	0.142 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver3-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| **Total Recorded Lumi:**  |	17.336 /fb |	  |
+| ```/MuonEG/Run2017A-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v2/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017A-PromptReco-v3/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017B-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017B-PromptReco-v2/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v2/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017C-PromptReco-v3/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017D-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017E-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| ```/MuonEG/Run2017F-PromptReco-v1/MINIAOD```  |	???? |	TO BE PRODUCED |
+| **Total Recorded Lumi:**  |	???? /fb |	  |
 
 - **ATTENTION: To be understood.**
   - **brilcalc command TO BE used:**
 ```brilcalc lumi -u /fb --normtag /cvmfs/cms-bril.cern.ch/cms-lumi-pog/Normtags/normtag_BRIL.json -i [...]processedLumis.json```
-
-
-
-
-
- 
 
 
 - **Other ggNtuples versions:** https://docs.google.com/spreadsheets/d/1Fxy9KmV0Rirdl7Kjnc_KMNmqRhfwl9w1_5I0IWxaFYA/edit#gid=1329660137
