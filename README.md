@@ -77,7 +77,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 | ```/MuonEG/Run2016G-03Feb2017-v1/MINIAOD```  | ????|	3.935 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016G-03Feb2017-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016H-03Feb2017_ver2-v1/MINIAOD```  | ????|	4.528 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver2-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
 | ```/MuonEG/Run2016H-03Feb2017_ver3-v1/MINIAOD```  | ????|	0.142 |	```/eos/cms/store/user/ftorresd/ZtoUpsilonPhoton2016/MuonEG_Run2016H-03Feb2017_ver3-v1_MINIAOD_ggNtuples_V08_00_26_07_v11/``` |
-| **Total Recorded Lumi:**  |	17.336 /fb |	  |
+| **Total Recorded Lumi:**  |	???? /fb|	17.336 /fb |	  |
 
 - **ATTENTION: To be understood.**
   - **brilcalc command used:**
