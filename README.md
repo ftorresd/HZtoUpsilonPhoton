@@ -33,9 +33,9 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 
 | **Sample**         | **Location @ EOS**  |
 | ------- |:-------|
-| ```/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
-| ```/ZToUpsilon2SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
-| ```/ZToUpsilon3SGamma-TuneCUETP8M1_13TeV-pythia8/*/MINIAODSIM```   |		TO BE PRODUCED |
+| ```/ZToUpsilon1SGamma-TuneCP5_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
+| ```/ZToUpsilon2SGamma-TuneCP5_13TeV-pythia8/*/MINIAODSIM```   |	TO BE PRODUCED |
+| ```/ZToUpsilon3SGamma-TuneCP5_13TeV-pythia8/*/MINIAODSIM```   |		TO BE PRODUCED |
 
 | **Sample**         | **xSec (pb)(*)**  | **Filter Efficiency(*)**  |  **Filter Efficiency Error(*)**  |
 | ------ |:--------:|:-------:|:------:|
