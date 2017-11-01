@@ -38,7 +38,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 ## 2017 Samples
 ### MC 
 - **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
-- **ggNutples:**
+- **ggNutples:**: https://docs.google.com/spreadsheets/d/1H10ZsIrbIF2klhLOb3BSq9xft5KKiF2I0FT8t37fsuw/edit#gid=0
 
 | **Sample**         | **Location @ EOS**  |
 | ------- |:-------|
