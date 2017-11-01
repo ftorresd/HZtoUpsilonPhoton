@@ -38,7 +38,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
 ## 2017 Samples
 ### MC 
 - **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
-- **ggNutples:**: https://docs.google.com/spreadsheets/d/1H10ZsIrbIF2klhLOb3BSq9xft5KKiF2I0FT8t37fsuw/edit#gid=0
+- **ggNutples:**:
 
 | **Sample**         | **Location @ EOS**  |
 | ------- |:-------|
@@ -61,7 +61,7 @@ Maybe one or two more ```scram b -j 20``` might be required in order to get clea
   - https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FMuonEG%2FRun2017*PromptReco*%2FMINIAOD
   - https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=%2FDoubleMuon%2FRun2017C-PromptReco*%2FMINIAOD
 - **JSON ([Ref](https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2017Analysis)):** https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions17/13TeV/PromptReco/Cert_294927-303825_13TeV_PromptReco_Collisions17_JSON.txt
-- **ggNutples:**
+- **ggNutples:**  https://docs.google.com/spreadsheets/d/1H10ZsIrbIF2klhLOb3BSq9xft5KKiF2I0FT8t37fsuw/edit#gid=0
 
 | **Sample**        | **Dataset Lumi (/fb)** | **Processed Lumi (/fb)**  |  Mu_Photon Trigger  |  DoubleMu_Photon Trigger  |**Location @ EOS**  |
 | ------------- |:-------------:|:-------------:| :-------------:|:-------------:|:-----| 
