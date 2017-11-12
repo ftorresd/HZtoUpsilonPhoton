@@ -27,6 +27,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)
 	// output tree
 	TFile outFile("outTree_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
 	TTree * outTree = new TTree("outTree_ZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
+	
 	//output objects
 	TLorentzVector * v2 = new TLorentzVector(1., 1., 1., 1.);
 	outTree->Branch("v2",&v2);
@@ -57,6 +58,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)
 		// 	cout << "eleGSFEta: " << eleGSFEta[i].size() << endl;
 		// }
     } // end loop over events
+
+    // post-processing 
     outTree->Fill();
     outTree->Print();
     outFile.Write();

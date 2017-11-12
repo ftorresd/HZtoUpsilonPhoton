@@ -1,5 +1,7 @@
 // #################################################
-// reads the ggNtuples and loads then into a TChain
+// -- reads the ggNtuples
+// -- loads then into a TChain
+// -- returns a TTreeReader for the TChain
 // #################################################
 
 #include "TChain.h"
