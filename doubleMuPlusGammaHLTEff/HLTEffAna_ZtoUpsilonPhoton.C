@@ -1,15 +1,13 @@
 // ######################################################
 // Z --> Upsilon + Photon
 // ######################################################
-// Analysis Code
-// Description:  - Reads the ggNtuples
-//               - Skim the sample
-//               - Apply corrections and cuts           
-//               - Produces a ntuple read for plotting  
-// ######################################################
+// HLT Eff Tree
 
 
 #include <iostream>
+#include <algorithm>
+#include <math.h>  
+
 #include "TFile.h"
 #include "TLorentzVector.h"
 #include "TTree.h"
@@ -24,11 +22,13 @@ using namespace std;
 const auto muonMass = 105.6583745/1000.0; //GeV
 
 
-void HLTEffAna_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)  
+void HLTEffAna_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string outFileAppend = "")  
 {
 	////////////////////////////////////////////////////////////////////
 	// output tree
-	TFile * outFile  = new TFile("outTree_HLTTnPEff_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
+	// TFile * outFile  = new TFile("outTree_HLTTnPEff_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
+	string outputFileName = "outTree_HLTTnPEff_ZtoUpsilonPhoton_"+ outFileAppend + ".root";
+	TFile * outFile  = new TFile(outputFileName.c_str(),"RECREATE","ZtoUpsilonPhoton output analysis tree");
 	TTree * outTree = new TTree("outTree_HLTTnPEff_ZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
 
 	////////////////////////////////////////////////////////////////////
@@ -55,8 +55,15 @@ void HLTEffAna_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)
 	TTreeReaderArray< ULong64_t > muFiredTrgs(*dataReader, "muFiredTrgs");
 	
 	// photons
+	TTreeReaderValue< int > nPho(*dataReader, "nPho");
 	TTreeReaderArray< float > phoEt(*dataReader, "phoEt");
+	TTreeReaderArray< float > phoEta(*dataReader, "phoEta");
+	TTreeReaderArray< float > phoPhi(*dataReader, "phoPhi");
 	TTreeReaderArray< float > phoIDMVA(*dataReader, "phoIDMVA");
+	TTreeReaderArray< float > phoR9(*dataReader, "phoR9");
+	TTreeReaderArray< unsigned short > phoIDbit(*dataReader, "phoIDbit");
+
+
 
 	////////////////////////////////////////////////////////////////////
 	//output objects - TAG
@@ -85,15 +92,38 @@ void HLTEffAna_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)
 	ULong64_t probeMuonFiredTrgs;
 	outTree->Branch("probeMuonFiredTrgs",&probeMuonFiredTrgs);
 	
+
+	//output objects - PHOTON
+	TLorentzVector photon;
+	outTree->Branch("photon",&photon);
+
+	float photonIDMVA;
+	outTree->Branch("photonIDMVA",&photonIDMVA);
+
+	float photonR9;
+	outTree->Branch("photonR9",&photonR9);
+
+	unsigned short photonIDbit;
+	outTree->Branch("photonIDbit",&photonIDbit);
+
+
+
 	////////////////////////////////////////////////////////////////////
 	// numer of entries
-	cout << "\nN. Entries: " << dataTree->GetEntries() << endl;
+	auto totalEvts = dataTree->GetEntries();
+	auto printEvery = 10000;
+	cout << "\nN. Entries: " << totalEvts << endl;
+	cout << "\nPrinting every: " << printEvery << " events" << endl;
+	cout << "\nLooping over events... \n" << endl;
+
 	// data->Print();
 
 	////////////////////////////////////////////////////////////////////
 	// main loop
+	auto iEvt = 0;
 	while (dataReader->Next()) { // loop over events
-		// cout << "nMu: " << *nMu << endl;
+		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read: " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
+		iEvt++;
 		for (int iMuon = 0; iMuon < *nMu; iMuon++) { //loop over tag muons candidates
 			TLorentzVector * tagMuonCand = new TLorentzVector();
 			tagMuonCand->SetPtEtaPhiM(muPt[iMuon], muEta[iMuon], muPhi[iMuon], muonMass);
@@ -101,20 +131,36 @@ void HLTEffAna_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1)
 					TLorentzVector * probeMuonCand = new TLorentzVector();
 					probeMuonCand->SetPtEtaPhiM(muPt[jMuon], muEta[jMuon], muPhi[jMuon], muonMass);
 					if (((*tagMuonCand+*probeMuonCand).M() > 2.95 && (*tagMuonCand+*probeMuonCand).M() < 3.30) && (muCharge[iMuon]*muCharge[jMuon] < 0) && (iMuon != jMuon)) {
-						// cout << "Good TnP pair!" << endl;
+						// Good TnP pair!
 						tagMuon = *tagMuonCand;
 						probeMuon = *probeMuonCand;
+						tagMuonType = muType[iMuon];
+						tagMuonIDbit = muIDbit[iMuon];
+						tagMuonMatches = muMatches[iMuon];
+						probeMuonMatches = muMatches[jMuon];
+						tagMuonFiredTrgs = muFiredTrgs[iMuon];
+						probeMuonFiredTrgs = muFiredTrgs[jMuon];
 
+						if (*nPho > 0) {
+						// photons
+						auto maxEtResult =  max_element(phoEt.begin(), phoEt.end()); // get max Et
+						auto indexMaxPt = distance(phoEt.begin(), maxEtResult); // get max Et index
+						photon.SetPtEtaPhiM(phoEt[indexMaxPt], phoEta[indexMaxPt], phoPhi[indexMaxPt], 0.);
+						photonIDMVA = phoIDMVA[indexMaxPt];
+						photonR9 = phoR9[indexMaxPt];
+						photonIDbit = phoIDbit[indexMaxPt];
 
-						outTree->Fill(); //save tnp pair the tree
+					    //save tnp pair the tree
+						outTree->Fill(); 
 					}
-				}	
-			}
+				}
+			}	
+		}
     } // end loop over events
 
     // post-processing 
     
-    outTree->Print();
+    // outTree->Print();
     outFile->Write();
 
 } //end ana_ZtoUpsilonPhoton
