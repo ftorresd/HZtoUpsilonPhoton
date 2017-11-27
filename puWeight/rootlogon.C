@@ -1,26 +1,13 @@
-#include "TStyle.h"
-
-// tdrGrid: Turns the grid lines on (true) or off (false)
-
-// void tdrGrid(bool gridOn) {
-//   tdrStyle->SetPadGridX(gridOn);
-//   tdrStyle->SetPadGridY(gridOn);
-// }
-
-// fixOverlay: Redraws the axis
-
-// void fixOverlay() {
-//   gPad->RedrawAxis();
-// }
-
-void setTDRStyle() {
+{
   TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+
+  cout << "TDR Style initialized" << endl;
 
 // For the canvas:
   tdrStyle->SetCanvasBorderMode(0);
   tdrStyle->SetCanvasColor(kWhite);
-  tdrStyle->SetCanvasDefH(600); //Height of canvas
-  tdrStyle->SetCanvasDefW(600); //Width of canvas
+  tdrStyle->SetCanvasDefH(500); //Height of canvas
+  tdrStyle->SetCanvasDefW(800); //Width of canvas
   tdrStyle->SetCanvasDefX(0);   //POsition on screen
   tdrStyle->SetCanvasDefY(0);
 
@@ -42,7 +29,7 @@ void setTDRStyle() {
   tdrStyle->SetFrameLineColor(1);
   tdrStyle->SetFrameLineStyle(1);
   tdrStyle->SetFrameLineWidth(1);
-  
+
 // For the histo:
   // tdrStyle->SetHistFillColor(1);
   // tdrStyle->SetHistFillStyle(0);
@@ -53,11 +40,11 @@ void setTDRStyle() {
   // tdrStyle->SetNumberContours(Int_t number = 20);
 
   tdrStyle->SetEndErrorSize(2);
-  // tdrStyle->SetErrorMarker(20);
-  //tdrStyle->SetErrorX(0.);
+  //tdrStyle->SetErrorMarker(20);
+  tdrStyle->SetErrorX(0.);
   
   tdrStyle->SetMarkerStyle(20);
-  
+
 //For the fit/function:
   tdrStyle->SetOptFit(1);
   tdrStyle->SetFitFormat("5.4g");
@@ -72,7 +59,7 @@ void setTDRStyle() {
 
 // For the statistics box:
   tdrStyle->SetOptFile(0);
-  tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
+  tdrStyle->SetOptStat(111111); // To display the mean and RMS:   SetOptStat("mr");
   tdrStyle->SetStatColor(kWhite);
   tdrStyle->SetStatFont(42);
   tdrStyle->SetStatFontSize(0.025);
@@ -86,14 +73,14 @@ void setTDRStyle() {
   // tdrStyle->SetStatY(Float_t y = 0);
 
 // Margins:
-  tdrStyle->SetPadTopMargin(0.05);
+  tdrStyle->SetPadTopMargin(0.10);
   tdrStyle->SetPadBottomMargin(0.13);
-  tdrStyle->SetPadLeftMargin(0.16);
-  tdrStyle->SetPadRightMargin(0.02);
+  tdrStyle->SetPadLeftMargin(0.13);
+  tdrStyle->SetPadRightMargin(0.10);
 
 // For the Global title:
 
-  tdrStyle->SetOptTitle(0);
+//  tdrStyle->SetOptTitle(0);
   tdrStyle->SetTitleFont(42);
   tdrStyle->SetTitleColor(1);
   tdrStyle->SetTitleTextColor(1);
@@ -114,9 +101,8 @@ void setTDRStyle() {
   // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
   // tdrStyle->SetTitleYSize(Float_t size = 0.02);
   tdrStyle->SetTitleXOffset(1.0);
-  tdrStyle->SetTitleYOffset(1.5);
-  // tdrStyle->SetTitleOffset(1.0, "X"); // Another way to set the Offset
-  // tdrStyle->SetTitleOffset(1.5, "Y"); // Another way to set the Offset
+//   tdrStyle->SetTitleYOffset(1.5);
+  tdrStyle->SetTitleOffset(1.5, "Y"); // Another way to set the Offset
 
 // For the axis labels:
 
@@ -139,8 +125,10 @@ void setTDRStyle() {
   tdrStyle->SetOptLogy(0);
   tdrStyle->SetOptLogz(0);
 
+  tdrStyle->SetPalette(1,0);
+
 // Postscript options:
-  tdrStyle->SetPaperSize(20.,20.);
+  // tdrStyle->SetPaperSize(15.,15.);
   // tdrStyle->SetLineScalePS(Float_t scale = 3);
   // tdrStyle->SetLineStyleString(Int_t i, const char* text);
   // tdrStyle->SetHeaderPS(const char* header);
@@ -152,9 +140,6 @@ void setTDRStyle() {
   // tdrStyle->SetPalette(Int_t ncolors = 0, Int_t* colors = 0);
   // tdrStyle->SetTimeOffset(Double_t toffset);
   // tdrStyle->SetHistMinimumZero(kTRUE);
-
-  tdrStyle->SetHatchesLineWidth(5);
-  tdrStyle->SetHatchesSpacing(0.05);
 
   tdrStyle->cd();
 

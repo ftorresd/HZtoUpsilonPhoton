@@ -1,0 +1,211 @@
+******************************************************************************
+*Tree    :outTree_ZtoUpsilonPhoton: ZtoUpsilonPhoton output analysis tree    *
+*Entries :    70296 : Total =        49785949 bytes  File  Size =   16862044 *
+*        :          : Tree compression factor =   2.95                       *
+******************************************************************************
+*Branch  :leadingMuon                                                        *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br    0 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    1485562 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   3.23     *
+*............................................................................*
+*Br    1 :charge    : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282503 bytes  File Size  =      45876 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   6.15     *
+*............................................................................*
+*Br    2 :muonIndex : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282542 bytes  File Size  =      30489 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   9.25     *
+*............................................................................*
+*Br    3 :muonIsLooseID : Bool_t                                             *
+*Entries :    70296 : Total  Size=      71106 bytes  File Size  =      16098 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Br    4 :muonIsTightID : Bool_t                                             *
+*Entries :    70296 : Total  Size=      71106 bytes  File Size  =      16098 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Br    5 :muonIsISO : Bool_t                                                 *
+*Entries :    70296 : Total  Size=      71078 bytes  File Size  =      16091 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Branch  :trailingMuon                                                       *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br    6 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    1491985 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   3.22     *
+*............................................................................*
+*Br    7 :charge    : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282503 bytes  File Size  =      45811 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   6.16     *
+*............................................................................*
+*Br    8 :muonIndex : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282542 bytes  File Size  =      36337 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   7.76     *
+*............................................................................*
+*Br    9 :muonIsLooseID : Bool_t                                             *
+*Entries :    70296 : Total  Size=      71106 bytes  File Size  =      16096 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Br   10 :muonIsTightID : Bool_t                                             *
+*Entries :    70296 : Total  Size=      71106 bytes  File Size  =      16096 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Br   11 :muonIsISO : Bool_t                                                 *
+*Entries :    70296 : Total  Size=      71078 bytes  File Size  =      16063 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.39     *
+*............................................................................*
+*Branch  :leadingPhoton                                                      *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   12 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    1409223 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   3.40     *
+*............................................................................*
+*Br   13 :photonIndex : Int_t                                                *
+*Entries :    70296 : Total  Size=     282568 bytes  File Size  =      30882 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   9.13     *
+*............................................................................*
+*Br   14 :photonR9  : Float_t                                                *
+*Entries :    70296 : Total  Size=     282529 bytes  File Size  =     154417 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   1.83     *
+*............................................................................*
+*Br   15 :photonSCEta : Float_t                                              *
+*Entries :    70296 : Total  Size=     282568 bytes  File Size  =     168582 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   1.67     *
+*............................................................................*
+*Br   16 :recoUpsilon : TLorentzVector                                       *
+*Entries :    70296 : Total  Size=    4800484 bytes  File Size  =    1483119 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   3.23     *
+*............................................................................*
+*Br   17 :recoZ     : TLorentzVector                                         *
+*Entries :    70296 : Total  Size=    4799506 bytes  File Size  =    1479855 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   3.24     *
+*............................................................................*
+*Br   18 :isGoodEvent : isGoodEvent/O                                        *
+*Entries :    70296 : Total  Size=      71082 bytes  File Size  =      15151 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.66     *
+*............................................................................*
+*Br   19 :goodTriggerEvt : goodTriggerEvt/O                                  *
+*Entries :    70296 : Total  Size=      71103 bytes  File Size  =      16142 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression=   4.37     *
+*............................................................................*
+*Br   20 :isMC      : isMC/O                                                 *
+*Entries :    70296 : Total  Size=      71033 bytes  File Size  =        679 *
+*Baskets :        3 : Basket Size=      32000 bytes  Compression= 103.93     *
+*............................................................................*
+*Br   21 :puWgt     : puWgt/D                                                *
+*Entries :    70296 : Total  Size=     564686 bytes  File Size  =     114089 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   4.94     *
+*............................................................................*
+*Br   22 :puWgtErr  : puWgtErr/D                                             *
+*Entries :    70296 : Total  Size=     564752 bytes  File Size  =     108328 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   5.21     *
+*............................................................................*
+*Branch  :genMuPlus                                                          *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   23 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    2469389 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   1.94     *
+*............................................................................*
+*Br   24 :charge    : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282503 bytes  File Size  =       2527 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 111.60     *
+*............................................................................*
+*Br   25 :partIndex : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282542 bytes  File Size  =      85055 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   3.32     *
+*............................................................................*
+*Br   26 :pdgID     : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282490 bytes  File Size  =       2527 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 111.60     *
+*............................................................................*
+*Branch  :genMuMinus                                                         *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   27 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    2469624 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   1.94     *
+*............................................................................*
+*Br   28 :charge    : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282503 bytes  File Size  =       2359 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 119.55     *
+*............................................................................*
+*Br   29 :partIndex : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282542 bytes  File Size  =      84964 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   3.32     *
+*............................................................................*
+*Br   30 :pdgID     : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282490 bytes  File Size  =       2527 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 111.60     *
+*............................................................................*
+*Branch  :genPhoton                                                          *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   31 :TLorentzVector : BASE                                              *
+*Entries :    70296 : Total  Size=    4800973 bytes  File Size  =    2459479 *
+*Baskets :      159 : Basket Size=      32000 bytes  Compression=   1.95     *
+*............................................................................*
+*Br   32 :charge    : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282503 bytes  File Size  =       2359 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 119.55     *
+*............................................................................*
+*Br   33 :partIndex : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282542 bytes  File Size  =      79509 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression=   3.55     *
+*............................................................................*
+*Br   34 :pdgID     : Int_t                                                  *
+*Entries :    70296 : Total  Size=     282490 bytes  File Size  =       2527 *
+*Baskets :        9 : Basket Size=      32000 bytes  Compression= 111.60     *
+*............................................................................*
+*Br   35 :polWgt    : polWgt/D                                               *
+*Entries :    70296 : Total  Size=     564708 bytes  File Size  =     528100 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   1.07     *
+*............................................................................*
+*Branch  :muonIDSF                                                           *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   36 :first     : Double_t                                               *
+*Entries :    70296 : Total  Size=     564682 bytes  File Size  =      72899 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   7.74     *
+*............................................................................*
+*Br   37 :second    : Double_t                                               *
+*Entries :    70296 : Total  Size=     564704 bytes  File Size  =      76101 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   7.41     *
+*............................................................................*
+*Branch  :photonMVAIDSF                                                      *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   38 :first     : Double_t                                               *
+*Entries :    70296 : Total  Size=     564682 bytes  File Size  =      57278 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=   9.85     *
+*............................................................................*
+*Br   39 :second    : Double_t                                               *
+*Entries :    70296 : Total  Size=     564704 bytes  File Size  =      54685 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=  10.31     *
+*............................................................................*
+*Branch  :photonEleVetoSF                                                    *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   40 :first     : Double_t                                               *
+*Entries :    70296 : Total  Size=     564682 bytes  File Size  =      41886 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=  13.47     *
+*............................................................................*
+*Br   41 :second    : Double_t                                               *
+*Entries :    70296 : Total  Size=     564704 bytes  File Size  =      41981 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=  13.44     *
+*............................................................................*
+*Branch  :triggerSF                                                          *
+*Entries :    70296 : BranchElement (see below)                              *
+*............................................................................*
+*Br   42 :first     : Double_t                                               *
+*Entries :    70296 : Total  Size=     564682 bytes  File Size  =      50148 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=  11.25     *
+*............................................................................*
+*Br   43 :second    : Double_t                                               *
+*Entries :    70296 : Total  Size=     564704 bytes  File Size  =      46861 *
+*Baskets :       18 : Basket Size=      32000 bytes  Compression=  12.04     *
+*............................................................................*

@@ -1,0 +1,445 @@
+#include <iostream>
+#include <algorithm>
+#include <math.h>  
+
+#include "TFile.h"
+#include "TMath.h"
+#include "TLorentzVector.h"
+#include "TTree.h"
+#include "TTreeReader.h"
+#include "TTreeReaderValue.h"
+#include "TTreeReaderArray.h"
+// #include "TRandom3.h"
+// #include "TROOT.h"
+#include "TH1.h"
+#include "TDirectory.h"
+
+
+
+#include "plugins/ggNtuplesFilesReader.h"
+// #include "plugins/roccor2016/RoccoR.cc"
+#include "plugins/deltaR_deltaPhi.h"
+#include "plugins/anaObjects.h"
+// #include "plugins/puWeight.h"
+#include "plugins/upsilonPolarizationAngle.h"
+// #include "plugins/getSF.h"
+
+
+#ifdef __CINT__
+#pragma link C++ class anaMuon+;
+#pragma link C++ class anaPhoton+;
+#pragma link C++ class anaGenPart+;
+// #pragma link C++ class TLorentzVector+;
+#endif
+
+using namespace std;
+
+void genFiller(bool plusIsLeading, TH1D * h_Gen_Leading, TH1D * h_Gen_Trailing, double plusVar, double minusVar, double weight = 1.0) {
+	if (plusIsLeading) {
+		h_Gen_Leading->Fill(plusVar, weight); 
+		h_Gen_Trailing->Fill(minusVar, weight); 
+	} else { 
+		h_Gen_Leading->Fill(minusVar, weight); 
+		h_Gen_Trailing->Fill(plusVar, weight); 
+	}
+}
+
+
+void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHistoAppend, bool isData = true)  
+{
+	// output tree
+	// TFile outFile("outTree_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
+	string outputFileName = "outputHistos/outHistos_ZtoUpsilonPhoton_"+ outHistoAppend + ".root";
+	TFile * outFile  = new TFile(outputFileName.c_str(),"RECREATE","ZtoUpsilonPhoton output histos");
+
+	// loads the ntuples 
+	TTreeReader * dataReader = ggNtuplesFilesReader( ntuplesToPlotFilesData, "outTree_ZtoUpsilonPhoton" );
+	TTree * dataTree = dataReader->GetTree();
+
+	////////////////////////////////////////////////////////////////////
+	// define readers
+	TTreeReaderValue< anaGenPart > genMuPlus(*dataReader, "genMuPlus");
+	TTreeReaderValue< anaGenPart > genMuMinus(*dataReader, "genMuMinus");
+	TTreeReaderValue< anaGenPart > genPhoton(*dataReader, "genPhoton");
+
+	TTreeReaderValue< anaMuon > leadingMuon(*dataReader, "leadingMuon");
+	TTreeReaderValue< anaMuon > trailingMuon(*dataReader, "trailingMuon");
+	TTreeReaderValue< anaPhoton > leadingPhoton(*dataReader, "leadingPhoton");
+
+	// can't figure it ou t why TTreeReaderValue don't work for TLorentzVector
+	// TTreeReaderValue< TLorentzVector > recoUpsilon(*dataReader, "recoUpsilon");
+	// TTreeReaderValue< TLorentzVector > recoZ(*dataReader, "recoZ");
+
+	// TLorentzVector * recoUpsilon;
+	// dataTree->SetBranchAddress("recoUpsilon",&recoUpsilon);
+	// TLorentzVector * recoZ;
+	// dataTree->SetBranchAddress("recoZ",&recoZ);
+
+	
+	TTreeReaderValue< bool > isGoodEvent(*dataReader, "isGoodEvent");
+	TTreeReaderValue< bool > goodTriggerEvt(*dataReader, "goodTriggerEvt");
+	TTreeReaderValue< bool > isMC(*dataReader, "isMC");
+
+	TTreeReaderValue< double > puWgt(*dataReader, "puWgt");
+	TTreeReaderValue< double > puWgtErr(*dataReader, "puWgtErr");
+	TTreeReaderValue< double > polWgt(*dataReader, "polWgt");
+	TTreeReaderValue< pair<double,double> > muonIDSF(*dataReader, "muonIDSF");
+	TTreeReaderValue< pair<double,double> > photonMVAIDSF(*dataReader, "photonMVAIDSF");
+	TTreeReaderValue< pair<double,double> > photonEleVetoSF(*dataReader, "photonEleVetoSF");
+	TTreeReaderValue< pair<double,double> > triggerSF(*dataReader, "triggerSF");
+
+
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// define directories and histos
+	TDirectory * rootDir = outFile->mkdir("outputHistos");
+	rootDir->cd();    
+
+	//GEN - no Polarization weight
+	rootDir->cd(); 
+	TDirectory * genDir = rootDir->mkdir("genHistos");
+	genDir->cd();   
+	auto * h_Gen_LeadingMu_pt = new TH1D("h_Gen_LeadingMu_pt", ";p_{T}^{#mu} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_LeadingMu_eta = new TH1D("h_Gen_LeadingMu_eta", ";#eta^{#mu};", 50, -2.5, 2.5);
+	auto * h_Gen_LeadingMu_phi = new TH1D("h_Gen_LeadingMu_phi", ";#phi^{#mu};", 70, -3.2, 3.2);
+
+	auto * h_Gen_TrailingMu_pt = new TH1D("h_Gen_TrailingMu_pt", ";p_{T}^{#mu} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_TrailingMu_eta = new TH1D("h_Gen_TrailingMu_eta", ";#eta^{#mu};", 50, -2.5, 2.5);
+	auto * h_Gen_TrailingMu_phi = new TH1D("h_Gen_TrailingMu_phi", ";#phi^{#mu};", 70, -3.2, 3.2);
+
+	auto * h_Gen_Photon_pt = new TH1D("h_Gen_Photon_pt", ";p_{T}^{#gamma} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_Photon_eta = new TH1D("h_Gen_Photon_eta", ";#eta^{#gamma};", 50, -2.5, 2.5);
+	auto * h_Gen_Photon_phi = new TH1D("h_Gen_Photon_phi", ";#phi^{#gamma};", 70, -3.2, 3.2);
+	
+	auto * h_Gen_deltaR_Leading_Trailing = new TH1D("h_Gen_deltaR_Leading_Trailing", ";#DeltaR(#mu_{Lead}, #mu_{Trail});", 100, 0.0, 1.0);
+	auto * h_Gen_deltaR_Leading_Photon = new TH1D("h_Gen_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_deltaR_Trailing_Photon = new TH1D("h_Gen_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_deltaR_Upsilon_Photon = new TH1D("h_Gen_deltaR_Upsilon_Photon", ";#DeltaR(#Upsilon, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_deltaPhi_Upsilon_Photon = new TH1D("h_Gen_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#Upsilon, #gamma)|;", 100, 0.0, 4.0);
+
+	auto * h_Gen_Upsilon_Mass = new TH1D("h_Gen_Upsilon_Mass", ";#Upsilon Mass (GeV);", 100, 9.0, 10.0);
+	auto * h_Gen_Upsilon_Pt = new TH1D("h_Gen_Upsilon_Pt", ";p_{T}^{#Upsilon} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_Upsilon_eta = new TH1D("h_Gen_Upsilon_eta", ";#eta^{#Upsilon};", 50, -2.5, 2.5);
+	auto * h_Gen_Upsilon_phi = new TH1D("h_Gen_Upsilon_phi", ";#phi^{#Upsilon};", 70, -3.2, 3.2);
+
+	auto * h_Gen_Z_Mass = new TH1D("h_Gen_Z_Mass", ";Z Mass (GeV);", 100, 70, 120.0);
+	auto * h_Gen_Z_Pt = new TH1D("h_Gen_Z_Pt", ";p_{T}^{Z} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_Z_eta = new TH1D("h_Gen_Z_eta", ";#eta^{Z};", 50, -2.5, 2.5);
+	auto * h_Gen_Z_phi = new TH1D("h_Gen_Z_phi", ";#phi^{Z};", 70, -3.2, 3.2);
+
+	auto * h_Gen_upsilonPt_over_zMass = new TH1D("h_Gen_upsilonPt_over_zMass", ";p_{T}^{#Upsilon}/m_{Z};", 100, 0.0, 1.0);
+	auto * h_Gen_photonPt_over_zMass = new TH1D("h_Gen_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
+
+	// polarization
+	auto * h_Gen_UnPol = new TH1D("h_Gen_UnPol", ";cos(#Upsilon, #mu^{+});", 100, -1.0, 1.0);
+
+
+	//GEN - with Polarization weight
+	rootDir->cd(); 
+	TDirectory * genwithPolWeightDir = rootDir->mkdir("genwithPolWeightHistos");
+	genwithPolWeightDir->cd();   
+	auto * h_Gen_withPolWeight_LeadingMu_pt = new TH1D("h_Gen_withPolWeight_LeadingMu_pt", ";p_{T}^{#mu} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_withPolWeight_LeadingMu_eta = new TH1D("h_Gen_withPolWeight_LeadingMu_eta", ";#eta^{#mu};", 50, -2.5, 2.5);
+	auto * h_Gen_withPolWeight_LeadingMu_phi = new TH1D("h_Gen_withPolWeight_LeadingMu_phi", ";#phi^{#mu};", 70, -3.2, 3.2);
+
+	auto * h_Gen_withPolWeight_TrailingMu_pt = new TH1D("h_Gen_withPolWeight_TrailingMu_pt", ";p_{T}^{#mu} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_withPolWeight_TrailingMu_eta = new TH1D("h_Gen_withPolWeight_TrailingMu_eta", ";#eta^{#mu};", 50, -2.5, 2.5);
+	auto * h_Gen_withPolWeight_TrailingMu_phi = new TH1D("h_Gen_withPolWeight_TrailingMu_phi", ";#phi^{#mu};", 70, -3.2, 3.2);
+
+	auto * h_Gen_withPolWeight_Photon_pt = new TH1D("h_Gen_withPolWeight_Photon_pt", ";p_{T}^{#gamma} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_withPolWeight_Photon_eta = new TH1D("h_Gen_withPolWeight_Photon_eta", ";#eta^{#gamma};", 50, -2.5, 2.5);
+	auto * h_Gen_withPolWeight_Photon_phi = new TH1D("h_Gen_withPolWeight_Photon_phi", ";#phi^{#gamma};", 70, -3.2, 3.2);
+	
+	auto * h_Gen_withPolWeight_deltaR_Leading_Trailing = new TH1D("h_Gen_withPolWeight_deltaR_Leading_Trailing", ";#DeltaR(#mu_{Lead}, #mu_{Trail});", 100, 0.0, 1.0);
+	auto * h_Gen_withPolWeight_deltaR_Leading_Photon = new TH1D("h_Gen_withPolWeight_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_withPolWeight_deltaR_Trailing_Photon = new TH1D("h_Gen_withPolWeight_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_withPolWeight_deltaR_Upsilon_Photon = new TH1D("h_Gen_withPolWeight_deltaR_Upsilon_Photon", ";#DeltaR(#Upsilon, #gamma);", 100, 0.0, 5.0);
+	auto * h_Gen_withPolWeight_deltaPhi_Upsilon_Photon = new TH1D("h_Gen_withPolWeight_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#Upsilon, #gamma)|;", 100, 0.0, 4.0);
+
+	auto * h_Gen_withPolWeight_Upsilon_Mass = new TH1D("h_Gen_withPolWeight_Upsilon_Mass", ";#Upsilon Mass (GeV);", 100, 9.0, 10.0);
+	auto * h_Gen_withPolWeight_Upsilon_Pt = new TH1D("h_Gen_withPolWeight_Upsilon_Pt", ";p_{T}^{#Upsilon} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_withPolWeight_Upsilon_eta = new TH1D("h_Gen_withPolWeight_Upsilon_eta", ";#eta^{#Upsilon};", 50, -2.5, 2.5);
+	auto * h_Gen_withPolWeight_Upsilon_phi = new TH1D("h_Gen_withPolWeight_Upsilon_phi", ";#phi^{#Upsilon};", 70, -3.2, 3.2);
+
+	auto * h_Gen_withPolWeight_Z_Mass = new TH1D("h_Gen_withPolWeight_Z_Mass", ";Z Mass (GeV);", 100, 70, 120.0);
+	auto * h_Gen_withPolWeight_Z_Pt = new TH1D("h_Gen_withPolWeight_Z_Pt", ";p_{T}^{Z} (GeV);", 250, 0.0, 250.0);
+	auto * h_Gen_withPolWeight_Z_eta = new TH1D("h_Gen_withPolWeight_Z_eta", ";#eta^{Z};", 50, -2.5, 2.5);
+	auto * h_Gen_withPolWeight_Z_phi = new TH1D("h_Gen_withPolWeight_Z_phi", ";#phi^{Z};", 70, -3.2, 3.2);
+
+	auto * h_Gen_withPolWeight_upsilonPt_over_zMass = new TH1D("h_Gen_withPolWeight_upsilonPt_over_zMass", ";p_{T}^{#Upsilon}/m_{Z};", 100, 0.0, 1.0);
+	auto * h_Gen_withPolWeight_photonPt_over_zMass = new TH1D("h_Gen_withPolWeight_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
+
+	// polarization
+	auto * h_Gen_Pol = new TH1D("h_Gen_Pol", ";cos(#Upsilon, #mu^{+});", 100, -1.0, 1.0);
+
+	// no kinematical cuts
+	rootDir->cd(); 
+	TDirectory * noKinCutsDir = rootDir->mkdir("noKinCutsHistos");
+	noKinCutsDir->cd();   
+	auto * h_noKin_LeadingMu_pt = new TH1D("h_noKin_LeadingMu_pt", ";p_{T}^{#mu} (GeV)", 160, 0.0, 160.0);
+	auto * h_noKin_LeadingMu_eta = new TH1D("h_noKin_LeadingMu_eta", ";#eta^{#mu}", 50, -2.5, 2.7);
+	auto * h_noKin_LeadingMu_phi = new TH1D("h_noKin_LeadingMu_phi", ";#phi^{#mu}", 70, -3.2, 3.2);
+
+	auto * h_noKin_TrailingMu_pt = new TH1D("h_noKin_TrailingMu_pt", ";p_{T}^{#mu}", 160, 0.0, 160.0);
+	auto * h_noKin_TrailingMu_eta = new TH1D("h_noKin_TrailingMu_eta", ";#eta^{#mu}", 50, -2.5, 2.7);
+	auto * h_noKin_TrailingMu_phi = new TH1D("h_noKin_TrailingMu_phi", ";#phi^{#mu}", 70, -3.2, 3.2);
+
+	auto * h_noKin_Photon_pt = new TH1D("h_noKin_Photon_pt", ";E_{T}^{#gamma} (GeV)", 100, 0.0, 160.0);
+	auto * h_noKin_Photon_eta = new TH1D("h_noKin_Photon_eta", ";#eta_{SC}^{#gamma}", 50, -2.5, 2.7);
+	auto * h_noKin_Photon_phi = new TH1D("h_noKin_Photon_phi", ";#phi^{#gamma}", 70, -3.2, 3.2);
+
+	auto * h_noKin_deltaR_Leading_Trailing = new TH1D("h_noKin_deltaR_Leading_Trailing", ";#DeltaR(lead #mu, trail #mu);", 100, 0.0, 1.0);
+	auto * h_noKin_deltaR_Leading_Photon = new TH1D("h_noKin_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_noKin_deltaR_Trailing_Photon = new TH1D("h_noKin_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_noKin_deltaR_Upsilon_Photon = new TH1D("h_noKin_deltaR_Upsilon_Photon", ";#DeltaR(#mu#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_noKin_deltaPhi_Upsilon_Photon = new TH1D("h_noKin_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#mu#mu, #gamma)|;", 100, 0.0, 4.0);
+
+	auto * h_noKin_Upsilon_Mass = new TH1D("h_noKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", 100, 9.0, 10.0);
+	auto * h_noKin_Upsilon_Pt = new TH1D("h_noKin_Upsilon_Pt", ";p_{T}^{#mu#mu} (GeV);", 160, 0.0, 160.0);
+	auto * h_noKin_Upsilon_eta = new TH1D("h_noKin_Upsilon_eta", ";#eta^{#mu#mu};", 50, -2.5, 2.5);
+	auto * h_noKin_Upsilon_phi = new TH1D("h_noKin_Upsilon_phi", ";#phi^{#mu#mu};", 70, -3.2, 3.2);
+
+	auto * h_noKin_Z_Mass = new TH1D("h_noKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", 100, 70, 120.0);
+	auto * h_noKin_Z_Pt = new TH1D("h_noKin_Z_Pt", ";p_{T}^{#mu#mu#gamma} (GeV);", 160, 0.0, 160.0);
+	auto * h_noKin_Z_eta = new TH1D("h_noKin_Z_eta", ";#eta^{#mu#mu#gamma};", 50, -2.5, 2.5);
+	auto * h_noKin_Z_phi = new TH1D("h_noKin_Z_phi", ";#phi^{#mu#mu#gamma};", 70, -3.2, 3.2);
+
+	auto * h_noKin_upsilonPt_over_zMass = new TH1D("h_noKin_upsilonPt_over_zMass", ";p_{T}^{#mu#mu}/m_{Z};", 100, 0.0, 1.0);
+	auto * h_noKin_photonPt_over_zMass = new TH1D("h_noKin_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
+
+
+	// with kinematical cuts
+	rootDir->cd(); 
+	TDirectory * withKinCutsDir = rootDir->mkdir("withKinCutsHistos");
+	withKinCutsDir->cd();   
+	auto * h_withKin_LeadingMu_pt = new TH1D("h_withKin_LeadingMu_pt", ";p_{T}^{#mu} (GeV)", 160, 0.0, 160.0);
+	auto * h_withKin_LeadingMu_eta = new TH1D("h_withKin_LeadingMu_eta", ";#eta^{#mu}", 50, -2.5, 2.7);
+	auto * h_withKin_LeadingMu_phi = new TH1D("h_withKin_LeadingMu_phi", ";#phi^{#mu}", 70, -3.2, 3.2);
+
+	auto * h_withKin_TrailingMu_pt = new TH1D("h_withKin_TrailingMu_pt", ";_{T}^{#mu}", 160, 0.0, 160.0);
+	auto * h_withKin_TrailingMu_eta = new TH1D("h_withKin_TrailingMu_eta", ";#eta^{#mu}", 50, -2.5, 2.7);
+	auto * h_withKin_TrailingMu_phi = new TH1D("h_withKin_TrailingMu_phi", ";#phi^{#mu}", 70, -3.2, 3.2);
+
+	auto * h_withKin_Photon_pt = new TH1D("h_withKin_Photon_pt", ";E_{T}^{#gamma} (GeV)", 100, 0.0, 160.0);
+	auto * h_withKin_Photon_eta = new TH1D("h_withKin_Photon_eta", ";#eta_{SC}^{#gamma}", 50, -2.5, 2.7);
+	auto * h_withKin_Photon_phi = new TH1D("h_withKin_Photon_phi", ";#phi^{#gamma}", 70, -3.2, 3.2);
+
+	auto * h_withKin_deltaR_Leading_Trailing = new TH1D("h_withKin_deltaR_Leading_Trailing", ";#DeltaR(lead #mu, trail #mu);", 100, 0.0, 1.0);
+	auto * h_withKin_deltaR_Leading_Photon = new TH1D("h_withKin_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_withKin_deltaR_Trailing_Photon = new TH1D("h_withKin_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_withKin_deltaR_Upsilon_Photon = new TH1D("h_withKin_deltaR_Upsilon_Photon", ";#DeltaR(#mu#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_withKin_deltaPhi_Upsilon_Photon = new TH1D("h_withKin_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#mu#mu, #gamma)|;", 100, 0.0, 4.0);
+
+	auto * h_withKin_Upsilon_Mass = new TH1D("h_withKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", 100, 9.0, 10.0);
+	auto * h_withKin_Upsilon_Pt = new TH1D("h_withKin_Upsilon_Pt", ";p_{T}^{#mu#mu} (GeV);", 160, 0.0, 160.0);
+	auto * h_withKin_Upsilon_eta = new TH1D("h_withKin_Upsilon_eta", ";#eta^{#mu#mu};", 50, -2.5, 2.5);
+	auto * h_withKin_Upsilon_phi = new TH1D("h_withKin_Upsilon_phi", ";#phi^{#mu#mu};", 70, -3.2, 3.2);
+
+	auto * h_withKin_Z_Mass = new TH1D("h_withKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", 100, 70, 120.0);
+	auto * h_withKin_Z_Pt = new TH1D("h_withKin_Z_Pt", ";p_{T}^{#mu#mu#gamma} (GeV);", 160, 0.0, 160.0);
+	auto * h_withKin_Z_eta = new TH1D("h_withKin_Z_eta", ";#eta^{#mu#mu#gamma};", 50, -2.5, 2.5);
+	auto * h_withKin_Z_phi = new TH1D("h_withKin_Z_phi", ";#phi^{#mu#mu#gamma};", 70, -3.2, 3.2);
+
+	auto * h_withKin_upsilonPt_over_zMass = new TH1D("h_withKin_upsilonPt_over_zMass", ";p_{T}^{#mu#mu}/m_{Z};", 100, 0.0, 1.0);
+	auto * h_withKin_photonPt_over_zMass = new TH1D("h_withKin_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
+
+	////////////////////////////////////////////////////////////////////
+	// numer of entries
+	auto totalEvts = dataTree->GetEntries();
+	auto printEvery = 100000;
+	cout << "\nN. Entries: " << totalEvts << endl;
+	cout << "\nPrinting every: " << printEvery << " events" << endl;
+	cout << "\nLooping over events... \n" << endl;
+
+	// // dataTree->Print();
+
+
+	////////////////////////////////////////////////////////////////////
+	// main loop
+	auto iEvt = 0;
+	while (dataReader->Next()) { // loop over events
+		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outHistoAppend <<  "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
+		iEvt++;
+
+		// event weight
+		double totalWeight = 1.0;
+		if (!isData) totalWeight = (*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+
+		// MC
+		if (!isData) { 
+			// upsilon polarization
+			h_Gen_UnPol->Fill(upsilonPolarizationAngle(*genMuPlus, *genMuMinus));
+			h_Gen_Pol->Fill(upsilonPolarizationAngle(*genMuPlus, *genMuMinus), *polWgt);
+
+
+			auto plusIsLeading = (genMuPlus->Pt() > genMuMinus->Pt()) ? true : false; // who is the leading?
+			
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////
+			// GEN - no Polarization weight
+			//muons
+			genFiller(plusIsLeading, h_Gen_LeadingMu_pt, h_Gen_TrailingMu_pt, genMuPlus->Pt(), genMuMinus->Pt()) ;
+			genFiller(plusIsLeading, h_Gen_LeadingMu_eta, h_Gen_TrailingMu_eta, genMuPlus->Eta(), genMuMinus->Eta()) ;
+			genFiller(plusIsLeading, h_Gen_LeadingMu_phi, h_Gen_TrailingMu_phi, genMuPlus->Phi(), genMuMinus->Phi()) ;	
+			// photon
+			h_Gen_Photon_pt->Fill(genPhoton->Pt());
+			h_Gen_Photon_eta->Fill(genPhoton->Eta());
+			h_Gen_Photon_phi->Fill(genPhoton->Phi());
+			//Upsilon
+			TLorentzVector genUpsilon = *genMuPlus + *genMuMinus;
+			h_Gen_Upsilon_Mass->Fill(genUpsilon.M());
+			h_Gen_Upsilon_Pt->Fill(genUpsilon.Pt());
+			h_Gen_Upsilon_eta->Fill(genUpsilon.Eta());
+			h_Gen_Upsilon_phi->Fill(genUpsilon.Phi());
+			// Z
+			TLorentzVector genZ = genUpsilon + *genPhoton;
+			h_Gen_Z_Mass->Fill(genZ.M());
+			h_Gen_Z_Pt->Fill(genZ.Pt());
+			h_Gen_Z_eta->Fill(genZ.Eta());
+			h_Gen_Z_phi->Fill(genZ.Phi());
+			// deltaR
+			h_Gen_deltaR_Leading_Trailing->Fill(deltaR(genMuPlus->Eta(), genMuPlus->Phi(), genMuMinus->Eta(), genMuMinus->Phi()));
+			genFiller(plusIsLeading, h_Gen_deltaR_Leading_Photon, h_Gen_deltaR_Trailing_Photon, deltaR(genMuPlus->Eta(), genMuPlus->Phi(), genPhoton->Eta(), genPhoton->Phi()), deltaR(genMuMinus->Eta(), genMuMinus->Phi(), genPhoton->Eta(), genPhoton->Phi())) ;
+			h_Gen_deltaR_Upsilon_Photon->Fill(deltaR(genUpsilon.Eta(), genUpsilon.Phi(), genPhoton->Eta(), genPhoton->Phi()));
+			h_Gen_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(genUpsilon.Phi(), genPhoton->Phi())));
+			//energy ratios
+			h_Gen_upsilonPt_over_zMass->Fill(genUpsilon.Pt()/genZ.M());
+			h_Gen_photonPt_over_zMass->Fill(genPhoton->Pt()/genZ.M());
+			
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////
+			// GEN - with Polarization weight
+			//muons
+			genFiller(plusIsLeading, h_Gen_withPolWeight_LeadingMu_pt, h_Gen_withPolWeight_TrailingMu_pt, genMuPlus->Pt(), genMuMinus->Pt(), *polWgt) ;
+			genFiller(plusIsLeading, h_Gen_withPolWeight_LeadingMu_eta, h_Gen_withPolWeight_TrailingMu_eta, genMuPlus->Eta(), genMuMinus->Eta(), *polWgt) ;
+			genFiller(plusIsLeading, h_Gen_withPolWeight_LeadingMu_phi, h_Gen_withPolWeight_TrailingMu_phi, genMuPlus->Phi(), genMuMinus->Phi(), *polWgt) ;	
+			// photon
+			h_Gen_withPolWeight_Photon_pt->Fill(genPhoton->Pt(), *polWgt);
+			h_Gen_withPolWeight_Photon_eta->Fill(genPhoton->Eta(), *polWgt);
+			h_Gen_withPolWeight_Photon_phi->Fill(genPhoton->Phi(), *polWgt);
+			//Upsilon
+			// TLorentzVector genUpsilon = *genMuPlus + *genMuMinus;
+			h_Gen_withPolWeight_Upsilon_Mass->Fill(genUpsilon.M(), *polWgt);
+			h_Gen_withPolWeight_Upsilon_Pt->Fill(genUpsilon.Pt(), *polWgt);
+			h_Gen_withPolWeight_Upsilon_eta->Fill(genUpsilon.Eta(), *polWgt);
+			h_Gen_withPolWeight_Upsilon_phi->Fill(genUpsilon.Phi(), *polWgt);
+			// Z
+			// TLorentzVector genZ = genUpsilon + *genPhoton;
+			h_Gen_withPolWeight_Z_Mass->Fill(genZ.M(), *polWgt);
+			h_Gen_withPolWeight_Z_Pt->Fill(genZ.Pt(), *polWgt);
+			h_Gen_withPolWeight_Z_eta->Fill(genZ.Eta(), *polWgt);
+			h_Gen_withPolWeight_Z_phi->Fill(genZ.Phi(), *polWgt);
+			// deltaR
+			h_Gen_withPolWeight_deltaR_Leading_Trailing->Fill(deltaR(genMuPlus->Eta(), genMuPlus->Phi(), genMuMinus->Eta(), genMuMinus->Phi()), *polWgt);
+			genFiller(plusIsLeading, h_Gen_withPolWeight_deltaR_Leading_Photon, h_Gen_withPolWeight_deltaR_Trailing_Photon, deltaR(genMuPlus->Eta(), genMuPlus->Phi(), genPhoton->Eta(), genPhoton->Phi()), deltaR(genMuMinus->Eta(), genMuMinus->Phi(), genPhoton->Eta(), genPhoton->Phi()), *polWgt) ;
+			h_Gen_withPolWeight_deltaR_Upsilon_Photon->Fill(deltaR(genUpsilon.Eta(), genUpsilon.Phi(), genPhoton->Eta(), genPhoton->Phi()), *polWgt);
+			h_Gen_withPolWeight_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(genUpsilon.Phi(), genPhoton->Phi())), *polWgt);
+			//energy ratios
+			h_Gen_withPolWeight_upsilonPt_over_zMass->Fill(genUpsilon.Pt()/genZ.M(), *polWgt);
+			h_Gen_withPolWeight_photonPt_over_zMass->Fill(genPhoton->Pt()/genZ.M(), *polWgt);
+
+
+		}
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// no kinematical cuts
+		if (*isGoodEvent) {
+			// reco objects
+			TLorentzVector recoUpsilon = *leadingMuon + *trailingMuon;
+			TLorentzVector recoZ = recoUpsilon + *leadingPhoton;
+
+
+			h_noKin_LeadingMu_pt->Fill(leadingMuon->Pt(),totalWeight);
+			h_noKin_LeadingMu_eta->Fill(leadingMuon->Eta(),totalWeight);
+			h_noKin_LeadingMu_phi->Fill(leadingMuon->Phi(),totalWeight);
+
+			h_noKin_TrailingMu_pt->Fill(trailingMuon->Pt(),totalWeight);
+			h_noKin_TrailingMu_eta->Fill(trailingMuon->Eta(),totalWeight);
+			h_noKin_TrailingMu_phi->Fill(trailingMuon->Phi(),totalWeight);
+
+			h_noKin_Photon_pt->Fill(leadingPhoton->Et(),totalWeight);
+			h_noKin_Photon_eta->Fill(leadingPhoton->photonSCEta,totalWeight);
+			h_noKin_Photon_phi->Fill(leadingPhoton->Phi(),totalWeight);
+
+			h_noKin_deltaR_Leading_Trailing->Fill(deltaR(leadingMuon->Eta(), leadingMuon->Phi(), trailingMuon->Eta(), trailingMuon->Phi()),totalWeight);
+			h_noKin_deltaR_Leading_Photon->Fill(deltaR(leadingMuon->Eta(), leadingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+			h_noKin_deltaR_Trailing_Photon->Fill(deltaR(trailingMuon->Eta(), trailingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+			h_noKin_deltaR_Upsilon_Photon->Fill(deltaR(recoUpsilon.Eta(), recoUpsilon.Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+			h_noKin_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(recoUpsilon.Phi(), leadingPhoton->Phi())),totalWeight);
+
+			h_noKin_Upsilon_Mass->Fill(recoUpsilon.M(),totalWeight);
+			h_noKin_Upsilon_Pt->Fill(recoUpsilon.Pt(),totalWeight);
+			h_noKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
+			h_noKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
+
+			h_noKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+			h_noKin_Z_Pt->Fill(recoZ.Pt(),totalWeight);
+			h_noKin_Z_eta->Fill(recoZ.Eta(),totalWeight);
+			h_noKin_Z_phi->Fill(recoZ.Phi(),totalWeight);
+
+			//energy ratios
+			h_noKin_upsilonPt_over_zMass->Fill(recoUpsilon.Pt()/recoZ.M(),totalWeight);
+			h_noKin_photonPt_over_zMass->Fill(leadingPhoton->Et()/recoZ.M(),totalWeight);
+
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// with kinematical cuts
+			auto goodKinCuts = true;
+			goodKinCuts *= (deltaR(leadingMuon->Eta(), leadingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()) > 1.0) ? true : false;
+			goodKinCuts *= (deltaR(trailingMuon->Eta(), trailingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()) > 1.0) ? true : false;
+			goodKinCuts *= (deltaR(recoUpsilon.Eta(), recoUpsilon.Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()) > 2.0) ? true : false;
+			goodKinCuts *= (fabs(deltaPhi(recoUpsilon.Phi(), leadingPhoton->Phi())) > 1.5) ? true : false;
+			goodKinCuts *= (recoUpsilon.M() > 9.35 && recoUpsilon.M() < 9.55) ? true : false;
+			goodKinCuts *= (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) ? true : false;
+			goodKinCuts *= (leadingPhoton->Et()/recoZ.M() > (35.0/91.2)) ? true : false;
+
+
+			if (goodKinCuts) {
+				h_withKin_LeadingMu_pt->Fill(leadingMuon->Pt(),totalWeight);
+				h_withKin_LeadingMu_eta->Fill(leadingMuon->Eta(),totalWeight);
+				h_withKin_LeadingMu_phi->Fill(leadingMuon->Phi(),totalWeight);
+
+				h_withKin_TrailingMu_pt->Fill(trailingMuon->Pt(),totalWeight);
+				h_withKin_TrailingMu_eta->Fill(trailingMuon->Eta(),totalWeight);
+				h_withKin_TrailingMu_phi->Fill(trailingMuon->Phi(),totalWeight);
+
+				h_withKin_Photon_pt->Fill(leadingPhoton->Et(),totalWeight);
+				h_withKin_Photon_eta->Fill(leadingPhoton->photonSCEta,totalWeight);
+				h_withKin_Photon_phi->Fill(leadingPhoton->Phi(),totalWeight);
+
+				h_withKin_deltaR_Leading_Trailing->Fill(deltaR(leadingMuon->Eta(), leadingMuon->Phi(), trailingMuon->Eta(), trailingMuon->Phi()),totalWeight);
+				h_withKin_deltaR_Leading_Photon->Fill(deltaR(leadingMuon->Eta(), leadingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+				h_withKin_deltaR_Trailing_Photon->Fill(deltaR(trailingMuon->Eta(), trailingMuon->Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+				h_withKin_deltaR_Upsilon_Photon->Fill(deltaR(recoUpsilon.Eta(), recoUpsilon.Phi(), leadingPhoton->Eta(), leadingPhoton->Phi()),totalWeight);
+				h_withKin_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(recoUpsilon.Phi(), leadingPhoton->Phi())),totalWeight);
+
+				h_withKin_Upsilon_Mass->Fill(recoUpsilon.M(),totalWeight);
+				h_withKin_Upsilon_Pt->Fill(recoUpsilon.Pt(),totalWeight);
+				h_withKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
+				h_withKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
+
+				h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+				h_withKin_Z_Pt->Fill(recoZ.Pt(),totalWeight);
+				h_withKin_Z_eta->Fill(recoZ.Eta(),totalWeight);
+				h_withKin_Z_phi->Fill(recoZ.Phi(),totalWeight);
+
+				//energy ratios
+				h_withKin_upsilonPt_over_zMass->Fill(recoUpsilon.Pt()/recoZ.M(),totalWeight);
+				h_withKin_photonPt_over_zMass->Fill(leadingPhoton->Et()/recoZ.M(),totalWeight);
+			}
+		}
+
+
+
+
+
+	}
+
+    // post-processing 
+	cout << "\n\n\nWriting output file..." << endl;
+    // outTree->Print();
+	outFile->Write();
+	cout << "\nDone!\n\n\n\n\n" << endl;
+
+
+} //end plots_ZtoUpsilonPhoton
+
+

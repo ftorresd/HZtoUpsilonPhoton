@@ -2,14 +2,16 @@
 // Z --> Upsilon + Photon
 // ######################################################
 // Analysis Code
-// Description:  - Reads the ggNtuples
+// Description:  - Read the ggNtuples
 //               - Skim the sample
 //               - Apply corrections and cuts           
-//               - Produces a ntuple read for plotting  
+//               - Produces a ntuple ready for plotting  
 // ######################################################
 
 
+// #define IS_MC 1
 
+ 
 
 #include <iostream>
 #include <algorithm>
@@ -22,28 +24,33 @@
 #include "TTreeReaderValue.h"
 #include "TTreeReaderArray.h"
 #include "TRandom3.h"
-// #include "TClassTable.h"
 #include "TROOT.h"
+// #include "TH1.h"
 
 
 #include "plugins/ggNtuplesFilesReader.h"
 #include "plugins/roccor2016/RoccoR.cc"
 #include "plugins/deltaR_deltaPhi.h"
 #include "plugins/anaObjects.h"
+#include "plugins/puWeight.h"
+#include "plugins/upsilonPolarizationAngle.h"
+#include "plugins/getSF.h"
+
 
 #ifdef __CINT__
 #pragma link C++ class anaMuon+;
 #pragma link C++ class anaPhoton+;
+#pragma link C++ class anaGenPart+;
 #endif
 
 using namespace std;
 
 
-void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string outFileAppend = "", bool isMC = false)  
+void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string outFileAppend = "", bool isMC = false, string puFile = "")  
 {
 	// output tree
 	// TFile outFile("outTree_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
-	string outputFileName = "outTree_ZtoUpsilonPhoton_"+ outFileAppend + ".root";
+	string outputFileName = "outputFiles/outTree_ZtoUpsilonPhoton_"+ outFileAppend + ".root";
 	TFile * outFile  = new TFile(outputFileName.c_str(),"RECREATE","ZtoUpsilonPhoton output analysis tree");
 	TTree * outTree = new TTree("outTree_ZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
 
@@ -51,7 +58,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	if (nFiles > 0) {
 		ggNtuplesFiles.resize(nFiles);	
 	}
-	TTreeReader * dataReader = ggNtuplesFilesReader( ggNtuplesFiles, nFiles );
+	TTreeReader * dataReader = ggNtuplesFilesReader( ggNtuplesFiles, "ggNtuplizer/EventTree" );
 	TTree * dataTree = dataReader->GetTree();
 
 	////////////////////////////////////////////////////////////////////
@@ -82,7 +89,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	const unsigned int ME0Muon =  1<<8;
 	TTreeReaderArray< unsigned short > muIDbit(*dataReader, "muIDbit");
 	TTreeReaderArray< int > muMatches(*dataReader, "muMatches");
-	TTreeReaderArray< unsigned int > muFiredTrgs(*dataReader, "muFiredTrgs");
+	// TTreeReaderArray< unsigned int > muFiredTrgs(*dataReader, "muFiredTrgs");
 	TTreeReaderArray< int > muTrkLayers(*dataReader, "muTrkLayers");
 	TTreeReaderArray< float > muD0(*dataReader, "muD0");
 	TTreeReaderArray< float > muDz(*dataReader, "muDz");
@@ -110,6 +117,21 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	TTreeReaderArray< unsigned short > phoIDbit(*dataReader, "phoIDbit");
 	TTreeReaderArray< int > phoEleVeto(*dataReader, "phoEleVeto");
 
+	//MC info
+	#ifdef IS_MC
+	TTreeReaderArray< float > puTrue(*dataReader, "puTrue");
+	TTreeReaderValue< int > nMC(*dataReader, "nMC");
+	TTreeReaderArray< int > mcPID(*dataReader, "mcPID");
+	TTreeReaderArray< int > mcMomPID(*dataReader, "mcMomPID");
+	TTreeReaderArray< int > mcGMomPID(*dataReader, "mcGMomPID");
+	TTreeReaderArray< float > mcPt(*dataReader, "mcPt");
+	TTreeReaderArray< float > mcEta(*dataReader, "mcEta");
+	TTreeReaderArray< float > mcPhi(*dataReader, "mcPhi");
+	#endif 
+	auto * puInfo = new puWeight(isMC, puFile);
+	auto * sfMVAIDFile = new TFile("data/SFs/egammaEffi.txt_EGM2D.root"); // photon MVA ID scale factor
+	auto * sfMuonIDFile = new TFile("data/SFs/final_HZZ_Moriond17Preliminary_v4.root"); // photon MVA ID scale factor
+	auto * sfTriggerFile = new TFile("data/SFs/TrigEff_HZZID_FinalVersion.root"); // trigger scale factor
 	
 	////////////////////////////////////////////////////////////////////
 	//output objects - MUONS
@@ -131,6 +153,54 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	//output objects - PHOTONS
 	TLorentzVector recoZ = TLorentzVector();
 	outTree->Branch("recoZ",&recoZ);
+
+	//output objects - isGoodEvent
+	bool isGoodEvent = true;
+	outTree->Branch("isGoodEvent",&isGoodEvent);
+
+	//output objects - goodTriggerEvt
+	bool goodTriggerEvt = true;
+	outTree->Branch("goodTriggerEvt",&goodTriggerEvt);
+
+	//MC
+	outTree->Branch("isMC",&isMC);
+
+	//output objects -  PU weight
+	double puWgt = 1.0;
+	outTree->Branch("puWgt",&puWgt);	
+
+	double puWgtErr = 1.0;
+	outTree->Branch("puWgtErr",&puWgtErr);	
+
+	//output objects -  gen particles
+	anaGenPart genMuPlus = anaGenPart();
+	outTree->Branch("genMuPlus",&genMuPlus);
+
+	anaGenPart genMuMinus = anaGenPart();
+	outTree->Branch("genMuMinus",&genMuMinus);
+
+	anaGenPart genPhoton = anaGenPart();
+	outTree->Branch("genPhoton",&genPhoton);
+
+	//output objects -  polarization weight
+	double polWgt = 1.0;
+	outTree->Branch("polWgt",&polWgt);	
+
+	//output objects -  muonID SF
+	pair<double,double> muonIDSF = {1.0, 0.0};
+	outTree->Branch("muonIDSF",&muonIDSF);	
+
+	//output objects -  photon MVA ID SF
+	pair<double,double> photonMVAIDSF = {1.0, 0.0};
+	outTree->Branch("photonMVAIDSF",&photonMVAIDSF);	
+
+	//output objects -  photon electron veto
+	pair<double,double> photonEleVetoSF = {1.0, 0.0};
+	outTree->Branch("photonEleVetoSF",&photonEleVetoSF);
+
+	//output objects -  trigger sf
+	pair<double,double> triggerSF = {1.0, 0.0};
+	outTree->Branch("triggerSF",&triggerSF);
 
 
 
@@ -154,7 +224,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 	// Here: 
 	// Q is charge
-	// nl is trackerLayersWithMeasurement \\
+	// nl is trackerLayersWithMeasurement 
 	// u1 and u2 are random numbers distributed uniformly between 0 and 1 (gRandom->Rndm());
 	// s is error set (default is 0)
 	// m is error member (default is 0)
@@ -167,7 +237,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	////////////////////////////////////////////////////////////////////
 	// numer of entries
 	auto totalEvts = dataTree->GetEntries();
-	auto printEvery = 10000;
+	auto printEvery = 100000;
 	cout << "\nN. Entries: " << totalEvts << endl;
 	cout << "\nPrinting every: " << printEvery << " events" << endl;
 	cout << "\nLooping over events... \n" << endl;
@@ -179,14 +249,71 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	// main loop
 	auto iEvt = 0;
 	while (dataReader->Next()) { // loop over events
-		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read: " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
+		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outFileAppend <<  "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
 		iEvt++;
 
 		////////////////////////////////////////////////////////////////////
+		// clear output tree variables 
+		leadingMuon.clear();
+		trailingMuon.clear();
+		leadingPhoton.clear();
+		recoUpsilon.SetPtEtaPhiM(-99,-99,-99,-99);
+		recoZ.SetPtEtaPhiM(-99,-99,-99,-99); 
+		genMuPlus.clear();
+		genMuMinus.clear();
+		genPhoton.clear();
+		puWgt = 1.0;
+		polWgt = 1.0;
+		muonIDSF = {1.0, 0.0};
+		photonMVAIDSF = {1.0, 0.0};
+		photonEleVetoSF = {1.0, 0.0};
+
+		////////////////////////////////////////////////////////////////////
+		// MC stuff
+		if (isMC){
+			#ifdef IS_MC
+			// PU reweighting
+			puWgt = puInfo->getWeight(puTrue[1]); 
+			puWgtErr = puInfo->getWeightErr(puTrue[1]); 
+
+			// gen info
+			for (int iPart = 0; iPart < *nMC; iPart++) {
+				if (abs(mcPID[iPart]) == 13) {
+					if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 25) {
+						// cout << "Muon!" << endl;
+						if (mcPID[iPart] == 13) {
+							genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+							genMuPlus.charge = 1;
+							genMuPlus.partIndex = iPart;
+							genMuPlus.pdgID = 13;
+						} else if (mcPID[iPart] == -13) {
+							genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+							genMuMinus.charge = -1;
+							genMuMinus.partIndex = iPart;
+							genMuMinus.pdgID = -13;
+						} 
+					}
+				} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+					genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+					genPhoton.charge = 0;
+					genPhoton.partIndex = iPart;
+					genPhoton.pdgID = 22;
+				}
+			}
+
+			// polarization weight
+			auto cosAngle = upsilonPolarizationAngle(genMuPlus, genMuMinus);
+			polWgt = (3./4.)*(1.+pow(cosAngle,2));
+			#endif
+			// puWeight = puInfo->getWeight(999); 
+			// if (iEvt % printEvery == 0) cout << puWgt << endl;
+		}
+
+		////////////////////////////////////////////////////////////////////
 		// trigger test 
-		auto goodEvt = true;
-		goodEvt *= (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
-		if (goodEvt == false) continue;
+		// auto goodTriggerEvt = true;
+		goodTriggerEvt = (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
+		// if (goodTriggerEvt == false) continue;
 		// cout << "Pass HLT!" << endl;
 
 		////////////////////////////////////////////////////////////////////
@@ -196,7 +323,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			////////////////////////////////////////////////////////////////////
 			// apply rochester corrections and get the corrected muons candidates collection
 			// get RocCor SF
-			TRandom *rand3 = new TRandom3();
+			// TRandom *rand3 = new TRandom3();
+			shared_ptr<TRandom3> rand3(new TRandom3);
 			auto getRocCorRandom1 = rand3->Rndm();
 			auto getRocCorRandom2 = rand3->Rndm();
 			double rocCorSF = 1.0;
@@ -204,7 +332,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			else rocCorSF = rc.kScaleDT(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], 0, 0);
 
 			// apply the corrections save muon candidate
-			anaMuon * muonCand = new anaMuon(muPt[iMuon]*rocCorSF, muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon);
+			// anaMuon * muonCand = new anaMuon(muPt[iMuon]*rocCorSF, muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon);
+			shared_ptr<anaMuon> muonCand(new anaMuon(muPt[iMuon]*rocCorSF, muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+
 
 			// cout << muonCand->Pt();
 			muonsCandCollection.push_back(*muonCand);
@@ -280,7 +410,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		vector< anaPhoton > photonsCandCollection;
 		for (int iPhoton = 0; iPhoton < *nPho; iPhoton++) { //loop over muons
 			// apply the calibrations save photon candidate
-			anaPhoton * photonCand = new anaPhoton(phoCalibEt[iPhoton], phoEta[iPhoton], phoPhi[iPhoton], iPhoton);
+			// anaPhoton * photonCand = new anaPhoton(phoCalibEt[iPhoton], phoEta[iPhoton], phoPhi[iPhoton], iPhoton);
+			shared_ptr<anaPhoton> photonCand(new anaPhoton(phoCalibEt[iPhoton], phoEta[iPhoton], phoPhi[iPhoton], iPhoton));
 			photonsCandCollection.push_back(*photonCand);
 		}
 		sort(photonsCandCollection.begin(), photonsCandCollection.end(),greater<anaPhoton>()); // re-sort photon collection
@@ -294,6 +425,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			goodPhoton *= (phoEleVeto[phoIndex] != 0) ? true : false; 
 			goodPhoton *= (phoIDMVA[phoIndex] > 0.2) ? true : false;
 			photonsCandCollection[iCandPhoton].photonR9 = phoR9[phoIndex];
+			photonsCandCollection[iCandPhoton].photonSCEta = phoSCEta[phoIndex];
 			
 			// clean photon collection 
 			if (!goodPhoton) {
@@ -314,12 +446,14 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		}
 
 		//////////////////////////////////////////////////////////////////////
-		// reconstructed Upsilon
-		recoUpsilon = leadingMuon + trailingMuon
+		// reconstructed UpsilonSetPtEtaPhiM
+		if (goodMuonPairSel && goodPhotonSel) recoUpsilon.SetPtEtaPhiM((leadingMuon + trailingMuon).Pt(), (leadingMuon + trailingMuon).Eta(), (leadingMuon + trailingMuon).Phi(), (leadingMuon + trailingMuon).M());
+		// auto goodUpsilon = ( (recoUpsilon.M() > 7.0) && (recoUpsilon.M() < 12.0) ) ? true : false;
 
 		//////////////////////////////////////////////////////////////////////
 		// reconstructed Z
-		recoZ = recoUpsilon + leadingPhoton
+		if (goodMuonPairSel && goodPhotonSel) recoZ.SetPtEtaPhiM((recoUpsilon + leadingPhoton).Pt(), (recoUpsilon + leadingPhoton).Eta(), (recoUpsilon + leadingPhoton).Phi(), (recoUpsilon + leadingPhoton).M());
+		// auto goodZ = ( (recoZ.M() > 7) && (recoZ.M() < 12.0) ) ? true : false;
 
 		//////////////////////////////////////////////////////////////////////
 		// muons ghost cleaning
@@ -346,21 +480,34 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 
 		// filling the outTree
-		auto isGoodEvent = true;
+		isGoodEvent = true;
+		isGoodEvent *= goodTriggerEvt;
+		isGoodEvent *= goodMuonPairSel;
+		isGoodEvent *= goodPhotonSel;
 		if (isGoodEvent) {
-			outTree->Fill();
-			leadingMuon.clear();
-			trailingMuon.clear();
-			leadingPhoton.clear();
+			// get the SFs
+			muonIDSF = getMuonIDSF(isMC, leadingMuon, sfMuonIDFile); // muon ID
+			// cout << "muonIDSF: " << muonIDSF.first << endl;
+			photonMVAIDSF = getPhotonMVAIDSF(isMC, leadingPhoton, sfMVAIDFile); // photon MVA ID
+			// cout << "photonMVAIDSF: " << photonMVAIDSF.first << endl;
+			photonEleVetoSF = getPhotonEleVetoSF(isMC, leadingPhoton); // photon electron veto
+			// cout << "photonEleVetoSF: " << photonEleVetoSF.first << endl;
+			triggerSF = getTriggerSF(isMC, leadingMuon, leadingPhoton, sfTriggerFile); // photon electron veto
+			// cout << "triggerSF: " << triggerSF.first << endl;
 		}
+		// fill the tree
+		outTree->Fill();
+
+
+		// delete pt; 
 
     } // end loop over events
 
     // post-processing 
     cout << "\n\n\nWriting output file..." << endl;
-    outTree->Print();
+    // outTree->Print();
     outFile->Write();
-    cout << "\nDone!\n\n" << endl;
+    cout << "\nDone!\n\n\n\n\n" << endl;
 
 } //end ana_ZtoUpsilonPhoton
 

@@ -60,6 +60,7 @@ class anaPhoton: public TLorentzVector {
   public:
     int photonIndex;
     float photonR9;
+    float photonSCEta;
     anaPhoton();
     anaPhoton(float, float, float, int, float);
     void clear();
@@ -76,18 +77,61 @@ anaPhoton::anaPhoton () {
   this->SetPtEtaPhiM(-99, -99, -99, 0.);
   photonIndex = -99;
   photonR9 = -99;
+  photonSCEta = -99;
 }
 
 anaPhoton::anaPhoton (float pt, float eta, float phi, int i, float mass = 0.0) {
   this->SetPtEtaPhiM(pt, eta, phi, mass);
   photonIndex = i;
   photonR9 = -99;
+  photonSCEta = -99;
 }
 
 void anaPhoton::clear () {
   this->SetPtEtaPhiM(-99, -99, -99, 0.);
   photonIndex = -99;
   photonR9 = -99;
+  photonSCEta = -99;
+}
+
+
+///////////////////////////////////////////////////
+// gen Particles
+class anaGenPart: public TLorentzVector {
+  public:
+    int charge;
+    int partIndex;
+    int pdgID;
+    anaGenPart();
+    anaGenPart(float pt, float eta, float phi , int c, int i, int pdg, float mass);
+    void clear();
+    bool operator > (const anaGenPart& compPart) const
+    {
+        return (this->Pt() > compPart.Pt());
+    }
+    ClassDef(anaGenPart, 1)
+};
+
+anaGenPart::anaGenPart () {
+  this->SetPtEtaPhiM(-99, -99, -99, -99);
+  charge = -99;
+  partIndex = -99;
+  pdgID = -99;
+}
+
+anaGenPart::anaGenPart (float pt, float eta, float phi , int c, int i, int pdg, float mass) {
+  this->SetPtEtaPhiM(pt, eta, phi, mass);
+  charge = c;
+  partIndex = i;
+  partIndex = pdg;
+  pdgID = -99;
+}
+
+void anaGenPart::clear () {
+  this->SetPtEtaPhiM(-99, -99, -99, -99);
+  charge = -99;
+  partIndex = -99;
+  pdgID = -99;
 }
 
 
