@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# Custom version from: https://github.com/cmsb2g/B2GDAS/blob/master/test/makepu_fwlite.py
+# Customized from: https://github.com/cmsb2g/B2GDAS/blob/master/test/makepu_fwlite.py
 # More Info: https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSDataAnalysisSchoolLPC2017B2GTTbarExercise#Pileup_reweighting
 
 # Usage:

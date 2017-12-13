@@ -40,11 +40,18 @@
 
 using namespace std;
 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PLOTTER FUNCTIONS
 void plotter_Single(TH1D * h1, string outputFilePath, string legendEntry, bool isLogY = false, bool isLogX = false) {
 	setTDRStyle();
 
 	h1->Scale(1.0/(h1->Integral()));
-	h1->SetLineWidth(3);
+	h1->SetLineWidth(4);
 	h1->SetLineColor(kOrange+8);
 	h1->SetLineStyle(1);
 
@@ -89,16 +96,17 @@ void plotter_Single(TH1D * h1, string outputFilePath, string legendEntry, bool i
 }
 
 
+
 void plotter_LeadingTrailing(TH1D * h_Lead, TH1D * h_Trail, string outputFilePath, bool isLogY = false, bool isLogX = false) {
 	setTDRStyle();
 
 	h_Lead->Scale(1.0/(h_Lead->Integral()));
-	h_Lead->SetLineWidth(3);
+	h_Lead->SetLineWidth(4);
 	h_Lead->SetLineColor(kOrange+8);
 	h_Lead->SetLineStyle(1);
 
 	h_Trail->Scale(1.0/(h_Trail->Integral()));
-	h_Trail->SetLineWidth(3);
+	h_Trail->SetLineWidth(4);
 	h_Trail->SetLineColor(kAzure+7);
 	h_Trail->SetLineStyle(1);
 
@@ -245,10 +253,89 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 	delete latex;
 }
 
+
+void plotter_Pol(TH1D * h_unPol, TH1D * h_Pol, string outputFilePath, bool isLogY = false, bool isLogX = false) {
+	setTDRStyle();
+
+	h_unPol->Scale(1.0/(h_unPol->Integral()));
+	h_unPol->SetLineWidth(4);
+	h_unPol->SetLineColor(kOrange+8);
+	h_unPol->SetLineStyle(1);
+
+	h_Pol->Scale(1.0/(h_Pol->Integral()));
+	h_Pol->SetLineWidth(4);
+	h_Pol->SetLineColor(kAzure+7);
+	h_Pol->SetLineStyle(1);
+
+	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);	
+
+	if (isLogY) c1->SetLogy();
+	if (isLogX) c1->SetLogx();
+
+	if (h_unPol->GetMaximum() > h_Pol->GetMaximum()) {
+		h_unPol->SetMaximum(h_unPol->GetMaximum()*1.3);
+		h_unPol->Draw("hist");	
+		h_unPol->GetYaxis()->SetTitle("a.u.");
+		h_unPol->GetXaxis()->SetTitleOffset(1.0);
+		h_unPol->GetYaxis()->SetTitleOffset(1.5);
+		h_Pol->Draw("hist same");	
+	} else {
+		h_Pol->SetMaximum(h_Pol->GetMaximum()*1.3);
+		h_Pol->Draw("hist");	
+		h_Pol->GetYaxis()->SetTitle("a.u.");
+		h_Pol->GetXaxis()->SetTitleOffset(1.0);
+		h_Pol->GetYaxis()->SetTitleOffset(1.5);
+		h_unPol->Draw("hist same");			
+	}
+	
+
+	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
+	auto legend = new TLegend(0.67,0.76,0.96,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
+	legend->SetBorderSize(0);
+	legend->SetFillStyle(0);
+	legend->AddEntry(h_unPol, "w/o Polarization Reweighting", "l");
+	legend->AddEntry(h_Pol, "w/ Polarization Reweighting", "l");
+	legend->Draw();
+
+    auto latex = new TLatex();
+    latex->SetNDC();
+    latex->SetTextFont(61);
+    latex->SetTextSize(0.05);
+    latex->DrawLatex(.17, 0.96, "CMS");
+    latex->SetTextFont(52);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(11);
+    latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->SetTextFont(42);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(31);
+    latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	c1->Update();
+
+	system(("mkdir -p  `dirname plotFiles/"+outputFilePath+".png`").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".png").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".pdf").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".root").c_str());
+
+	delete c1;
+	delete legend;
+	delete latex;
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DOES THE ACTUAL PLOTTING
 void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCFilePath)  
 {
 	auto * histoDataFile = TFile::Open(histoDataFilePath.c_str());
 	auto * histoMCFile = TFile::Open(histoMCFilePath.c_str());
+	// auto * histoMCFile = TFile::Open(histoDataFilePath.c_str());
 
 
 	// plotter
@@ -724,7 +811,6 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCFilePath)
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// RECO - WITH KIN CUTS
-
 	plotter_DataMC(
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_pt"), 
 		(TH1D*)histoMCFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_pt"), 
@@ -893,7 +979,16 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCFilePath)
 		false
 		); 
 
-
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// POLARIZATION
+ 	plotter_Pol(
+		(TH1D*)histoMCFile->Get("outputHistos/genHistos/h_Gen_UnPol"), 
+		(TH1D*)histoMCFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_Pol"), 
+		"mc/polarizatioReweight/h_Gen_COS_theta",
+		false
+		); 
 
 } //end plotter_ZtoUpsilonPhoton
 

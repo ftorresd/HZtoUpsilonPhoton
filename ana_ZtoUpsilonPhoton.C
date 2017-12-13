@@ -77,8 +77,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	TTreeReaderArray< int > muType(*dataReader, "muType");
  	// Types of muons
 	// REF: https://github.com/cms-sw/cmssw/blob/master/DataFormats/MuonReco/interface/Muon.h
-	/// muon type - type of the algorithm that reconstructed this muon
-	//  multiple algorithms can reconstruct the same muon
+	// muon type - type of the algorithm that reconstructed this muon
+	// multiple algorithms can reconstruct the same muon
 	const unsigned int GlobalMuon     =  1<<1;
 	const unsigned int TrackerMuon    =  1<<2;
 	const unsigned int StandAloneMuon =  1<<3;
@@ -134,6 +134,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	auto * sfTriggerFile = new TFile("data/SFs/TrigEff_HZZID_FinalVersion.root"); // trigger scale factor
 	
 	////////////////////////////////////////////////////////////////////
+	//xSec
+	outTree->Branch("sampleSource",&outFileAppend);
+
 	//output objects - MUONS
 	anaMuon leadingMuon = anaMuon();
 	outTree->Branch("leadingMuon",&leadingMuon);
@@ -161,6 +164,18 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	//output objects - goodTriggerEvt
 	bool goodTriggerEvt = true;
 	outTree->Branch("goodTriggerEvt",&goodTriggerEvt);
+
+	//output objects - goodMuonPairSel
+	bool goodMuonPairSel = true;
+	outTree->Branch("goodMuonPairSel",&goodMuonPairSel);
+
+	//output objects - goodMuonPairPreSel
+	bool goodMuonPairPreSel = true;
+	outTree->Branch("goodMuonPairPreSel",&goodMuonPairPreSel);
+
+	//output objects - goodPhotonSel
+	bool goodPhotonSel = true;
+	outTree->Branch("goodPhotonSel",&goodPhotonSel);
 
 	//MC
 	outTree->Branch("isMC",&isMC);
@@ -238,7 +253,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	// numer of entries
 	auto totalEvts = dataTree->GetEntries();
 	auto printEvery = 100000;
-	cout << "\nN. Entries: " << totalEvts << endl;
+	cout << "\nN. Entries (" << outFileAppend <<  "): " << totalEvts << endl;
 	cout << "\nPrinting every: " << printEvery << " events" << endl;
 	cout << "\nLooping over events... \n" << endl;
 
@@ -279,7 +294,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// gen info
 			for (int iPart = 0; iPart < *nMC; iPart++) {
 				if (abs(mcPID[iPart]) == 13) {
-					if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 25) {
+					if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553 || (mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 25) {
 						// cout << "Muon!" << endl;
 						if (mcPID[iPart] == 13) {
 							genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
@@ -304,6 +319,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// polarization weight
 			auto cosAngle = upsilonPolarizationAngle(genMuPlus, genMuMinus);
 			polWgt = (3./4.)*(1.+pow(cosAngle,2));
+			// cout << "polWgt: " << polWgt << endl;
 			#endif
 			// puWeight = puInfo->getWeight(999); 
 			// if (iEvt % printEvery == 0) cout << puWgt << endl;
@@ -340,6 +356,19 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			muonsCandCollection.push_back(*muonCand);
 		}
 		sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
+		
+		////////////////////////////////////////////////////////////////////
+		// muons pre-selection
+		// sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
+		goodMuonPairPreSel = true; // muon pair pre-selection
+		if (muonsCandCollection.size() >= 2) {
+			goodMuonPairPreSel *= (muonsCandCollection[0].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
+			goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
+			goodMuonPairPreSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
+			goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
+		} else {
+			goodMuonPairPreSel = false;
+		}
 
 		//////////////////////////////////////////////////////////////////////
 		// muons ID
@@ -389,7 +418,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// muons selection
 		// sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
-		auto goodMuonPairSel = true; // muon pair pre-selection
+		goodMuonPairSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
 			goodMuonPairSel *= (muonsCandCollection[0].muonIsISO) ? true : false; // leading muon is ISO
 			goodMuonPairSel *= (muonsCandCollection[0].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
@@ -435,7 +464,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 		// photon selection
 		sort(photonsCandCollection.begin(), photonsCandCollection.end(),greater<anaPhoton>()); // re-sort photon collection
-		auto goodPhotonSel = true; 
+		goodPhotonSel = true; 
 		if (photonsCandCollection.size() >= 1) {
 			goodPhotonSel *= (photonsCandCollection[0].Pt() > 33.) ? true : false; // photon Et > 33.0 GeV
 		} else {
@@ -504,10 +533,10 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
     } // end loop over events
 
     // post-processing 
-    cout << "\n\n\nWriting output file..." << endl;
+    cout << "\n\n\nWriting output file... (" << outFileAppend <<  ")"  << endl;
     // outTree->Print();
     outFile->Write();
-    cout << "\nDone!\n\n\n\n\n" << endl;
+    cout << "\nDone  (" << outFileAppend <<  ")" << "!\n\n\n\n\n" << endl;
 
 } //end ana_ZtoUpsilonPhoton
 

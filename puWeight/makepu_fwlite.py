@@ -95,6 +95,7 @@ def makepu_fwlite(argv) :
             #s = 'root://xrootd-cms.infn.it/' + ifile.rstrip()
             # s = 'root://eoscms.cern.ch/' + ifile.rstrip()  
             s = 'root://cms-xrd-global.cern.ch/' + ifile.rstrip()  
+            # s = ifile.rstrip()  
             files.append( s )
             print 'Added ' + s
 
