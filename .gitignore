@@ -1,4 +1,5 @@
 .DS_Store
+plotFiles/*.php
 *.d
 *.so
 *.pcm
