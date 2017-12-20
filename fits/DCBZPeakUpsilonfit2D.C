@@ -1,4 +1,6 @@
 #include "RooDCBShape/RooDCBShape.h"
+#include "RooWorkspace.h"
+#include "TFile.h"
 #include "tdrstyle.C"
 
 using namespace RooFit;
@@ -8,18 +10,19 @@ void DCBZPeakUpsilonfit2D() {
 	setTDRStyle();
 
 	TFile* _file0 = new TFile("outHistos_ZtoUpsilonPhoton_Data.root","read");
+	//	TFile* _file0 = new TFile("HaddHistos_ZtoUpsilonPhoton_ZToUpsilonGamma.root","read");
+
 	TCanvas* c = new TCanvas("2DFits","2DFits",800,400) ;
-	
+
 	TH2* mass2DHist = (TH2D*)_file0->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_Z_Mass");
-        TString title="signal+bckg";
- 
-        
+	TString title="signal+bckg";
+
 
 
 	// Upsilon Fit
 
 	TString xtitle="m_{#mu^{-}#mu^{+}} [GeV/c^{2}]";
-        TString ytitle="m_{#mu^{-}#mu^{+}+#gamma} [GeV/c^{2}]";
+	TString ytitle="m_{#mu^{-}#mu^{+}+#gamma} [GeV/c^{2}]";
 	const double M1S = 9.46;   //upsilon 1S pgd mass value
 	const double M2S = 10.02;  //upsilon 2S pgd mass value
 	const double M3S = 10.35; //upsilon 3S pgd mass value
@@ -30,7 +33,7 @@ void DCBZPeakUpsilonfit2D() {
 
 	TH1 * Dimuon = mass2DHist->ProjectionX();//dimuon
 
-	RooRealVar mass(xtitle,xtitle,minMass,maxMass);
+	RooRealVar mass("mass",xtitle,minMass,maxMass);
 	RooDataHist dimuonData("dimuonData","dimuonData",mass,Import(*Dimuon));
 
 	RooRealVar mean("mass_mean","#Upsilon mean",M1S,M1S-0.5,M1S+0.5,"GeV");
@@ -40,7 +43,7 @@ void DCBZPeakUpsilonfit2D() {
 
 	RooRealVar mscale("mscale","mass scale factor",1.,1.0,1.0);
 	mscale.setConstant(kTRUE); /* the def. parameter value is fixed in the fit */
-	// double mscale = 1.0;
+	// double mscale = 1.0;//  check it for MC 
 
 	RooFormulaVar mean1S("mean1S","@0",RooArgList(mean));
 	RooFormulaVar mean2S("mean2S","@0+@1*@2",RooArgList(mean,mscale,shift21));
@@ -121,9 +124,9 @@ void DCBZPeakUpsilonfit2D() {
 
 	TH1 * DimuonGamma = mass2DHist->ProjectionY();// Boson Z
 	RooRealVar dimuongamma("dimuongamma", ytitle, 70, 130);
-        RooDataHist dimuonGammaData("dimuonGammaData","dimuonGammaData",dimuongamma,Import(*DimuonGamma));
-	
-        RooRealVar mean_dcb("mean_dcb", "Mean" ,91.1876,70,130) ;
+	RooDataHist dimuonGammaData("dimuonGammaData","dimuonGammaData",dimuongamma,Import(*DimuonGamma));
+
+	RooRealVar mean_dcb("mean_dcb", "Mean" ,91.1876,70,130) ;
 	RooRealVar sigma_dcb("sigma_dcb", "Width" ,  2., 0.5, 4.) ;
 	RooRealVar n1("n1","", 0.5, 0.1, 50.);//dCBPowerL
 	RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
@@ -159,6 +162,7 @@ void DCBZPeakUpsilonfit2D() {
 	sum.fitTo(dimuonGammaData, RooFit::Extended());  
 	dimuonGammaData.plotOn(xFrame,DataError(RooDataHist::SumW2)) ;
 	sum.plotOn(xFrame) ;
+
 	sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
 	sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
 
@@ -170,59 +174,83 @@ void DCBZPeakUpsilonfit2D() {
 	sum.paramOn(xFrame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", myndof*mychsq, myndof))
 		   );
 
-        
-////////////
-// Creating 2D fit using projection 
-///
 
-// RooAddPdf model("model","sig+bkg",RooArgList(sig1S,sig2S,sig3S,sig4S,*bkgPdf),RooArgList(*nsig1,*nsig2,*nsig3,*nsig4,*nbkgd));
+	////////////
+	// Creating 2D fit using projection 
+	///
 
-RooProdPdf sig2DpdfU1SZ("sig2DpdfU1SZ", "2D Signal PDF Upsilon 1S and Z boson", RooArgList(sig1S,cball));
-//RooProdPdf res2Dpdf("res2Dpdf", "2D Resonant Background PDF", RooArgList(expo));
+	RooProdPdf sig2DpdfUSZ("sig2DpdfUZ", "2D Signal PDF Upsilon and Z boson", RooArgList(*pdf,sum));
 
-//RooDataSet* data2D = model.generate(RooArgSet(mass,dimuongamma),10000) ;
-RooDataHist data2D("data2D","Th2D Dataset",RooArgSet(mass,dimuongamma),mass2DHist);
-TH1* hmodel2d = sig2DpdfU1SZ.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
-//TH1* hmodel2dbkg = res2Dpdf.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
+	RooDataHist data2D("data2D","Th2D Dataset",RooArgSet(mass,dimuongamma),mass2DHist);
 
-sig2DpdfU1SZ.fitTo(data2D);
-//res2Dpdf.fitTo(data2D);
-//RooPlot* xyFrame = mass.frame() ;
-RooPlot* xyFrame = dimuongamma.frame() ;
-//data->plotOn(xframe) ;
-//RooPlot* yframe = y.frame() ;
-data2D.plotOn(xyFrame) ;
-sig2DpdfU1SZ.plotOn(xyFrame) ;
-//res2Dpdf.plotOn(xyFrame) ;
+	TH1* hmodel2d = sig2DpdfUSZ.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
+
+	// Z fiting and blind regions 
+	dimuongamma.setRange("blind_signal", 70, 120);
+	dimuongamma.setRange("blind_bck", 115, 135);
+	// Upsilon Region
+	mass.setRange("blind_signal", 9., 11.);
+	//mass.setRange("blind_bck", 8, 8.9);
+	//mass.setRange("blind_bck", 11., 12.);
 
 
-   //PDFs for diMuon (Upsilon 1S,2S,3S,4S) * dimuons+ gamma (Zboson)
-  //RooProdPdf sig2DpdfU1SZ("sig2DpdfU1SZ", "2D Signal PDF Upsilon 1S and Z boson", RooArgList(sig1S,cball));
-  
-  //RooProdPdf sig2DpdfU2SZ("sig2DpdfU2SZ", "2D Signal PDF Upsilon 2S and Z boson", RooArgList(sig2S,cball));
-
-  //RooProdPdf sig2DpdfU3SZ("sig2DpdfU3SZ", "2D Signal PDF Upsilon 3S and Z boson", RooArgList(sig3S,cball));
-
-  //RooProdPdf sig2DpdfU4SZ("sig2DpdfU3SZ", "2D Signal PDF Upsilon 4S and Z boson", RooArgList(sig4S,cball));
+	sig2DpdfUSZ.fitTo(data2D,Save(kTRUE));
+	//sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal,blind_bck"));
 
 
-  //RooProdPdf res2Dpdf("res2Dpdf", "2D Resonant Background PDF", RooArgList(resPDFPho, resPDFBjet));
-  //RooProdPdf nonres2Dpdf("nonres2Dpdf", "2D Non-Resonant Background PDF", RooArgList(nonresPDFPho, nonresPDFBjet));
-  //RooAddPdf model2Dpdf("model2Dpdf", "2D Signal+Background PDF", RooArgList(sig2Dpdf, res2Dpdf, nonres2Dpdf), RooArgList(nsig, nres, nnonres));  
 
-// RooPlot * xyFrame = x.frame(Title("Z-peak")) ;
-// Data2D.plotOn(xyFrame) ; 
+	// Fit p.d.f to all data
+	RooFitResult* r_full = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE)) ;
+	// Fit p.d.f only to data in "signal" range
+	RooFitResult* r_sig = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal")) ;
 
-// Draw the 'sigar'
-   gStyle->SetCanvasPreferGL(true);
-   gStyle->SetPalette(1);       
-       // Draw all frames on a canvas
-        c->Divide(2,2) ;
-        c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
-        c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
-        c->cd(3); hmodel2d->Draw("Surf3") ; //xyFrame->Draw();
- //       c->cd(4); hmodel2dbkg->Draw("Surf3") ;
-        //c->cd(5);xyFrame->Draw();
+	//  Fit p.d.f only to data in "bckground" range
+	RooFitResult* r_bkg = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_bck")) ;
+
+
+
+	// --- Fit ---
+	RooPlot* xyFrame = dimuongamma.frame() ;
+	data2D.plotOn(xyFrame) ;
+	sig2DpdfUSZ.plotOn(xyFrame) ;
+
+
+	// Print fit results 
+	cout << "result of fit on all data " << endl ;
+	r_full->Print() ; 
+
+	cout << "result of fit in in signal region (note increased error on signal fraction)" << endl ;
+	r_sig->Print() ;
+
+	cout << "result of fit in in bck region (note increased error on signal fraction)" << endl ;
+	r_bkg->Print() ;
+
+	//-----------------------------------//
+
+
+	/*
+
+
+	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l,
+	// 2D fit
+	*/      
+        RooWorkspace *w = new RooWorkspace("w","workspace") ;   
+	w->import(sig2DpdfUSZ); 
+	w->import(data2D);
+	w->Print();
+
+	w->writeToFile("workspace_2016.root"); 
+	//gDirectory->Add(w) ;  
+
+	// Draw the 'sigar'
+	gStyle->SetCanvasPreferGL(true);
+	gStyle->SetPalette(1);       
+	// Draw all frames on a canvas
+	//c->Divide(2,2) ;
+	c->Divide(2,1);
+	c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
+	// c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
+	c->cd(2); hmodel2d->Draw("Surf3") ;
 
 	c->SaveAs("UpsilonZ2Dfit.gif");
 
