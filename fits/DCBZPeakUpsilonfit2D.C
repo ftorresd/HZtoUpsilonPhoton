@@ -137,34 +137,50 @@ void DCBZPeakUpsilonfit2D() {
 	RooRealVar alpha2("alpha2","", 3., 0.1, 50.);//dCBCutR
 
 
-	RooRealVar lambda("lambda", "slope", -0.1, -5., 0.);
+	//RooRealVar lambda("lambda", "slope", -0.1, -5., 0.);
 	//RooRealVar s_bw("signal_bw", "signal", 100, 0, 10000);
 	RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
 
-	RooRealVar b("background", "background yield", 100, 0, 10000);
 
 
-	//RooBreitWigner gauss_bw("gauss_bw","gauss_bw",x,mean_bw,sigma_bw);
 
-	//RooCBShape cball("cball", "crystal ball", x, mean_cb, sigma_cb, alpha, n);
 	RooDCBShape cball("cball", "double crystal ball", dimuongamma, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
 
-	//RooDataHist data("data", "dataset with x", dimuongamma, DimuonGamma);
-	RooExponential expo("expo", "exponential PDF", dimuongamma, lambda);
-
-	//	RooAddPdf sum("sum", "gaussian double crystal ball and exponential PDF", RooArgList(gauss_bw, cball, expo), RooArgList(s_bw, s_dcb, b));
-	RooAddPdf sum("sum", "double crystal ball and exponential PDF", RooArgList(cball, expo), RooArgList(s_dcb, b));
+	//	RooExponential expo("expo", "exponential PDF", dimuongamma, lambda);
 
 
+	//--------------------------------//
+	// Background fit                 //
+	// Using Bernstein 2nd polynomial //
+	//                                //
+	//--------------------------------//
+
+	RooRealVar p0("p0", " ", 0, 1); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
+	RooBernstein BkgPdf_2016("BkgPdf_2016", " ", dimuongamma, RooArgList(RooConst(1),p1,p2));
+        RooRealVar b("BernsteinBackground", "background yield", 100, 0, 10000);
+
+
+	//RooAddPdf sum("sum", "double crystal ball and exponential PDF", RooArgList(cball, expo), RooArgList(s_dcb, b));
+        RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(cball, BkgPdf_2016), RooArgList(s_dcb, b));
 	RooPlot * xFrame = dimuongamma.frame(Title("Z-peak")) ;
+
+        // Z fiting and blind regions 
+        //dimuongamma.setRange("blind_signal", 70, 120);
+        //dimuongamma.setRange("blind_bck1", 80, 100);
+        //dimuongamma.setRange("blind_bck2", 120, 135);
 
 
 	sum.fitTo(dimuonGammaData, RooFit::Extended());  
 	dimuonGammaData.plotOn(xFrame,DataError(RooDataHist::SumW2)) ;
 	sum.plotOn(xFrame) ;
 
-	sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
-	sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
+	//sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
+	sum.plotOn(xFrame, RooFit::Components(BkgPdf_2016),RooFit::LineStyle(kDashed),LineColor(kRed)) ; 
+        sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
+
+
 
 	// Adding Dataset box and PDF parameters box 
 	RooArgSet * pars = sum.getParameters(dimuongamma);
@@ -181,14 +197,15 @@ void DCBZPeakUpsilonfit2D() {
 
 	RooProdPdf sig2DpdfUSZ("sig2DpdfUZ", "2D Signal PDF Upsilon and Z boson", RooArgList(*pdf,sum));
 
-	RooDataHist data2D("data2D","Th2D Dataset",RooArgSet(mass,dimuongamma),mass2DHist);
+	RooDataHist data2D("data2D","Th2D Dataset",RooArgList(mass,dimuongamma),mass2DHist);
 
 	TH1* hmodel2d = sig2DpdfUSZ.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
 
 	// Z fiting and blind regions 
-	dimuongamma.setRange("blind_signal", 70, 120);
-	dimuongamma.setRange("blind_bck", 115, 135);
-	// Upsilon Region
+	//dimuongamma.setRange("blind_signal", 70, 120);
+	dimuongamma.setRange("blind_bck1", 80, 100);
+        dimuongamma.setRange("blind_bck2", 120, 135);	
+// Upsilon Region
 	mass.setRange("blind_signal", 9., 11.);
 	//mass.setRange("blind_bck", 8, 8.9);
 	//mass.setRange("blind_bck", 11., 12.);
@@ -204,8 +221,8 @@ void DCBZPeakUpsilonfit2D() {
 	// Fit p.d.f only to data in "signal" range
 	RooFitResult* r_sig = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal")) ;
 
-	//  Fit p.d.f only to data in "bckground" range
-	RooFitResult* r_bkg = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_bck")) ;
+	//  Fit p.d.f only to data in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region 
+	RooFitResult* r_Z = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal"),CutRange("blind_bck1,blind_bck2")) ;
 
 
 
@@ -219,11 +236,11 @@ void DCBZPeakUpsilonfit2D() {
 	cout << "result of fit on all data " << endl ;
 	r_full->Print() ; 
 
-	cout << "result of fit in in signal region (note increased error on signal fraction)" << endl ;
+	cout << "result of fit in in upsilon region (note increased error on signal fraction)" << endl ;
 	r_sig->Print() ;
 
-	cout << "result of fit in in bck region (note increased error on signal fraction)" << endl ;
-	r_bkg->Print() ;
+	cout << "result of fit in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region   (note increased error on signal fraction)" << endl ;
+	r_Z->Print() ;
 
 	//-----------------------------------//
 
@@ -234,7 +251,7 @@ void DCBZPeakUpsilonfit2D() {
 	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l,
 	// 2D fit
 	*/      
-        RooWorkspace *w = new RooWorkspace("w","workspace") ;   
+	RooWorkspace *w = new RooWorkspace("w","workspace") ;   
 	w->import(sig2DpdfUSZ); 
 	w->import(data2D);
 	w->Print();
@@ -249,7 +266,7 @@ void DCBZPeakUpsilonfit2D() {
 	//c->Divide(2,2) ;
 	c->Divide(2,1);
 	c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
-	// c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
+//	c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
 	c->cd(2); hmodel2d->Draw("Surf3") ;
 
 	c->SaveAs("UpsilonZ2Dfit.gif");
