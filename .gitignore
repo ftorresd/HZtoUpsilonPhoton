@@ -8,3 +8,9 @@
 /tmpdir
 /tmp
 ._*
+
+plotFiles/mc/unpolarized/
+
+plotFiles/data_x_mc/
+
+plotFiles/

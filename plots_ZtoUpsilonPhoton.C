@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <math.h> 
 #include <fstream>
+#include <string>
+
 
 
 #include "TFile.h"
@@ -14,7 +16,10 @@
 // #include "TRandom3.h"
 // #include "TROOT.h"
 #include "TH1.h"
+#include "TH2.h"
+#include "TH3.h"
 #include "TDirectory.h"
+#include "TObjString.h"
 
 
 
@@ -47,19 +52,27 @@ void genFiller(bool plusIsLeading, TH1D * h_Gen_Leading, TH1D * h_Gen_Trailing, 
 }
 
 
-void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHistoAppend, bool isData = true)  
+void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHistoAppend, string analysisBranch, bool isData = true)  
 {
 	// output tree
 	// TFile outFile("outTree_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
-	string outputFileName = "outputHistos/outHistos_ZtoUpsilonPhoton_"+ outHistoAppend + ".root";
+	string outputFileName = "outputHistos/outHistos_ZtoUpsilonPhoton_"+ outHistoAppend + "_"+analysisBranch+".root";
 	TFile * outFile  = new TFile(outputFileName.c_str(),"RECREATE","ZtoUpsilonPhoton output histos");
 
+
+	////////////////////////////////////////////////////////
 	// loads the ntuples 
 	TTreeReader * dataReader = ggNtuplesFilesReader( ntuplesToPlotFilesData, "outTree_ZtoUpsilonPhoton" );
 	TTree * dataTree = dataReader->GetTree();
 
+
+
 	////////////////////////////////////////////////////////////////////
 	// define readers
+
+	TTreeReaderValue< TObjString > sampleSource(*dataReader, "sampleSource");
+
+
 	TTreeReaderValue< anaGenPart > genMuPlus(*dataReader, "genMuPlus");
 	TTreeReaderValue< anaGenPart > genMuMinus(*dataReader, "genMuMinus");
 	TTreeReaderValue< anaGenPart > genPhoton(*dataReader, "genPhoton");
@@ -68,7 +81,6 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	TTreeReaderValue< anaMuon > trailingMuon(*dataReader, "trailingMuon");
 	TTreeReaderValue< anaPhoton > leadingPhoton(*dataReader, "leadingPhoton");
 
-	// TTreeReaderValue< double > xSec(*dataReader, "xSec");
 
 	// can't figure it ou t why TTreeReaderValue don't work for TLorentzVector
 	// TTreeReaderValue< TLorentzVector > recoUpsilon(*dataReader, "recoUpsilon");
@@ -101,12 +113,51 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	////////////////////////////////////////////////////////////////////
 	// cuts setup
-	double minUpsilonMass = 8.0;
-	double maxUpsilonMass = 12.0;
-	int nBinsUpsilonMass = 50;
-	// double minUpsilonMass = 3.0;
-	// double maxUpsilonMass = 3.2;
-	// int nBinsUpsilonMass = 20;
+	double minUpsilonMass = 1;
+	double maxUpsilonMass = 1;
+	int nBinsUpsilonMass = 1;
+
+	double minHZMassLeft = 1;
+	double maxHZMassLeft = 1;
+	double minHZMassRight = 1;
+	double maxHZMassRight = 1;
+	int nBinsHZMass = 1;
+	string dimuonLatexName = "";
+	string mumugammaLatexName = "";
+
+	// dimuon cut
+	if (analysisBranch == "ZtoJpsi" || analysisBranch == "HtoJpsi") {
+		minUpsilonMass = 3.0;
+		maxUpsilonMass = 3.2;
+		nBinsUpsilonMass = 20;
+		dimuonLatexName = "J/#Psi";
+	}
+	if (analysisBranch == "ZtoUpsilon" || analysisBranch == "HtoUpsilon") {
+		minUpsilonMass = 9.0;
+		maxUpsilonMass = 9.8;
+		nBinsUpsilonMass = 25;
+		dimuonLatexName = "#Upsilon";
+	}
+
+	// mumugamma cut 
+	if (analysisBranch == "ZtoJpsi" || analysisBranch == "ZtoUpsilon") {
+		minHZMassLeft = 70.;
+		maxHZMassLeft = 80.;
+		minHZMassRight = 100.;
+		maxHZMassRight = 120.;
+		nBinsHZMass = 50;
+		mumugammaLatexName = "Z";
+
+	}
+	if (analysisBranch == "HtoJpsi" || analysisBranch == "HtoUpsilon") {
+		minHZMassLeft = 100.;
+		maxHZMassLeft = 115.;
+		minHZMassRight = 135.;
+		maxHZMassRight = 150.;
+		nBinsHZMass = 50;
+		mumugammaLatexName = "H";
+	}
+
 
 
 
@@ -151,6 +202,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_Gen_deltaPhi_Upsilon_Photon = new TH1D("h_Gen_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#Upsilon, #gamma)|;", 100, 0.0, 4.0);
 	h_Gen_deltaPhi_Upsilon_Photon->Sumw2();
 
+
 	auto * h_Gen_Upsilon_Mass = new TH1D("h_Gen_Upsilon_Mass", ";#Upsilon Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
 	h_Gen_Upsilon_Mass->Sumw2();
 	auto * h_Gen_Upsilon_Pt = new TH1D("h_Gen_Upsilon_Pt", ";p_{T}^{#Upsilon} (GeV);", 250, 0.0, 250.0);
@@ -160,7 +212,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_Gen_Upsilon_phi = new TH1D("h_Gen_Upsilon_phi", ";#phi^{#Upsilon};", 70, -3.2, 3.2);
 	h_Gen_Upsilon_phi->Sumw2();
 
-	auto * h_Gen_Z_Mass = new TH1D("h_Gen_Z_Mass", ";Z Mass (GeV);", 100, 70, 120.0);
+	auto * h_Gen_Z_Mass = new TH1D("h_Gen_Z_Mass", ";Z Mass (GeV);", nBinsHZMass, minHZMassLeft, maxHZMassRight);
 	h_Gen_Z_Mass->Sumw2();
 	auto * h_Gen_Z_Pt = new TH1D("h_Gen_Z_Pt", ";p_{T}^{Z} (GeV);", 250, 0.0, 250.0);
 	h_Gen_Z_Pt->Sumw2();
@@ -224,7 +276,8 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_Gen_withPolWeight_Upsilon_phi = new TH1D("h_Gen_withPolWeight_Upsilon_phi", ";#phi^{#Upsilon};", 70, -3.2, 3.2);
 	h_Gen_withPolWeight_Upsilon_phi->Sumw2();
 
-	auto * h_Gen_withPolWeight_Z_Mass = new TH1D("h_Gen_withPolWeight_Z_Mass", ";Z Mass (GeV);", 100, 70, 120.0);
+
+	auto * h_Gen_withPolWeight_Z_Mass = new TH1D("h_Gen_withPolWeight_Z_Mass", ";Z Mass (GeV);", nBinsHZMass, minHZMassLeft, maxHZMassRight);
 	h_Gen_withPolWeight_Z_Mass->Sumw2();
 	auto * h_Gen_withPolWeight_Z_Pt = new TH1D("h_Gen_withPolWeight_Z_Pt", ";p_{T}^{Z} (GeV);", 250, 0.0, 250.0);
 	h_Gen_withPolWeight_Z_Pt->Sumw2();
@@ -287,7 +340,9 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_noKin_Upsilon_phi = new TH1D("h_noKin_Upsilon_phi", ";#phi^{#mu#mu};", 70, -3.2, 3.2);
 	h_noKin_Upsilon_phi->Sumw2();
 
-	auto * h_noKin_Z_Mass = new TH1D("h_noKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", 100, 70, 120.0);
+
+
+	auto * h_noKin_Z_Mass = new TH1D("h_noKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", nBinsHZMass, minHZMassLeft, maxHZMassRight);
 	h_noKin_Z_Mass->Sumw2();
 	auto * h_noKin_Z_Pt = new TH1D("h_noKin_Z_Pt", ";p_{T}^{#mu#mu#gamma} (GeV);", 160, 0.0, 160.0);
 	h_noKin_Z_Pt->Sumw2();
@@ -300,6 +355,14 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	h_noKin_upsilonPt_over_zMass->Sumw2();
 	auto * h_noKin_photonPt_over_zMass = new TH1D("h_noKin_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
 	h_noKin_photonPt_over_zMass->Sumw2();
+
+	//2D masss plot
+	auto * h_noKin_Upsilon_Mass_Z_Mass = new TH2D("h_noKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, nBinsHZMass, minHZMassLeft, maxHZMassRight);
+	h_noKin_Upsilon_Mass_Z_Mass->Sumw2();
+	//3D masss plot
+	auto * h_noKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_noKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, nBinsHZMass, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
+	h_noKin_Upsilon_Mass_Z_Mass_Z_Pt->Sumw2();
+
 
 
 	// with kinematical cuts
@@ -347,7 +410,9 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_withKin_Upsilon_phi = new TH1D("h_withKin_Upsilon_phi", ";#phi^{#mu#mu};", 70, -3.2, 3.2);
 	h_withKin_Upsilon_phi->Sumw2();
 
-	auto * h_withKin_Z_Mass = new TH1D("h_withKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", 100, 70, 120.0);
+
+
+	auto * h_withKin_Z_Mass = new TH1D("h_withKin_Z_Mass", ";#mu#mu#gamma Mass (GeV);", minHZMassLeft, minHZMassLeft, maxHZMassRight);
 	h_withKin_Z_Mass->Sumw2();
 	auto * h_withKin_Z_Pt = new TH1D("h_withKin_Z_Pt", ";p_{T}^{#mu#mu#gamma} (GeV);", 160, 0.0, 160.0);
 	h_withKin_Z_Pt->Sumw2();
@@ -361,22 +426,39 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_withKin_photonPt_over_zMass = new TH1D("h_withKin_photonPt_over_zMass", ";E_{T}^{#gamma}/m_{Z};", 100, 0.0, 1.0);
 	h_withKin_photonPt_over_zMass->Sumw2();
 
+	//2D masss plot
+	auto * h_withKin_Upsilon_Mass_Z_Mass = new TH2D("h_withKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, minHZMassLeft, minHZMassLeft, maxHZMassRight);
+	h_withKin_Upsilon_Mass_Z_Mass->Sumw2();
+	//3D masss plot
+	auto * h_withKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_withKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, minHZMassLeft, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
+	h_withKin_Upsilon_Mass_Z_Mass_Z_Pt->Sumw2();
+
+
+	////////////////////////////////////////////////////////
+	// ttree to fit
+	string outputTreeName = "outputHistos/outTreeToFit_ZtoUpsilonPhoton_"+ outHistoAppend + "_"+analysisBranch+".root";
+	TFile * outputTreeFile  = new TFile(outputTreeName.c_str(),"RECREATE","ZtoUpsilonPhoton output analysis tree");
+	TTree * outTree = new TTree("outTree_ZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
+	double mHZ = -99.0;
+	outTree->Branch("mHZ", &mHZ) ;
+	double mHZWeight = 1.;
+	outTree->Branch("mHZWeight", &mHZWeight) ;
 
 	////////////////////////////////////////////////////////////////////
 	// events count
 	// counter
-    double countTotalEvts = 0;
-    double countTrigger = 0;
-    double countMuonPreSel = 0;
-    double countMuonIDISO = 0;
-    double countPhotonSel = 0;
-    double countMuonToPhoton = 0;
-    double countUpsilonToPhoton = 0;
-    double countUpsilonMassCut = 0;
-    double countRatioCuts = 0;
-    double countZMassCut = 0;
+	double countTotalEvts = 0;
+	double countTrigger = 0;
+	double countMuonPreSel = 0;
+	double countMuonIDISO = 0;
+	double countPhotonSel = 0;
+	double countMuonToPhoton = 0;
+	double countUpsilonToPhoton = 0;
+	double countUpsilonMassCut = 0;
+	double countRatioCuts = 0;
+	double countZMassCut = 0;
     // booleans
-    bool goodDeltaRLeadTrail = false;
+	bool goodDeltaRLeadTrail = false;
 	bool goodDeltaRMuonsPhoton = false;
 	bool goodDeltaRPhiUpsilonPhoton  = false;
 	bool goodUpsilonMassCut = false;
@@ -404,13 +486,32 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	// main loop
 	auto iEvt = 0;
 	while (dataReader->Next()) { // loop over events
-		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outHistoAppend <<  "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
+		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outHistoAppend << " - " << analysisBranch << "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
 		iEvt++;
 
 		// event weight
 		double totalWeight = 1.0;
-		if (!isData) totalWeight = (*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
-
+		if (sampleSource->GetString() == "ZToUpsilon1SGamma" && !isData) 
+			totalWeight = (6.9806E-05*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "ZToUpsilon2SGamma" && !isData) 
+			totalWeight = (6.9806E-05*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "ZToUpsilon3SGamma" && !isData) 
+			totalWeight = (6.9806E-05*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "ZToJPsiGamma" && !isData) 
+			totalWeight = (3.3898E-04*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "ZGTo2MuG_MMuMu-2To15" && !isData) 
+			totalWeight = (7.9260E-02*3.5860E+04/(double)totalEvts)*(*puWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "HToUpsilon1SGamma" && !isData) 
+			totalWeight = (8.4271E-10*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "HToUpsilon2SGamma" && !isData) 
+			totalWeight = (2.1682E-09*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "HToUpsilon3SGamma" && !isData) 
+			totalWeight = (2.9582E-04*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "HToJPsiGamma" && !isData) 
+			totalWeight = (9.2493E-06*3.5860E+04/(double)totalEvts)*(*puWgt)*(*polWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		if (sampleSource->GetString() == "HDalitz" && !isData) 
+			totalWeight = (2.1300E-03*3.5860E+04/(double)totalEvts)*(*puWgt)*(muonIDSF->first)*(photonMVAIDSF->first)*(photonEleVetoSF->first)*(triggerSF->first);
+		
 		// MC
 		if (!isData) { 
 			// upsilon polarization
@@ -519,7 +620,13 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			h_noKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
 			h_noKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
 
-			h_noKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+
+			if (isData){
+				if (recoZ.M() < maxHZMassLeft || recoZ.M() > minHZMassRight) h_noKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+			} else {
+				h_noKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+			}
+
 			h_noKin_Z_Pt->Fill(recoZ.Pt(),totalWeight);
 			h_noKin_Z_eta->Fill(recoZ.Eta(),totalWeight);
 			h_noKin_Z_phi->Fill(recoZ.Phi(),totalWeight);
@@ -528,6 +635,10 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			h_noKin_upsilonPt_over_zMass->Fill(recoUpsilon.Pt()/recoZ.M(),totalWeight);
 			h_noKin_photonPt_over_zMass->Fill(leadingPhoton->Et()/recoZ.M(),totalWeight);
 
+			//2D masss plot
+			h_noKin_Upsilon_Mass_Z_Mass->Fill(recoUpsilon.M(), recoZ.M(),totalWeight);
+			//3D masss plot
+			h_noKin_Upsilon_Mass_Z_Mass_Z_Pt->Fill(recoUpsilon.M(), recoZ.M(), recoZ.Pt(),totalWeight);
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// with kinematical cuts
@@ -587,7 +698,20 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 				h_withKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
 				h_withKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
 
-				h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+				mHZ = recoZ.M();
+				mHZWeight = totalWeight;
+				if (isData){
+					if (recoZ.M() < maxHZMassLeft || recoZ.M() > minHZMassRight) {
+						h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+						// outputTreeFile->cd();
+						outTree->Fill();
+					}
+				} else {
+					h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
+					outTree->Fill();
+				}
+				mHZ = recoZ.M();
+				mHZWeight = totalWeight;
 				h_withKin_Z_Pt->Fill(recoZ.Pt(),totalWeight);
 				h_withKin_Z_eta->Fill(recoZ.Eta(),totalWeight);
 				h_withKin_Z_phi->Fill(recoZ.Phi(),totalWeight);
@@ -595,6 +719,12 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 				//energy ratios
 				h_withKin_upsilonPt_over_zMass->Fill(recoUpsilon.Pt()/recoZ.M(),totalWeight);
 				h_withKin_photonPt_over_zMass->Fill(leadingPhoton->Et()/recoZ.M(),totalWeight);
+
+				//2D masss plot
+				h_withKin_Upsilon_Mass_Z_Mass->Fill(recoUpsilon.M(), recoZ.M(),totalWeight);
+				//3D masss plot
+				h_withKin_Upsilon_Mass_Z_Mass_Z_Pt->Fill(recoUpsilon.M(), recoZ.M(), recoZ.Pt(),totalWeight);
+
 			}
 		}
 
@@ -619,25 +749,27 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
     // post-processing 
 	cout << "\n\n\nWriting output text file..." << endl;
 	// evtsCount
+	system("rm -fr evtsCountFiles; mkdir evtsCountFiles");
 	ofstream evtsCountFile;
-  	evtsCountFile.open ("evtsCountFile_"+ outHistoAppend + ".csv");
-  	evtsCountFile << "cut ; nevts" << endl;
-  	evtsCountFile << "total ; " << countTotalEvts << endl;
-  	evtsCountFile << "trigger ; " << countTrigger << endl;
-  	evtsCountFile << "muon pre sel ; " << countMuonPreSel << endl;
-  	evtsCountFile << "muon ID/ISO ; " << countMuonIDISO << endl;
-  	evtsCountFile << "photon sel ; " << countPhotonSel << endl;
-  	evtsCountFile << "deltaR muon to photon ; " << countMuonToPhoton << endl;
-  	evtsCountFile << "deltaRPhi upsilon to photon ; " << countUpsilonToPhoton << endl;
-  	evtsCountFile << "upsilon mass cut ; " << countUpsilonMassCut << endl;
-  	evtsCountFile << "ratio ctus ; " << countRatioCuts << endl;
-  	evtsCountFile << "z mass cut ; " << countZMassCut << endl;
-  	evtsCountFile.close();
+	evtsCountFile.open ("evtsCountFiles/evtsCountFile_"+ outHistoAppend + ".csv");
+	evtsCountFile << "cut ; nevts" << endl;
+	evtsCountFile << "total ; " << countTotalEvts << endl;
+	evtsCountFile << "trigger ; " << countTrigger << endl;
+	evtsCountFile << "muon pre sel ; " << countMuonPreSel << endl;
+	evtsCountFile << "muon ID/ISO ; " << countMuonIDISO << endl;
+	evtsCountFile << "photon sel ; " << countPhotonSel << endl;
+	evtsCountFile << "deltaR muon to photon ; " << countMuonToPhoton << endl;
+	evtsCountFile << "deltaRPhi upsilon to photon ; " << countUpsilonToPhoton << endl;
+	evtsCountFile << "upsilon mass cut ; " << countUpsilonMassCut << endl;
+	evtsCountFile << "ratio ctus ; " << countRatioCuts << endl;
+	evtsCountFile << "z mass cut ; " << countZMassCut << endl;
+	evtsCountFile.close();
 
 
 
-	cout << "\n\n\nWriting output tree file..." << endl;
+	cout << "\n\n\nWriting output file..." << endl;
 	outFile->Write();
+	outputTreeFile->Write();
 	cout << "\nDone!\n\n\n\n\n" << endl;
 
 

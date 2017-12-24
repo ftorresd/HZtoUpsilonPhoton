@@ -9,9 +9,9 @@
 // ######################################################
 
 
-// #define IS_MC 1
+#define IS_MC 1
 
- 
+
 
 #include <iostream>
 #include <algorithm>
@@ -25,6 +25,7 @@
 #include "TTreeReaderArray.h"
 #include "TRandom3.h"
 #include "TROOT.h"
+#include "TObjString.h"
 // #include "TH1.h"
 
 
@@ -135,7 +136,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	
 	////////////////////////////////////////////////////////////////////
 	//xSec
-	outTree->Branch("sampleSource",&outFileAppend);
+	TObjString sampleSource(outFileAppend.c_str());
+	outTree->Branch("sampleSource", &sampleSource) ;
 
 	//output objects - MUONS
 	anaMuon leadingMuon = anaMuon();
@@ -252,7 +254,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	////////////////////////////////////////////////////////////////////
 	// numer of entries
 	auto totalEvts = dataTree->GetEntries();
-	auto printEvery = 100000;
+	// auto printEvery = 100000;
+	auto printEvery = 1000;
 	cout << "\nN. Entries (" << outFileAppend <<  "): " << totalEvts << endl;
 	cout << "\nPrinting every: " << printEvery << " events" << endl;
 	cout << "\nLooping over events... \n" << endl;
@@ -291,29 +294,200 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			puWgt = puInfo->getWeight(puTrue[1]); 
 			puWgtErr = puInfo->getWeightErr(puTrue[1]); 
 
+			// ZToUpsilonGamma - Signal
+			if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma") {
 			// gen info
-			for (int iPart = 0; iPart < *nMC; iPart++) {
-				if (abs(mcPID[iPart]) == 13) {
-					if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553 || (mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 25) {
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 25) {
 						// cout << "Muon!" << endl;
-						if (mcPID[iPart] == 13) {
-							genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
-							genMuPlus.charge = 1;
-							genMuPlus.partIndex = iPart;
-							genMuPlus.pdgID = 13;
-						} else if (mcPID[iPart] == -13) {
-							genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
-							genMuMinus.charge = -1;
-							genMuMinus.partIndex = iPart;
-							genMuMinus.pdgID = -13;
-						} 
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+						// cout << "Photon!" << endl;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
 					}
-				} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
-					genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
-					genPhoton.charge = 0;
-					genPhoton.partIndex = iPart;
-					genPhoton.pdgID = 22;
 				}
+			}
+
+			// ZToJPsiGamma - Signal
+			if (sampleSource.GetString() == "ZToJPsiGamma") {
+			// gen info
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if (((mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 25) {
+						// cout << "Muon!" << endl;
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+						// cout << "Photon!" << endl;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
+					}
+				}
+			}
+
+			// ZToMuMuGamma - Background
+			if (sampleSource.GetString() == "ZGTo2MuG_MMuMu-2To15") {
+			// gen info
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if ((mcMomPID[iPart]) == 23) {
+						// cout << "Muon!" << endl;
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 23) {
+						// cout << "Photon!" << endl;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
+					}
+				}
+			}
+
+			// HToUpsilonGamma - Signal
+			if (sampleSource.GetString() == "HToUpsilon1SGamma" || sampleSource.GetString() == "HToUpsilon2SGamma" || sampleSource.GetString() == "HToUpsilon3SGamma") {
+			// gen info
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 25) {
+						// cout << "Muon!" << endl;
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+						// cout << "Photon!" << endl;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
+					}
+				}
+			}
+
+			// HToJPsiGamma - Signal
+			if (sampleSource.GetString() == "HToJPsiGamma") {
+			// gen info
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if (((mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 25) {
+						// cout << "Muon!" << endl;
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+						// cout << "Photon!" << endl;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
+					}
+				}
+			}
+
+			// HDalitz - Background
+			if (sampleSource.GetString() == "HDalitz") {
+				// gen info
+				// bool hasMuPlus = false;
+				// bool hasMuMinus = false;
+				// bool hasPhoton = false;
+				for (int iPart = 0; iPart < *nMC; iPart++) {
+					if (abs(mcPID[iPart]) == 13) {
+						if ((mcMomPID[iPart]) == 25) {
+						// cout << "Muon!" << endl;
+							if (mcPID[iPart] == 13) {
+								// cout << "Muon +!" << endl;
+								// hasMuPlus = true;
+								genMuPlus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuPlus.charge = 1;
+								genMuPlus.partIndex = iPart;
+								genMuPlus.pdgID = 13;
+							} else if (mcPID[iPart] == -13) {
+								// cout << "Muon -!" << endl;
+								// hasMuMinus = true;
+								genMuMinus.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 105.6583745/1000.0);
+								genMuMinus.charge = -1;
+								genMuMinus.partIndex = iPart;
+								genMuMinus.pdgID = -13;
+							} 
+						}
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+						// cout << "Photon!" << endl;
+						// hasPhoton = true;
+						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
+						genPhoton.charge = 0;
+						genPhoton.partIndex = iPart;
+						genPhoton.pdgID = 22;
+					}
+				}
+				// cout << "hasMuPlus: " << hasMuPlus << endl;
+				// cout << "hasMuMinus: " << hasMuMinus << endl;
+				// cout << "hasPhoton: " << hasPhoton << endl;
+
 			}
 
 			// polarization weight
