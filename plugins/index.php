@@ -42,8 +42,8 @@ if ($_GET['noplots']) {
     if (isset($_GET['match']) && !fnmatch('*'.$_GET['match'].'*', $filename)) continue;
     print "<div class='pic'>\n";
     print "<h3><a href=\"$filename\">$filename</a></h3>";
-    // print "<a href=\"$filename\"><img src=\"$filename\" style=\"border: none; width: 300px; \" target=\"_blank\"></a>";
-    print "<a href=\"$filename\"><img src=\"$filename\" style=\"border: none; width: 300px; \"></a>";
+    print "<a href=\"$filename\"><img src=\"$filename\" style=\"border: none; width: 300px; \" target=\"_blank\"></a>";
+    // print "<a href=\"$filename\"><img src=\"$filename\" style=\"border: none; width: 300px; \"></a>";
     //$others = array();
     //foreach ($other_exts as $ex) {
     //    if (file_exists(str_replace('.png', $ex, $filename))) {
@@ -61,7 +61,8 @@ if ($_GET['noplots']) {
 <ul>
 <?
 foreach ($remainder as $filename) {
-  print "<li><a href=\"$filename\" target=\"_blank\">$filename</a></li>";
+  // print "<li><a href=\"$filename\" target=\"_blank\">$filename</a></li>";
+  print "<li><a href=\"$filename\">$filename</a></li>";
 }
 ?>
 </ul>
