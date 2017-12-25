@@ -309,6 +309,10 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 void plotter_DataMCSignalBackground(TH1D * h_Data, TH1D * h_MCSignal, TH1D * h_MCBackground, string outputFilePath, string xAxisTitle, bool isLogY = false, bool isLogX = false) {
 	setTDRStyle();
 
+	// gPad->SetLeftMargin(0.05); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+
 	h_Data->Sumw2();	
 	h_MCSignal->Sumw2();
 	h_MCBackground->Sumw2();	

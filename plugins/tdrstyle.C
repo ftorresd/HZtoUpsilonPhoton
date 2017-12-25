@@ -33,6 +33,8 @@ void setTDRStyle() {
   tdrStyle->SetGridColor(0);
   tdrStyle->SetGridStyle(3);
   tdrStyle->SetGridWidth(1);
+  // tdrStyle->SetPadRightMargin(0.05); 
+  // tdrStyle->SetPadTopMargin(0.08);
 
 // For the frame:
   tdrStyle->SetFrameBorderMode(0);

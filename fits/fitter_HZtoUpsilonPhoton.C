@@ -40,13 +40,14 @@
 #include "RooConstVar.h"
 
 
-// #include "RooDataSet.h"
+#include "RooDataSet.h"
 // #include "RooPolynomial.h"
 // #include "TAxis.h"
 // #include "RooTrace.h"
 
 
 #include "../plugins/tdrstyle.C"
+// #include "plugins/tdrstyle.C"
 #include "plugins/RooDCBShape/RooDCBShape.h"
 
 #ifdef __CINT__
@@ -57,6 +58,9 @@ using namespace RooFit;
 using namespace std;
 
 
+
+////////////////////////////////////////////////////////////////////////////////////
+// 2D Fit
 void DCBZPeakUpsilonfit2D() {
 
 	setTDRStyle();
@@ -167,7 +171,7 @@ void DCBZPeakUpsilonfit2D() {
 	double dmychsq = frame->chiSquare("thePdf","theData", dnfloatpars);
 	double dmyndof = Dimuon->GetNbinsX() - dnfloatpars;
 	pdf->paramOn(frame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", dmyndof*dmychsq, dmyndof))
-		    );
+		);
 
 
 
@@ -211,11 +215,11 @@ void DCBZPeakUpsilonfit2D() {
 	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
 	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
 	RooBernstein BkgPdf_2016("BkgPdf_2016", " ", dimuongamma, RooArgList(RooConst(1),p1,p2));
-    RooRealVar b("BernsteinBackground", "background yield", 100, 0, 10000);
+	RooRealVar b("BernsteinBackground", "background yield", 100, 0, 10000);
 
 
 	//RooAddPdf sum("sum", "double crystal ball and exponential PDF", RooArgList(cball, expo), RooArgList(s_dcb, b));
-    RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(cball, BkgPdf_2016), RooArgList(s_dcb, b));
+	RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(cball, BkgPdf_2016), RooArgList(s_dcb, b));
     // RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(BkgPdf_2016), RooArgList(s_dcb, b));
 	RooPlot * xFrame = dimuongamma.frame(Title("Z-peak")) ;
 
@@ -231,9 +235,7 @@ void DCBZPeakUpsilonfit2D() {
 
 	//sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
 	sum.plotOn(xFrame, RooFit::Components(BkgPdf_2016),RooFit::LineStyle(kDashed),LineColor(kRed)) ; 
-        sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
-
-
+	sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
 
 	// Adding Dataset box and PDF parameters box 
 	RooArgSet * pars = sum.getParameters(dimuongamma);
@@ -241,7 +243,7 @@ void DCBZPeakUpsilonfit2D() {
 	double mychsq = xFrame->chiSquare(nfloatpars);
 	double myndof = DimuonGamma->GetNbinsX() - nfloatpars;
 	sum.paramOn(xFrame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", myndof*mychsq, myndof))
-		   );
+		);
 
 
 	////////////
@@ -257,8 +259,8 @@ void DCBZPeakUpsilonfit2D() {
 	// Z fiting and blind regions 
 	//dimuongamma.setRange("blind_signal", 70, 120);
 	dimuongamma.setRange("blind_bck1", 80, 100);
-        dimuongamma.setRange("blind_bck2", 120, 135);	
-// Upsilon Region
+	dimuongamma.setRange("blind_bck2", 120, 135);	
+	// Upsilon Region
 	mass.setRange("blind_signal", 9., 11.);
 	//mass.setRange("blind_bck", 8, 8.9);
 	//mass.setRange("blind_bck", 11., 12.);
@@ -318,7 +320,7 @@ void DCBZPeakUpsilonfit2D() {
 	//c->Divide(2,2) ;
 	c->Divide(2,1);
 	c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
-//	c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
+	//	c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
 	c->cd(2); hmodel2d->Draw("Surf3") ;
 
 	system(("mkdir -p  `dirname fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.png`"));
@@ -328,11 +330,125 @@ void DCBZPeakUpsilonfit2D() {
 	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.root");
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+// 2D Fit
+void ZBackgroundFit() {
+
+	setTDRStyle();
+
+
+	// auto * outTreeToFitFile = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoJPsi.root");
+	auto * outTreeToFitFile = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoUpsilon.root");
+	//	TFile* _file0 = new TFile("HaddHistos_ZtoUpsilonPhoton_ZToUpsilonGamma.root","read");
+	auto * outTreeToFit = (TTree*)outTreeToFitFile->Get("outTree_ZtoUpsilonPhoton");
+
+	auto * outHistoFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToUpsilon1SGamma.root");
+	auto * outHisto = (TH1D*)outHistoFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+
+
+	RooRealVar mHZ("mHZ", "mHZ", 70, 120, "GeV") ;
+	RooRealVar weights("mHZWeight", "mHZWeight", -100, 100, "");
+
+	RooDataSet data("data", " ", RooArgSet(mHZ), Import(*outTreeToFit)); 
+	data.Print();
+
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// background model
+	RooRealVar p0("p0", " ", 0, 1); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
+	RooRealVar p3("p3", " ", 0, 1); // coefficient of x^3 term
+	RooBernstein Bernstein("Bernstein", " ", mHZ, RooArgList(RooConst(1), p1, p2, p3));
+	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
+
+
+	RooFitResult * fitResult = Bernstein.fitTo(data, Save(kTRUE));
+	fitResult->Print();
+
+  	////////////////////////////////////////////////////////////////////////////////////
+  	// plot fit 
+
+	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+
+	mHZ.setRange("leftSide",70,80) ;
+	mHZ.setRange("rightSide",100,120);
+	RooPlot* xframe1 = mHZ.frame(Title("M_{#mu#mu#gamma}")) ;
+	data.plotOn(xframe1,Binning(20),CutRange("leftSide"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("rightSide"), MarkerSize(3)) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResult,2),FillColor(kYellow)) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResult,1),FillColor(kGreen)) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7));
+	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
+	data.plotOn(xframe1,Binning(20),CutRange("leftSide"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("rightSide"), MarkerSize(3)) ;
+	xframe1->SetMinimum(0.00001);
+	xframe1->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
+	xframe1->GetXaxis()->SetLabelOffset(0.02);
+	xframe1->Draw();
+
+
+	//signal yield
+	outHisto->SetLineWidth(3);
+	outHisto->SetLineColor(kOrange+8);
+	outHisto->SetLineStyle(1);
+	outHisto->Scale(30.0/(outHisto->Integral()));
+	outHisto->Rebin(5);
+	outHisto->Draw("hist same");
+
+	// legend
+	auto legend = new TLegend(0.6,0.7,0.9,0.87);
+	legend->SetBorderSize(0);
+	legend->SetFillStyle(0);
+	legend->AddEntry(xframe1->findObject("data"), "Data", "lpe");
+	legend->AddEntry(xframe1->findObject("Bernstein"), "Background Model", "l");
+	legend->AddEntry(outHisto, "Expected Signal (#times 30)", "l");
+
+	legend->Draw();
+
+	// CMS decoration
+    auto latex = new TLatex();
+    latex->SetNDC();
+    latex->SetTextFont(61);
+    latex->SetTextSize(0.05);
+    latex->DrawLatex(.17, 0.93, "CMS");
+    latex->SetTextFont(52);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(11);
+    latex->DrawLatex(.25, 0.93, "Preliminary");
+    latex->SetTextFont(42);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(31);
+    latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+ 	system(("mkdir -p  `dirname fitPlotFiles/ZBackgroundFit.png`"));
+ 	c1->SaveAs("fitPlotFiles/ZBackgroundFit.root");
+ 	c1->SaveAs("fitPlotFiles/ZBackgroundFit.png");
+ 	c1->SaveAs("fitPlotFiles/ZBackgroundFit.pdf");
+
+
+
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
+	RooWorkspace *w = new RooWorkspace("w","workspace") ;  
+	w->import(mHZ);
+	w->import(data,Rename("data_obs"));
+	w->import(Bernstein);
+	w->Print();
+	system(("mkdir -p  `dirname fitPlotFiles/ZBackgroundFit_workspace.root`"));
+	w->writeToFile("fitPlotFiles/ZBackgroundFit_workspace.root"); 
+
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DOES THE ACTUAL FITTING
-void fitter_HZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFilePath, string histoMCBackgroundFilePath)  
+// void fitter_HZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFilePath, string histoMCBackgroundFilePath)  
+void fitter_HZtoUpsilonPhoton()  
 {
 	// auto * histoDataFile = TFile::Open(histoDataFilePath.c_str());
 	// auto * histoMCSignalFile = TFile::Open(histoMCSignalFilePath.c_str());
@@ -344,12 +460,13 @@ void fitter_HZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	setTDRStyle();
 	system("rm -fr fitPlotFiles; mkdir fitPlotFiles");
 
-	DCBZPeakUpsilonfit2D();
+	// DCBZPeakUpsilonfit2D();
+	ZBackgroundFit();
 
 
 
 } //end plotter_ZtoUpsilonPhoton
 
-   
+
 
 
