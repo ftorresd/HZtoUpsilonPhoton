@@ -334,9 +334,7 @@ void ZToUpsilonPhotonSignalAndBackgroundFit() {
 	setTDRStyle();
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	// LOAD DATA
-
-	// DATA
+	// LOAD DATA 
 	// auto * outTreeToFitFile = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoJPsi.root");
 	auto * outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoUpsilon.root");
 	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
@@ -349,16 +347,6 @@ void ZToUpsilonPhotonSignalAndBackgroundFit() {
 	// SIGNAL HISTO
 	auto * outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToUpsilon1SGamma.root");
 	auto * outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
-
-
-	// SIGNAL
-	auto * outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root");
-	// auto * outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon.root");
-	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_ZtoUpsilonPhoton");
-	RooRealVar mHZSignal("mHZ", "mHZ", 70, 120, "GeV") ;
-	RooRealVar weightsSignal("mHZWeight", "mHZWeight", -100, 100, "");
-	RooDataSet signal("signal", " ", RooArgSet(mHZSignal, weightsSignal), Import(*outTreeToFitSignal), WeightVar(weightsSignal));
-	signal.Print();
 
 
 	////////////////////////////////////////////////////////////////////////////////////
@@ -420,25 +408,36 @@ void ZToUpsilonPhotonSignalAndBackgroundFit() {
 	legend->Draw();
 
 	// CMS decoration
-    auto latex = new TLatex();
-    latex->SetNDC();
-    latex->SetTextFont(61);
-    latex->SetTextSize(0.05);
-    latex->DrawLatex(.17, 0.93, "CMS");
-    latex->SetTextFont(52);
-    latex->SetTextSize(0.04);
-    latex->SetTextAlign(11);
-    latex->DrawLatex(.25, 0.93, "Preliminary");
-    latex->SetTextFont(42);
-    latex->SetTextSize(0.04);
-    latex->SetTextAlign(31);
-    latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+	auto latex = new TLatex();
+	latex->SetNDC();
+	latex->SetTextFont(61);
+	latex->SetTextSize(0.05);
+	latex->DrawLatex(.17, 0.93, "CMS");
+	latex->SetTextFont(52);
+	latex->SetTextSize(0.04);
+	latex->SetTextAlign(11);
+	latex->DrawLatex(.25, 0.93, "Preliminary");
+	latex->SetTextFont(42);
+	latex->SetTextSize(0.04);
+	latex->SetTextAlign(31);
+	latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
 
- 	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png`"));
- 	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.root");
- 	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png");
- 	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.pdf");
+	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png`"));
+	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.root");
+	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png");
+	c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.pdf");
 
+
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// LOAD DATA - SIGNAL
+	// auto * outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root");
+	auto * outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon.root");
+	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_ZtoUpsilonPhoton");
+	RooRealVar mHZSignal("mHZ", "mHZ", 70, 120, "GeV") ;
+	RooRealVar weightsSignal("mHZWeight", "mHZWeight", -100, 100, "");
+	RooDataSet signal("signal", " ", RooArgSet(mHZSignal, weightsSignal), Import(*outTreeToFitSignal), WeightVar(weightsSignal));
+	signal.Print();
 
 	////////////////////////////////////////////////////////////////////////////////////
 	// SIGNAL MODEL
@@ -471,7 +470,10 @@ void ZToUpsilonPhotonSignalAndBackgroundFit() {
 	signal.plotOn(xframeSignal,Binning(40),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
 	// dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kAzure+7));
 	dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kOrange+8));
+	signal.plotOn(xframeSignal,Binning(40),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
 	// dcball.paramOn(xframeSignal,Layout(0.65,0.92,0.89));
+
+
 
 	xframeSignal->SetMinimum(0.00001);
 	xframeSignal->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
@@ -488,32 +490,134 @@ void ZToUpsilonPhotonSignalAndBackgroundFit() {
 	legendSignal->Draw();
 
 	// CMS decoration
-    auto latexSignal = new TLatex();
-    latexSignal->SetNDC();
-    latexSignal->SetTextFont(61);
-    latexSignal->SetTextSize(0.05);
-    latexSignal->DrawLatex(.17, 0.93, "CMS");
-    latexSignal->SetTextFont(52);
-    latexSignal->SetTextSize(0.04);
-    latexSignal->SetTextAlign(11);
-    latexSignal->DrawLatex(.25, 0.93, "Preliminary");
-    latexSignal->SetTextFont(42);
-    latexSignal->SetTextSize(0.04);
-    latexSignal->SetTextAlign(31);
-    latexSignal->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+	auto latexSignal = new TLatex();
+	latexSignal->SetNDC();
+	latexSignal->SetTextFont(61);
+	latexSignal->SetTextSize(0.05);
+	latexSignal->DrawLatex(.17, 0.93, "CMS");
+	latexSignal->SetTextFont(52);
+	latexSignal->SetTextSize(0.04);
+	latexSignal->SetTextAlign(11);
+	latexSignal->DrawLatex(.25, 0.93, "Preliminary");
+	latexSignal->SetTextFont(42);
+	latexSignal->SetTextSize(0.04);
+	latexSignal->SetTextAlign(31);
+	latexSignal->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
 
- 	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png`"));
- 	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.root");
- 	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png");
- 	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.pdf");
+	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png`"));
+	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.root");
+	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png");
+	cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.pdf");
+
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// LOAD DATA - PEAKING BACKGROUND
+	// auto * outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJpsi.root");
+	auto * outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon.root");
+	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_ZtoUpsilonPhoton");
+	RooRealVar mHZPeakingBackground("mHZ", "mHZ", 70, 120, "GeV") ;
+	RooRealVar weightsPeakingBackground("mHZWeight", "mHZWeight", -100, 100, "");
+	RooDataSet peakingBackground("peakingBackground", " ", RooArgSet(mHZPeakingBackground, weightsPeakingBackground), Import(*outTreeToFitPeakingBackground), WeightVar(weightsPeakingBackground));
+	peakingBackground.Print();
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// SIGNAL PEAKING BACKGROUND
+	RooRealVar mean_dcbPeakingBackground("mean_dcbPeakingBackground", "Mean" ,91.1876,70,120) ;
+	RooRealVar sigma_dcbPeakingBackground("sigma_dcbPeakingBackground", "Width" ,  2., 0.5, 4.) ;
+	RooRealVar n1PeakingBackground("n1PeakingBackground","", 0.5, 0.1, 50.);//dCBPowerL
+	// RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
+	RooRealVar n2PeakingBackground("n2PeakingBackground","", 0.5, 0.1, 50.);//dCBPowerR
+	RooRealVar alpha1PeakingBackground("alpha1PeakingBackground","", 3., 0.1, 50.);//dCBCutL
+	RooRealVar alpha2PeakingBackground("alpha2PeakingBackground","", 3., 0.1, 50.);//dCBCutR
+	// RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
+
+
+	RooDCBShape dcballPeakingBackground(
+			"dcballPeakingBackground", 
+			"double sided crystal ball", 
+			mHZPeakingBackground, 
+			mean_dcbPeakingBackground,
+			sigma_dcbPeakingBackground,
+			alpha1PeakingBackground,
+			alpha2PeakingBackground,
+			n1PeakingBackground,
+			n2PeakingBackground
+		);
+
+	cout << "\n\n---------> Begin Peaking Background Fit\n\n" << endl;
+	RooFitResult * fitResultPeakingBackground = dcballPeakingBackground.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
+	fitResultPeakingBackground->Print();
+	cout << "\n\n---------> End Peaking Background Fit\n\n" << endl;
+
+
+  	////////////////////////////////////////////////////////////////////////////////////
+  	// Peaking Background PLOT
+	auto cPeakingBackground = new TCanvas("cPeakingBackground","cPeakingBackground",1050*2.0,750*2.0);
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+	RooPlot* xframePeakingBackground = mHZPeakingBackground.frame(Title("M_{#mu#mu#gamma}")) ;
+	peakingBackground.plotOn(xframePeakingBackground,Binning(40),RooFit::Name("peakingBackground"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcballPeakingBackground.plotOn(xframePeakingBackground,RooFit::Name("dcballPeakingBackground"),LineColor(kAzure+7));
+	dcballPeakingBackground.plotOn(xframePeakingBackground,RooFit::Name("dcballPeakingBackground"),LineColor(kAzure+7));
+	peakingBackground.plotOn(xframePeakingBackground,Binning(40),RooFit::Name("peakingBackground"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcballPeakingBackground.paramOn(xframePeakingBackground,Layout(0.65,0.92,0.89));
+
+
+
+	xframePeakingBackground->SetMinimum(0.00001);
+	xframePeakingBackground->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
+	xframePeakingBackground->GetXaxis()->SetLabelOffset(0.02);
+	xframePeakingBackground->Draw();
+
+	// legend
+	auto legendPeakingBackground = new TLegend(0.6,0.7,0.9,0.87);
+	legendPeakingBackground->SetBorderSize(0);
+	legendPeakingBackground->SetFillStyle(0);
+	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Z #rightarrow #mu#mu + #gamma MC", "lpe");
+	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("dcballPeakingBackground"), "Peaking Background Model", "l");
+	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	legendPeakingBackground->Draw();
+
+	// CMS decoration
+	auto latexPeakingBackground = new TLatex();
+	latexPeakingBackground->SetNDC();
+	latexPeakingBackground->SetTextFont(61);
+	latexPeakingBackground->SetTextSize(0.05);
+	latexPeakingBackground->DrawLatex(.17, 0.93, "CMS");
+	latexPeakingBackground->SetTextFont(52);
+	latexPeakingBackground->SetTextSize(0.04);
+	latexPeakingBackground->SetTextAlign(11);
+	latexPeakingBackground->DrawLatex(.25, 0.93, "Preliminary");
+	latexPeakingBackground->SetTextFont(42);
+	latexPeakingBackground->SetTextSize(0.04);
+	latexPeakingBackground->SetTextAlign(31);
+	latexPeakingBackground->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
+	cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.root");
+	cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png");
+	cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+
 
 
 	////////////////////////////////////////////////////////////////////////////////////
 	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
 	RooWorkspace *w = new RooWorkspace("w","workspace") ;  
+	
+	// data
 	w->import(mHZData);
 	w->import(data,Rename("data_obs"));
 	w->import(Bernstein);
+	// signal
+	// w->import(mHZSignal,Rename("mHZSignal"));
+	w->import(signal,Rename("signal"));
+	w->import(dcball);
+	//peaking background
+	// w->import(mHZPeakingBackground);
+	w->import(peakingBackground,Rename("peakingBackground"));
+	w->import(dcballPeakingBackground);
+
 	w->Print();
 	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit.root`"));
 	w->writeToFile("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root"); 
@@ -537,6 +641,7 @@ void fitter_HZtoUpsilonPhoton()
 	system("rm -fr fitPlotFiles; mkdir fitPlotFiles");
 
 	// DCBZPeakUpsilonfit2D();
+	// ZToJPsiPhotonSignalAndBackgroundFit();
 	ZToUpsilonPhotonSignalAndBackgroundFit();
 
 
