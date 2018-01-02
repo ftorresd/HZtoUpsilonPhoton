@@ -112,6 +112,10 @@ void plotter_Single(TH1D * h1, string outputFilePath, string legendEntry, bool i
 
 	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);	
 
+	if (isLogY) c1->SetLogy();
+	if (isLogX) c1->SetLogx();
+
+
 	h1->SetMaximum(h1->GetMaximum()*1.3);
 	h1->GetXaxis()->SetTitleOffset(1.0);
 	h1->GetYaxis()->SetTitleOffset(1.5);
@@ -220,13 +224,15 @@ void plotter_LeadingTrailing(TH1D * h_Lead, TH1D * h_Trail, string outputFilePat
 	delete latex;
 }
 
-void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLogY = false, bool isLogX = false) {
+void plotter_DataMC(TH1D * h_DataOriginal, TH1D * h_MCOriginal, string outputFilePath, bool isLogY = false, int mcScale = -1, bool isLogX = false) {
 	setTDRStyle();
 
-	h_Data->Sumw2();	
-	h_MC->Sumw2();	
+	// clone histos
+	auto h_Data = (TH1D*)h_DataOriginal->Clone();
+	auto h_MC = (TH1D*)h_MCOriginal->Clone();
 
-	h_Data->Scale(1.0/(h_Data->Integral()));
+	if (mcScale < 0) h_Data->Scale(1.0/(h_Data->Integral()));
+	else h_Data->Scale(1.0);
 	// h_Data->SetLineWidth(0);
 	// h_Data->SetLineColor(kOrange+8);
 	// h_Data->SetLineStyle(0);
@@ -235,7 +241,9 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 	h_Data->SetMarkerColor(kBlack);
 
 
-	h_MC->Scale(1.0/(h_MC->Integral()));
+	if (mcScale < 0) h_MC->Scale(1.0/(h_MC->Integral()));
+	// else h_MC->Scale(mcScale/(h_MC->Integral()));
+	else h_MC->Scale(mcScale);
 	h_MC->SetLineWidth(0);
 	// h_MC->SetLineColor(kAzure+7);
 	h_MC->SetLineStyle(0);
@@ -250,7 +258,8 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 	double histoMax = max(h_Data->GetMaximum(), h_MC->GetMaximum())*1.3;
 	h_MC->SetMaximum(histoMax);
 	h_MC->Draw("hist");	
-	h_MC->GetYaxis()->SetTitle("a.u.");
+	if (mcScale < 0) h_MC->GetYaxis()->SetTitle("a.u.");
+	else h_MC->GetYaxis()->SetTitle("Events (Data) / Yield (MC)");
 	h_MC->GetXaxis()->SetTitleOffset(1.0);
 	h_MC->GetYaxis()->SetTitleOffset(1.5);
 	h_Data->Draw("E1 same");
@@ -273,11 +282,12 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 	
 
 	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
-	auto legend = new TLegend(0.74,0.76,1.03,0.93);
+	auto legend = new TLegend(0.68,0.76,.97,0.93);
 	legend->SetBorderSize(0);
 	legend->SetFillStyle(0);
 	legend->AddEntry(h_Data, "Data", "lpe");
-	legend->AddEntry(h_MC, "Signal", "f");
+	if (mcScale < 0) legend->AddEntry(h_MC, "Signal", "f");
+	else legend->AddEntry(h_MC, ("Signal (#times " + to_string(mcScale) + ")").c_str(), "f");
 	legend->Draw();
 
     auto latex = new TLatex();
@@ -296,42 +306,65 @@ void plotter_DataMC(TH1D * h_Data, TH1D * h_MC, string outputFilePath, bool isLo
 
 	c1->Update();
 
-	system(("mkdir -p  `dirname plotFiles/"+outputFilePath+".png`").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".png").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".pdf").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".root").c_str());
+	if (mcScale < 0){ 
+		system(("mkdir -p  `dirname plotFiles/au/"+outputFilePath+".png`").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".png").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".pdf").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".root").c_str());
+	} else {
+		system(("mkdir -p  `dirname plotFiles/nEvts/"+outputFilePath+".png`").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".png").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".pdf").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".root").c_str());
+	}
 
 	delete c1;
 	delete legend;
 	delete latex;
+	delete h_MC;
+	delete h_Data;
+
+	// break recursive function
+	if (mcScale < 0) plotter_DataMC(h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 20 , isLogX);
+	else return;
+
 }
 
-void plotter_DataMCSignalBackground(TH1D * h_Data, TH1D * h_MCSignal, TH1D * h_MCBackground, string outputFilePath, string xAxisTitle, bool isLogY = false, bool isLogX = false) {
+void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOriginal, TH1D * h_MCBackgroundOriginal, string outputFilePath, string xAxisTitle, bool isLogY = false, int mcScale = -1, bool isLogX = false) {
 	setTDRStyle();
 
-	// gPad->SetLeftMargin(0.05); 
-	gPad->SetRightMargin(0.05); 
-	gPad->SetTopMargin(0.08);
+	// // gPad->SetLeftMargin(0.05); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
 
-	h_Data->Sumw2();	
-	h_MCSignal->Sumw2();
-	h_MCBackground->Sumw2();	
+	// h_Data->Sumw2();	
+	// h_MCSignal->Sumw2();
+	// h_MCBackground->Sumw2();	
 
-	h_Data->Scale(1.0/(h_Data->Integral()));
+	// clone histos
+	auto h_Data = (TH1D*)h_DataOriginal->Clone();
+	auto h_MCSignal = (TH1D*)h_MCSignalOriginal->Clone();
+	auto h_MCBackground = (TH1D*)h_MCBackgroundOriginal->Clone();
+
+
+	if (mcScale < 0) h_Data->Scale(1.0/(h_Data->Integral()));
+	else h_Data->Scale(1.0);
 	h_Data->SetMarkerStyle(20);
 	h_Data->SetMarkerSize(2);
 	h_Data->SetMarkerColor(kBlack);
 
 
 	// h_MCSignal->Scale(1.0/( (*h_MCSignal + *h_MCBackground).Integral() ));
-	h_MCSignal->Scale(1.0/( h_MCSignal->Integral() ));
+	if (mcScale < 0) h_MCSignal->Scale(1.0/( h_MCSignal->Integral() ));
+	else h_MCSignal->Scale(mcScale);
 	h_MCSignal->SetLineWidth(0);
 	h_MCSignal->SetLineStyle(0);
 	h_MCSignal->SetFillColor(kAzure+7);
    	h_MCSignal->SetFillStyle(1001);
 
 	// h_MCBackground->Scale(1.0/( (*h_MCSignal + *h_MCBackground).Integral() ));
-	h_MCBackground->Scale(1.0/( h_MCBackground->Integral() ));
+	if (mcScale < 0) h_MCBackground->Scale(1.0/( h_MCBackground->Integral() ));
+	else h_MCBackground->Scale(mcScale);
 	h_MCBackground->SetLineWidth(0);
 	h_MCBackground->SetLineStyle(0);
 	h_MCBackground->SetFillColor(kGray);
@@ -361,8 +394,12 @@ void plotter_DataMCSignalBackground(TH1D * h_Data, TH1D * h_MCSignal, TH1D * h_M
 	legend->SetBorderSize(0);
 	legend->SetFillStyle(0);
 	legend->AddEntry(h_Data, "Data", "lpe");
-	legend->AddEntry(h_MCSignal, "Signal", "f");
-	legend->AddEntry(h_MCBackground, "Background", "f");
+	if (mcScale < 0) legend->AddEntry(h_MCSignal, "Signal", "f");
+	else legend->AddEntry(h_MCSignal, ("Signal (#times " + to_string(mcScale) + ")").c_str(), "f");
+	if (mcScale < 0) legend->AddEntry(h_MCBackground, "Background", "f");
+	else legend->AddEntry(h_MCBackground, ("Background (#times " + to_string(mcScale) + ")").c_str(), "f");
+	// legend->AddEntry(h_MCSignal, "Signal", "f");
+	// legend->AddEntry(h_MCBackground, "Background", "f");
 	legend->Draw();
 
     auto latex = new TLatex();
@@ -381,15 +418,33 @@ void plotter_DataMCSignalBackground(TH1D * h_Data, TH1D * h_MCSignal, TH1D * h_M
 
 	c1->Update();
 
-	system(("mkdir -p  `dirname plotFiles/"+outputFilePath+".png`").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".png").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".pdf").c_str());
-	c1->SaveAs(("plotFiles/"+outputFilePath+".root").c_str());
 
+
+	if (mcScale < 0){ 
+		system(("mkdir -p  `dirname plotFiles/au/"+outputFilePath+".png`").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".png").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".pdf").c_str());
+		c1->SaveAs(("plotFiles/au/"+outputFilePath+".root").c_str());
+	} else {
+		system(("mkdir -p  `dirname plotFiles/nEvts/"+outputFilePath+".png`").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".png").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".pdf").c_str());
+		c1->SaveAs(("plotFiles/nEvts/"+outputFilePath+".root").c_str());
+	}
+
+	
 	delete c1;
 	delete legend;
 	delete latex;
-	delete h_MC;
+	delete h_MCSignal;
+	delete h_MCBackground;
+	delete h_Data;
+
+	// break recursive function
+	if (mcScale < 0) plotter_DataMCSignalBackground(h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 20, isLogX);
+	else return;
+
+
 }
 
 

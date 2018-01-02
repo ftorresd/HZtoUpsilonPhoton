@@ -340,9 +340,12 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoUpsilon.root");
 	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
 	RooRealVar mHZData("mHZ", "mHZ", 70, 120, "GeV") ;
+	mHZData.setRange("LS", 70, 80);
+  	mHZData.setRange("RS", 100, 120);
 	// RooRealVar mHZData("mHZ", "mHZ", 80, 100, "GeV") ;
-	RooRealVar weightsData("mHZWeight", "mHZWeight", -100, 100, "");
+	// RooRealVar weightsData("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet data("data", "", RooArgSet(mHZData), Import(*outTreeToFitData)); 
+
 	// data.Print("v");
 	// for (int i = 0 ; i <190 ; i++) {
 	// 	data.get(i)->Print("v");
@@ -352,24 +355,42 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 
 	// SIGNAL HISTO
-	auto * outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToUpsilon1SGamma.root");
-	auto * outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
-
+	TFile * outHistoSignalFile;
+	TH1D * outHistoSignal;
+	if (analysisBranch == "JPsi")  {
+		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root");
+		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+	}
+	if (analysisBranch == "Upsilon")  {
+		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon.root");
+		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////
 	// BACKGROUND MODEL
-	RooRealVar p0("p0", " ", 0, 1); // coefficient of x^0 term
-	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
-	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
-	RooRealVar p3("p3", " ", 0, 1); // coefficient of x^3 term
-	RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2, p3));
+	// RooRealVar p0("p0", " ", 0, 10); // coefficient of x^0 term
+	// RooRealVar p1("p1", " ", 0, 10); // coefficient of x^1 term
+	// RooRealVar p2("p2", " ", 0, 10); // coefficient of x^2 term
+	// RooRealVar p3("p3", " ", 0, 10); // coefficient of x^3 term
+	// RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+	RooRealVar p0("p0", " ", 10, 0.1, 20); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 10, 0.1, 20); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 10, 0.1, 20); // coefficient of x^2 term
+	RooRealVar p3("p3", " ", 10, 0.1, 20); // coefficient of x^3 term
+	RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+
+	RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(p0, p1, p2, p3));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2, p3));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), RooConst(1), RooConst(1.12), p3));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
 	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1 ) );
 	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
 
-	cout << "\n\n---------> Begin Background Fit\n\n" << endl;
-	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE));
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit\n\n" << endl;
+	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
+	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
-	cout << "\n\n---------> End Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit\n\n" << endl;
 
 
 
@@ -380,17 +401,21 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	gPad->SetRightMargin(0.05); 
 	gPad->SetTopMargin(0.08);
 
-	mHZData.setRange("leftSide",70,80) ;
-	mHZData.setRange("rightSide",100,120);
+	// mHZData.setRange("leftSide",70,80) ;
+	// mHZData.setRange("rightSide",100,120);
 	RooPlot* xframe1 = mHZData.frame(Title("M_{#mu#mu#gamma}")) ;
-	data.plotOn(xframe1,Binning(20),CutRange("leftSide"),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("rightSide"), MarkerSize(3)) ;
-	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,2),FillColor(kYellow)) ;
-	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,1),FillColor(kGreen)) ;
-	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7));
-	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
-	data.plotOn(xframe1,Binning(20),CutRange("leftSide"),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("rightSide"), MarkerSize(3)) ;
+	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	// data.plotOn(xframe1,Binning(20),CutRange("RS"), MarkerSize(3)) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,2),FillColor(kYellow), Range("full"), NormRange("full") ) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,1),FillColor(kGreen), Range("full"), NormRange("full") ) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7), Range("full"), NormRange("full")   );
+	// Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7)   );
+	Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
+	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(20),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
 	xframe1->SetMinimum(0.00001);
 	xframe1->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
 	xframe1->GetXaxis()->SetLabelOffset(0.02);
@@ -413,7 +438,7 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	legend->AddEntry(xframe1->findObject("Bernstein"), "Background Model", "l");
 	legend->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
 
-	legend->Draw();
+	// legend->Draw();
 
 	// CMS decoration
 	auto latex = new TLatex();
@@ -470,11 +495,11 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	RooDCBShape dcball("dcball", "double sided crystal ball", mHZSignal, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
 
-	cout << "\n\n---------> Begin Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit\n\n" << endl;
 	RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	// RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kFALSE) ) ;
 	fitResultSignal->Print();
-	cout << "\n\n---------> End Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -571,10 +596,10 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 		n2PeakingBackground
 		);
 
-	cout << "\n\n---------> Begin Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit\n\n" << endl;
 	RooFitResult * fitResultPeakingBackground = dcballPeakingBackground.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultPeakingBackground->Print();
-	cout << "\n\n---------> End Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -677,7 +702,7 @@ void fitter_HZtoUpsilonPhoton()
 	// fitter
 	// DCBZPeakUpsilonfit2D();
 	ZToUpsilonPhotonSignalAndBackgroundFit("JPsi");
-	ZToUpsilonPhotonSignalAndBackgroundFit("Upsilon");
+	// ZToUpsilonPhotonSignalAndBackgroundFit("Upsilon");
 
 } //end plotter_ZtoUpsilonPhoton
 

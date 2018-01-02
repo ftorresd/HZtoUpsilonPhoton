@@ -147,7 +147,6 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 		maxHZMassRight = 120.;
 		nBinsHZMass = 50;
 		mumugammaLatexName = "Z";
-
 	}
 	if (analysisBranch == "HtoJpsi" || analysisBranch == "HtoUpsilon") {
 		minHZMassLeft = 100.;
@@ -704,14 +703,19 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 					if (recoZ.M() < maxHZMassLeft || recoZ.M() > minHZMassRight) {
 						h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
 						// outputTreeFile->cd();
-						outTree->Fill();
+						// cout << "mHZ: "<< mHZ << endl;
 					}
+					outTree->Fill();
+					mHZ = -99.0;
+					mHZWeight = 1.;
 				} else {
 					h_withKin_Z_Mass->Fill(recoZ.M(),totalWeight);
 					outTree->Fill();
+					mHZ = -99.0;
+					mHZWeight = 1.;
 				}
-				mHZ = recoZ.M();
-				mHZWeight = totalWeight;
+				// mHZ = recoZ.M();
+				// mHZWeight = totalWeight;
 				h_withKin_Z_Pt->Fill(recoZ.Pt(),totalWeight);
 				h_withKin_Z_eta->Fill(recoZ.Eta(),totalWeight);
 				h_withKin_Z_phi->Fill(recoZ.Phi(),totalWeight);
