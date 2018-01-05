@@ -224,7 +224,7 @@ void plotter_LeadingTrailing(TH1D * h_Lead, TH1D * h_Trail, string outputFilePat
 	delete latex;
 }
 
-void plotter_DataMC(TH1D * h_DataOriginal, TH1D * h_MCOriginal, string outputFilePath, bool isLogY = false, int mcScale = -1, bool isLogX = false) {
+void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOriginal, string outputFilePath, bool isLogY = false, int mcScale = -1, bool isLogX = false) {
 	setTDRStyle();
 
 	// clone histos
@@ -325,17 +325,22 @@ void plotter_DataMC(TH1D * h_DataOriginal, TH1D * h_MCOriginal, string outputFil
 	delete h_Data;
 
 	// break recursive function
-	if (mcScale < 0) plotter_DataMC(h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 20 , isLogX);
-	else return;
+	if (analysisBranch == "ZtoJpsi")
+		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 50 , isLogX);
+	if (analysisBranch == "HtoJpsi")
+		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 800 , isLogX);
+	if (analysisBranch == "ZtoUpsilon")
+		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 50 , isLogX);
+	if (analysisBranch == "HtoUpsilon")
+		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 800 , isLogX);
+
+	if (mcScale > 0) return;
 
 }
 
-void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOriginal, TH1D * h_MCBackgroundOriginal, string outputFilePath, string xAxisTitle, bool isLogY = false, int mcScale = -1, bool isLogX = false) {
+void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCSignalOriginal, TH1D * h_MCBackgroundOriginal, string outputFilePath, string xAxisTitle, bool isLogY = false, int mcSignalScale = -1, int mcBackgroundScale = -1, bool isLogX = false) {
 	setTDRStyle();
 
-	// // gPad->SetLeftMargin(0.05); 
-	// gPad->SetRightMargin(0.05); 
-	// gPad->SetTopMargin(0.08);
 
 	// h_Data->Sumw2();	
 	// h_MCSignal->Sumw2();
@@ -347,7 +352,7 @@ void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOrig
 	auto h_MCBackground = (TH1D*)h_MCBackgroundOriginal->Clone();
 
 
-	if (mcScale < 0) h_Data->Scale(1.0/(h_Data->Integral()));
+	if (mcSignalScale < 0) h_Data->Scale(1.0/(h_Data->Integral()));
 	else h_Data->Scale(1.0);
 	h_Data->SetMarkerStyle(20);
 	h_Data->SetMarkerSize(2);
@@ -355,24 +360,28 @@ void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOrig
 
 
 	// h_MCSignal->Scale(1.0/( (*h_MCSignal + *h_MCBackground).Integral() ));
-	if (mcScale < 0) h_MCSignal->Scale(1.0/( h_MCSignal->Integral() ));
-	else h_MCSignal->Scale(mcScale);
+	if (mcSignalScale < 0) h_MCSignal->Scale(1.0/( h_MCSignal->Integral() ));
+	else h_MCSignal->Scale(mcSignalScale);
 	h_MCSignal->SetLineWidth(0);
 	h_MCSignal->SetLineStyle(0);
 	h_MCSignal->SetFillColor(kAzure+7);
    	h_MCSignal->SetFillStyle(1001);
 
 	// h_MCBackground->Scale(1.0/( (*h_MCSignal + *h_MCBackground).Integral() ));
-	if (mcScale < 0) h_MCBackground->Scale(1.0/( h_MCBackground->Integral() ));
-	else h_MCBackground->Scale(mcScale);
-	h_MCBackground->SetLineWidth(0);
-	h_MCBackground->SetLineStyle(0);
-	h_MCBackground->SetFillColor(kGray);
+	if (mcSignalScale < 0) h_MCBackground->Scale(1.0/( h_MCBackground->Integral() ));
+	else h_MCBackground->Scale(mcBackgroundScale);
+	h_MCBackground->SetLineWidth(3);
+	h_MCBackground->SetLineStyle(9);
+	h_MCBackground->SetLineColor(kGray+1);
+	// h_MCBackground->SetFillColor(kGray);
+	// h_MCBackground->SetFillColor(kBlack);
    	h_MCBackground->SetFillStyle(1001);
+   	h_MCBackground->SetFillColorAlpha(kGray, 0.60);
+   	// h_MCBackground->SetFillStyle(3315);
 
    	THStack * h_MC = new THStack("h_MC","");
-   	h_MC->Add(h_MCBackground);
    	h_MC->Add(h_MCSignal);
+   	h_MC->Add(h_MCBackground);
 
 	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);	
 
@@ -383,21 +392,26 @@ void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOrig
 	h_MC->SetMaximum(histoMax);
 	h_MC->Draw("AXIS");	
 	h_MC->GetXaxis()->SetTitle(xAxisTitle.c_str());
-	h_MC->Draw("hist");	
-	h_MC->GetYaxis()->SetTitle("a.u.");
+	h_MC->Draw("hist nostack");	
+	// h_MC->GetYaxis()->SetTitle("a.u.");
+	if (mcSignalScale < 0) h_MC->GetYaxis()->SetTitle("a.u.");
+	else h_MC->GetYaxis()->SetTitle("Events (Data) / Yield (MC)");
 	h_MC->GetXaxis()->SetTitleOffset(1.0);
 	h_MC->GetYaxis()->SetTitleOffset(1.5);
 	h_Data->Draw("E1 same");
 	
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
 
-	auto legend = new TLegend(0.71,0.76,1.0,0.93);
+	auto legend = new TLegend(0.66,0.74,0.95,0.91);
 	legend->SetBorderSize(0);
 	legend->SetFillStyle(0);
 	legend->AddEntry(h_Data, "Data", "lpe");
-	if (mcScale < 0) legend->AddEntry(h_MCSignal, "Signal", "f");
-	else legend->AddEntry(h_MCSignal, ("Signal (#times " + to_string(mcScale) + ")").c_str(), "f");
-	if (mcScale < 0) legend->AddEntry(h_MCBackground, "Background", "f");
-	else legend->AddEntry(h_MCBackground, ("Background (#times " + to_string(mcScale) + ")").c_str(), "f");
+	if (mcSignalScale < 0) legend->AddEntry(h_MCSignal, "Signal", "f");
+	else legend->AddEntry(h_MCSignal, ("Signal (#times " + to_string(mcSignalScale) + ")").c_str(), "f");
+	if (mcSignalScale < 0) legend->AddEntry(h_MCBackground, "Background", "f");
+	else legend->AddEntry(h_MCBackground, ("Background (#times " + to_string(mcBackgroundScale) + ")").c_str(), "f");
 	// legend->AddEntry(h_MCSignal, "Signal", "f");
 	// legend->AddEntry(h_MCBackground, "Background", "f");
 	legend->Draw();
@@ -420,7 +434,7 @@ void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOrig
 
 
 
-	if (mcScale < 0){ 
+	if (mcSignalScale < 0){ 
 		system(("mkdir -p  `dirname plotFiles/au/"+outputFilePath+".png`").c_str());
 		c1->SaveAs(("plotFiles/au/"+outputFilePath+".png").c_str());
 		c1->SaveAs(("plotFiles/au/"+outputFilePath+".pdf").c_str());
@@ -441,8 +455,16 @@ void plotter_DataMCSignalBackground(TH1D * h_DataOriginal, TH1D * h_MCSignalOrig
 	delete h_Data;
 
 	// break recursive function
-	if (mcScale < 0) plotter_DataMCSignalBackground(h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 20, isLogX);
-	else return;
+	if (analysisBranch == "ZtoJpsi")
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100, 60, isLogX);
+	if (analysisBranch == "HtoJpsi")
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 1600, 400, isLogX);
+	if (analysisBranch == "ZtoUpsilon")
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100, 3, isLogX);
+	if (analysisBranch == "HtoUpsilon")
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 1600, 400, isLogX);
+	
+	if (mcSignalScale > 0) return;
 
 
 }

@@ -7,6 +7,7 @@
 
 	gStyle->SetOptStat(0);
 
+	system("rm -fr evtsCountFiles; mkdir evtsCountFiles");
 	
 	vector<string> ntuplesToPlotFilesData = {
 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
@@ -41,6 +42,13 @@
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToJPsiGamma.root"}, "HToJPsiGamma", "HtoJpsi", false); //MC
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HDalitz.root"}, "HDalitz", "HtoJpsi", false); //MC
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HDalitz.root"}, "HDalitz", "HtoUpsilon", false); //MC
+
+
+	system("hadd -f outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon.root outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon2SGamma_HtoUpsilon.root outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon3SGamma_HtoUpsilon.root");
+	system("hadd -f outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon.root outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilon2SGamma_HtoUpsilon.root outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilon3SGamma_HtoUpsilon.root");
+
+	system("cat evtsCountFiles/*.csv > evtsCountFiles/MERGED_evtsCountFiles.csv");
+
 
 	
 }

@@ -46,7 +46,7 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DOES THE ACTUAL PLOTTING
-void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFilePath, string histoMCBackgroundFilePath)  
+void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFilePath, string histoMCBackgroundFilePath, string analysisBranch)  
 {
 	auto * histoDataFile = TFile::Open(histoDataFilePath.c_str());
 	auto * histoMCSignalFile = TFile::Open(histoMCSignalFilePath.c_str());
@@ -353,112 +353,112 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// RECO - NO KIN CUTS
 
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_pt"), 
 		"data_x_mc/noKinCuts/h_noKin_LeadingMu_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_eta"), 
 		"data_x_mc/noKinCuts/h_noKin_LeadingMu_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_LeadingMu_phi"), 
 		"data_x_mc/noKinCuts/h_noKin_LeadingMu_phi",
 		false
 		); 
 
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_pt"), 
 		"data_x_mc/noKinCuts/h_noKin_TrailingMu_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_eta"), 
 		"data_x_mc/noKinCuts/h_noKin_TrailingMu_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_TrailingMu_phi"), 
 		"data_x_mc/noKinCuts/h_noKin_TrailingMu_phi",
 		false
 		); 
 
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_pt"), 
 		"data_x_mc/noKinCuts/h_noKin_Photon_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_eta"), 
 		"data_x_mc/noKinCuts/h_noKin_Photon_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Photon_phi"), 
 		"data_x_mc/noKinCuts/h_noKin_Photon_phi",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Leading_Trailing"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Leading_Trailing"), 
 		"data_x_mc/noKinCuts/h_noKin_deltaR_Leading_Trailing",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Leading_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Leading_Photon"), 
 		"data_x_mc/noKinCuts/h_noKin_deltaR_Leading_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Trailing_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Trailing_Photon"), 
 		"data_x_mc/noKinCuts/h_noKin_deltaR_Trailing_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Upsilon_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaR_Upsilon_Photon"), 
 		"data_x_mc/noKinCuts/h_noKin_deltaR_Upsilon_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaPhi_Upsilon_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_deltaPhi_Upsilon_Photon"), 
 		"data_x_mc/noKinCuts/h_noKin_deltaPhi_Upsilon_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass"), 
 		"data_x_mc/noKinCuts/h_noKin_Upsilon_Mass",
 		false
 		); 
 
- 	plotter_DataMCSignalBackground(
+ 	plotter_DataMCSignalBackground(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass"), 
 		(TH1D*)histoMCBackgroundFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass"), 
@@ -467,63 +467,63 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Pt"), 
 		"data_x_mc/noKinCuts/h_noKin_Upsilon_Pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_eta"), 
 		"data_x_mc/noKinCuts/h_noKin_Upsilon_eta",
 		false
 		); 
 		
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_phi"), 
 		"data_x_mc/noKinCuts/h_noKin_Upsilon_phi",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_Mass"), 
 		"data_x_mc/noKinCuts/h_noKin_Z_Mass",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_Pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_Pt"), 
 		"data_x_mc/noKinCuts/h_noKin_Z_Pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_eta"), 
 		"data_x_mc/noKinCuts/h_noKin_Z_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Z_phi"), 
 		"data_x_mc/noKinCuts/h_noKin_Z_phi",
 		false
 		); 
 				 	
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_upsilonPt_over_zMass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_upsilonPt_over_zMass"), 
 		"data_x_mc/noKinCuts/h_noKin_upsilonPt_over_zMass",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_photonPt_over_zMass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_photonPt_over_zMass"), 
 		"data_x_mc/noKinCuts/h_noKin_photonPt_over_zMass",
@@ -536,112 +536,112 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// RECO - WITH KIN CUTS
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_pt"), 
 		"data_x_mc/withKinCuts/h_withKin_LeadingMu_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_eta"), 
 		"data_x_mc/withKinCuts/h_withKin_LeadingMu_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_LeadingMu_phi"), 
 		"data_x_mc/withKinCuts/h_withKin_LeadingMu_phi",
 		false
 		); 
 
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_pt"), 
 		"data_x_mc/withKinCuts/h_withKin_TrailingMu_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_eta"), 
 		"data_x_mc/withKinCuts/h_withKin_TrailingMu_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_TrailingMu_phi"), 
 		"data_x_mc/withKinCuts/h_withKin_TrailingMu_phi",
 		false
 		); 
 
-	plotter_DataMC(
+	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_pt"), 
 		"data_x_mc/withKinCuts/h_withKin_Photon_pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_eta"), 
 		"data_x_mc/withKinCuts/h_withKin_Photon_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Photon_phi"), 
 		"data_x_mc/withKinCuts/h_withKin_Photon_phi",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Leading_Trailing"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Leading_Trailing"), 
 		"data_x_mc/withKinCuts/h_withKin_deltaR_Leading_Trailing",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Leading_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Leading_Photon"), 
 		"data_x_mc/withKinCuts/h_withKin_deltaR_Leading_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Trailing_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Trailing_Photon"), 
 		"data_x_mc/withKinCuts/h_withKin_deltaR_Trailing_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Upsilon_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaR_Upsilon_Photon"), 
 		"data_x_mc/withKinCuts/h_withKin_deltaR_Upsilon_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaPhi_Upsilon_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_deltaPhi_Upsilon_Photon"), 
 		"data_x_mc/withKinCuts/h_withKin_deltaPhi_Upsilon_Photon",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		"data_x_mc/withKinCuts/h_withKin_Upsilon_Mass",
 		false
 		); 
 
-  	plotter_DataMCSignalBackground(
+  	plotter_DataMCSignalBackground(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		(TH1D*)histoMCBackgroundFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
@@ -650,63 +650,63 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Pt"), 
 		"data_x_mc/withKinCuts/h_withKin_Upsilon_Pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_eta"), 
 		"data_x_mc/withKinCuts/h_withKin_Upsilon_eta",
 		false
 		); 
 		
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_phi"), 
 		"data_x_mc/withKinCuts/h_withKin_Upsilon_phi",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass"), 
 		"data_x_mc/withKinCuts/h_withKin_Z_Mass",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Pt"), 
 		"data_x_mc/withKinCuts/h_withKin_Z_Pt",
 		true
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_eta"), 
 		"data_x_mc/withKinCuts/h_withKin_Z_eta",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_phi"), 
 		"data_x_mc/withKinCuts/h_withKin_Z_phi",
 		false
 		); 
 				 	
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_upsilonPt_over_zMass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_upsilonPt_over_zMass"), 
 		"data_x_mc/withKinCuts/h_withKin_upsilonPt_over_zMass",
 		false
 		); 
 
- 	plotter_DataMC(
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_photonPt_over_zMass"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_photonPt_over_zMass"), 
 		"data_x_mc/withKinCuts/h_withKin_photonPt_over_zMass",

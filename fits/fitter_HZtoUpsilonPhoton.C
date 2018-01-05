@@ -329,8 +329,9 @@ void DCBZPeakUpsilonfit2D() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-// 2D Fit
-void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
+// 1D Fit
+// Z Fit
+void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	setTDRStyle();
 
 	//////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +342,7 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
 	RooRealVar mHZData("mHZ", "mHZ", 70, 120, "GeV") ;
 	mHZData.setRange("LS", 70, 80);
-  	mHZData.setRange("RS", 100, 120);
+	mHZData.setRange("RS", 100, 120);
 	// RooRealVar mHZData("mHZ", "mHZ", 80, 100, "GeV") ;
 	// RooRealVar weightsData("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet data("data", "", RooArgSet(mHZData), Import(*outTreeToFitData)); 
@@ -387,8 +388,8 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
 
 	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit\n\n" << endl;
-	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
-	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
+	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
+	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
 	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit\n\n" << endl;
 
@@ -412,7 +413,7 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,1),FillColor(kGreen), Range("full"), NormRange("full") ) ;
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7), Range("full"), NormRange("full")   );
 	// Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7)   );
-	Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
+	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
 	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(20),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(20),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
@@ -426,7 +427,8 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	outHistoSignal->SetLineWidth(3);
 	outHistoSignal->SetLineColor(kOrange+8);
 	outHistoSignal->SetLineStyle(1);
-	outHistoSignal->Scale(30.0/(outHistoSignal->Integral()));
+	// outHistoSignal->Scale(30.0/(outHistoSignal->Integral()));
+	outHistoSignal->Scale(30.0);
 	outHistoSignal->Rebin(5);
 	outHistoSignal->Draw("hist same");
 
@@ -437,8 +439,7 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	legend->AddEntry(xframe1->findObject("data"), "Data", "lpe");
 	legend->AddEntry(xframe1->findObject("Bernstein"), "Background Model", "l");
 	legend->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
-
-	// legend->Draw();
+	legend->Draw();
 
 	// CMS decoration
 	auto latex = new TLatex();
@@ -690,6 +691,371 @@ void ZToUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	}
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+// Higgs Fit
+void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
+	setTDRStyle();
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// LOAD DATA 
+	TFile * outTreeToFitFileData;
+	if (analysisBranch == "JPsi") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_HtoJPsi.root");
+	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_HtoUpsilon.root");
+	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
+	RooRealVar mHZData("mHZ", "mHZ", 100, 150, "GeV") ;
+	mHZData.setRange("LS", 100, 115);
+	mHZData.setRange("RS", 135, 150);
+	// RooRealVar mHZData("mHZ", "mHZ", 80, 100, "GeV") ;
+	// RooRealVar weightsData("mHZWeight", "mHZWeight", -100, 100, "");
+	RooDataSet data("data", "", RooArgSet(mHZData), Import(*outTreeToFitData)); 
+
+	// data.Print("v");
+	// for (int i = 0 ; i <190 ; i++) {
+	// 	data.get(i)->Print("v");
+	// }
+	
+	// data.PrintValue();
+
+
+	// SIGNAL HISTO
+	TFile * outHistoSignalFile;
+	TH1D * outHistoSignal;
+	if (analysisBranch == "JPsi")  {
+		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToJPsiGamma_HtoJpsi.root");
+		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+	}
+	if (analysisBranch == "Upsilon")  {
+		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon.root");
+		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// BACKGROUND MODEL
+	// RooRealVar p0("p0", " ", 0, 10); // coefficient of x^0 term
+	// RooRealVar p1("p1", " ", 0, 10); // coefficient of x^1 term
+	// RooRealVar p2("p2", " ", 0, 10); // coefficient of x^2 term
+	// RooRealVar p3("p3", " ", 0, 10); // coefficient of x^3 term
+	// RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+	RooRealVar p0("p0", " ", 10, 0.1, 20); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 10, 0.1, 20); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 10, 0.1, 20); // coefficient of x^2 term
+	RooRealVar p3("p3", " ", 10, 0.1, 20); // coefficient of x^3 term
+	RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(p0, p1, p2));
+	RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), RooConst(1), RooConst(1.12), p3));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1 ) );
+	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit\n\n" << endl;
+	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
+	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
+	fitResultBackground->Print();
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit\n\n" << endl;
+
+
+
+  	////////////////////////////////////////////////////////////////////////////////////
+  	// BAKCGROUND PLOT 
+	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+
+	// mHZData.setRange("leftSide",70,80) ;
+	// mHZData.setRange("rightSide",100,120);
+	RooPlot* xframe1 = mHZData.frame(Title("M_{#mu#mu#gamma}")) ;
+	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	// data.plotOn(xframe1,Binning(20),CutRange("RS"), MarkerSize(3)) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,2),FillColor(kYellow), Range("full"), NormRange("full") ) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,1),FillColor(kGreen), Range("full"), NormRange("full") ) ;
+	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7), Range("full"), NormRange("full")   );
+	// Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7)   );
+	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
+	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
+	xframe1->SetMinimum(0.00001);
+	xframe1->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
+	xframe1->GetXaxis()->SetLabelOffset(0.02);
+	xframe1->Draw();
+
+
+	//signal yield
+	outHistoSignal->SetLineWidth(3);
+	outHistoSignal->SetLineColor(kOrange+8);
+	outHistoSignal->SetLineStyle(1);
+	// outHistoSignal->Scale(30.0/(outHistoSignal->Integral()));
+	outHistoSignal->Scale(120.0);
+	outHistoSignal->Rebin(5);
+	outHistoSignal->Draw("hist same");
+
+	// legend
+	auto legend = new TLegend(0.6,0.7,0.9,0.87);
+	legend->SetBorderSize(0);
+	legend->SetFillStyle(0);
+	legend->AddEntry(xframe1->findObject("data"), "Data", "lpe");
+	legend->AddEntry(xframe1->findObject("Bernstein"), "Background Model", "l");
+	legend->AddEntry(outHistoSignal, "Expected Signal (#times 120)", "l");
+	legend->Draw();
+
+	// CMS decoration
+	auto latex = new TLatex();
+	latex->SetNDC();
+	latex->SetTextFont(61);
+	latex->SetTextSize(0.05);
+	latex->DrawLatex(.17, 0.93, "CMS");
+	latex->SetTextFont(52);
+	latex->SetTextSize(0.04);
+	latex->SetTextAlign(11);
+	latex->DrawLatex(.25, 0.93, "Preliminary");
+	latex->SetTextFont(42);
+	latex->SetTextSize(0.04);
+	latex->SetTextAlign(31);
+	latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	if (analysisBranch == "JPsi")  {
+		system(("mkdir -p  `dirname fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.png`"));
+		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.root");
+		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.png");
+		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.pdf");
+	}
+
+	if (analysisBranch == "Upsilon")  {
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.png`"));
+		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.root");
+		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.png");
+		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.pdf");
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// LOAD DATA - SIGNAL
+	TFile * outTreeToFitFileSignal;
+	if (analysisBranch == "JPsi") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToJPsiGamma_HtoJpsi.root");
+	if (analysisBranch == "Upsilon") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root");
+	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_ZtoUpsilonPhoton");
+	RooRealVar mHZSignal("mHZ", "mHZ", 100, 150, "GeV") ;
+	RooRealVar weightsSignal("mHZWeight", "mHZWeight", -100, 100, "");
+	RooDataSet signal("signal", " ", RooArgSet(mHZSignal, weightsSignal), Import(*outTreeToFitSignal), WeightVar(weightsSignal));
+	signal.Print();
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// SIGNAL MODEL
+	// CB params
+	RooRealVar mean_Higgs("mean_Higgs", "Mean" ,125,100,150) ;
+	RooRealVar sigma_cb("sigma_cb", "Width" ,  2., 0.5, 4.) ;
+	RooRealVar n("n","", 0.5, 0.1, 50.);
+	RooRealVar alpha_cb("alpha_cb","", 3., 0.1, 50.);
+	
+	// GAUSSIAN params
+	RooRealVar sigma_gauss("sigma_cb", "Width" ,  2., 0.5, 4.) ;
+
+
+	RooCBShape signal_cb("signal_cb", "Crystal Ball Signal component", mHZSignal, mean_Higgs, sigma_cb, alpha_cb, n);
+	RooGaussian signal_gauss("signal_gauss","Gaussian Signal component", mHZSignal, mean_Higgs, sigma_gauss) ;
+
+	// add gaussian to CB
+	RooRealVar cb_fraction("cb_fraction", "cb_fraction",  0.5, 0.0, 1.0);
+	RooAddPdf signal_model("signal_model", "signal_model", RooArgList(signal_cb, signal_gauss), cb_fraction); 
+
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit\n\n" << endl;
+	RooFitResult * fitResultSignal = signal_model.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
+	fitResultSignal->Print();
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit\n\n" << endl;
+
+
+  	////////////////////////////////////////////////////////////////////////////////////
+  	// SIGNAL PLOT
+	auto cSignal = new TCanvas("cSignal","cSignal",1050*2.0,750*2.0);
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+	RooPlot* xframeSignal = mHZSignal.frame(Title("M_{#mu#mu#gamma}")) ;
+	signal.plotOn(xframeSignal,Binning(50),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kAzure+7));
+	signal_model.plotOn(xframeSignal,RooFit::Name("signal_cb"), RooFit::Components(signal_cb), LineColor(kBlack), LineStyle(7));
+	signal_model.plotOn(xframeSignal,RooFit::Name("signal_gauss"), RooFit::Components(signal_gauss), LineColor(kGray+1), LineStyle(7));
+	signal_model.plotOn(xframeSignal,RooFit::Name("signal_model"),LineColor(kOrange+8));
+	// signal_cb.plotOn(xframeSignal,RooFit::Name("signal_cb"),LineColor(kAzure+7));
+	// signal_gauss.plotOn(xframeSignal,RooFit::Name("signal_gauss"),LineColor(kBlack));
+	signal.plotOn(xframeSignal,Binning(50),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcball.paramOn(xframeSignal,Layout(0.65,0.92,0.89));
+
+
+
+	// xframeSignal->SetMinimum(0.00000001);
+	xframeSignal->SetMinimum(0.0);
+	xframeSignal->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
+	xframeSignal->GetXaxis()->SetLabelOffset(0.02);
+	xframeSignal->Draw();
+
+	// legend
+	auto legendSignal = new TLegend(0.6,0.7,0.9,0.87);
+	legendSignal->SetBorderSize(0);
+	legendSignal->SetFillStyle(0);
+	legendSignal->AddEntry(xframeSignal->findObject("signal"), "Signal MC", "lpe");
+	legendSignal->AddEntry(xframeSignal->findObject("signal_model"), "Signal Model", "l");
+	legendSignal->AddEntry(xframeSignal->findObject("signal_cb"), "CB Component", "l");
+	legendSignal->AddEntry(xframeSignal->findObject("signal_gauss"), "Gauss Component", "l");
+	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	legendSignal->Draw();
+
+	// CMS decoration
+	auto latexSignal = new TLatex();
+	latexSignal->SetNDC();
+	latexSignal->SetTextFont(61);
+	latexSignal->SetTextSize(0.05);
+	latexSignal->DrawLatex(.17, 0.93, "CMS");
+	latexSignal->SetTextFont(52);
+	latexSignal->SetTextSize(0.04);
+	latexSignal->SetTextAlign(11);
+	latexSignal->DrawLatex(.25, 0.93, "Preliminary");
+	latexSignal->SetTextFont(42);
+	latexSignal->SetTextSize(0.04);
+	latexSignal->SetTextAlign(31);
+	latexSignal->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+
+	if (analysisBranch == "JPsi")  {
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.png`"));
+		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.root");
+		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.png");
+		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.pdf");
+	}
+
+	if (analysisBranch == "Upsilon")  {
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.png`"));
+		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.root");
+		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.png");
+		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.pdf");
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	// LOAD DATA - PEAKING BACKGROUND
+	TFile * outTreeToFitFilePeakingBackground;
+	if (analysisBranch == "JPsi") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HDalitz_HtoJpsi.root");
+	if (analysisBranch == "Upsilon") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HDalitz_HtoUpsilon.root");
+	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_ZtoUpsilonPhoton");
+	RooRealVar mHZPeakingBackground("mHZ", "mHZ", 100, 150, "GeV") ;
+	RooRealVar weightsPeakingBackground("mHZWeight", "mHZWeight", -100, 100, "");
+	RooDataSet peakingBackground("peakingBackground", " ", RooArgSet(mHZPeakingBackground, weightsPeakingBackground), Import(*outTreeToFitPeakingBackground), WeightVar(weightsPeakingBackground));
+	peakingBackground.Print();
+
+	////////////////////////////////////////////////////////////////////////////////////
+	// PEAKING BACKGROUND
+	RooRealVar mean_cbPeakingBackground("mean_cbPeakingBackground", "Mean" , 125, 100, 150) ;
+	RooRealVar sigma_cbPeakingBackground("sigma_cbPeakingBackground", "Width" ,  2., 0.5, 4.) ;
+	RooRealVar alphaPeakingBackground("alphaPeakingBackground","", 3., 0.1, 50.);
+	RooRealVar nPeakingBackground("nPeakingBackground","", 0.5, 0.1, 50.);
+
+	
+
+	RooCBShape PeakingBackground_cb("PeakingBackground_cb", "Crystal Ball Peaking Background component", mHZSignal, mean_cbPeakingBackground, sigma_cbPeakingBackground, alphaPeakingBackground, nPeakingBackground);
+
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit\n\n" << endl;
+	RooFitResult * fitResultPeakingBackground = PeakingBackground_cb.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
+	fitResultPeakingBackground->Print();
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit\n\n" << endl;
+
+
+  	////////////////////////////////////////////////////////////////////////////////////
+  	// Peaking Background PLOT
+	auto cPeakingBackground = new TCanvas("cPeakingBackground","cPeakingBackground",1050*2.0,750*2.0);
+	gPad->SetLeftMargin(0.17); 
+	gPad->SetRightMargin(0.05); 
+	gPad->SetTopMargin(0.08);
+	RooPlot* xframePeakingBackground = mHZPeakingBackground.frame(Title("M_{#mu#mu#gamma}")) ;
+	peakingBackground.plotOn(xframePeakingBackground,Binning(40),RooFit::Name("peakingBackground"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcballPeakingBackground.plotOn(xframePeakingBackground,RooFit::Name("dcballPeakingBackground"),LineColor(kAzure+7));
+	PeakingBackground_cb.plotOn(xframePeakingBackground,RooFit::Name("PeakingBackground_cb"),LineColor(kAzure+7));
+	peakingBackground.plotOn(xframePeakingBackground,Binning(40),RooFit::Name("peakingBackground"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
+	// dcballPeakingBackground.paramOn(xframePeakingBackground,Layout(0.65,0.92,0.89));
+
+
+
+	// xframePeakingBackground->SetMinimum(0.000000001);
+	xframePeakingBackground->SetMinimum(0.0);
+	xframePeakingBackground->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
+	xframePeakingBackground->GetXaxis()->SetLabelOffset(0.02);
+	xframePeakingBackground->Draw();
+
+	// legend
+	auto legendPeakingBackground = new TLegend(0.6,0.7,0.9,0.87);
+	legendPeakingBackground->SetBorderSize(0);
+	legendPeakingBackground->SetFillStyle(0);
+	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Higgs Dalitz MC", "lpe");
+	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("PeakingBackground_cb"), "Higgs Dalitz Model", "l");
+	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	legendPeakingBackground->Draw();
+
+	// CMS decoration
+	auto latexPeakingBackground = new TLatex();
+	latexPeakingBackground->SetNDC();
+	latexPeakingBackground->SetTextFont(61);
+	latexPeakingBackground->SetTextSize(0.05);
+	latexPeakingBackground->DrawLatex(.17, 0.93, "CMS");
+	latexPeakingBackground->SetTextFont(52);
+	latexPeakingBackground->SetTextSize(0.04);
+	latexPeakingBackground->SetTextAlign(11);
+	latexPeakingBackground->DrawLatex(.25, 0.93, "Preliminary");
+	latexPeakingBackground->SetTextFont(42);
+	latexPeakingBackground->SetTextSize(0.04);
+	latexPeakingBackground->SetTextAlign(31);
+	latexPeakingBackground->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	if (analysisBranch == "JPsi") {
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
+		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.root");
+		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png");
+		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+	}
+
+	if (analysisBranch == "Upsilon") {
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
+		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.root");
+		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png");
+		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////////////
+	// // C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
+	// RooWorkspace *w = new RooWorkspace("w","workspace") ;  
+	
+	// // data
+	// w->import(mHZData);
+	// w->import(data,Rename("data_obs"));
+	// w->import(Bernstein);
+	// // signal
+	// // w->import(mHZSignal,Rename("mHZSignal"));
+	// w->import(signal,Rename("signal"));
+	// w->import(dcball);
+	// //peaking background
+	// // w->import(mHZPeakingBackground);
+	// w->import(peakingBackground,Rename("peakingBackground"));
+	// w->import(dcballPeakingBackground);
+
+	// w->Print();
+
+	// if (analysisBranch == "JPsi") {
+	// 	system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root`"));
+	// 	w->writeToFile("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root");
+	// }
+
+	// if (analysisBranch == "Upsilon") {
+	// 	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root`"));
+	// 	w->writeToFile("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root");
+	// }
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -701,8 +1067,11 @@ void fitter_HZtoUpsilonPhoton()
 
 	// fitter
 	// DCBZPeakUpsilonfit2D();
-	ZToUpsilonPhotonSignalAndBackgroundFit("JPsi");
-	// ZToUpsilonPhotonSignalAndBackgroundFit("Upsilon");
+	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi");
+	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
+
+	HToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi");
+	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
 
 } //end plotter_ZtoUpsilonPhoton
 
