@@ -61,19 +61,19 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	//////////////////////////////////////////////////////////////////
 	// GEN - UNPOLARIZED
 	// gen unpolarized muons
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_LeadingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_TrailingMu_pt"), 
 		"mc/unpolarized/h_Gen_Mu_pt",
 		true
 		); 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_LeadingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_TrailingMu_eta"), 
 		"mc/unpolarized/h_Gen_Mu_eta",
 		false
 		); 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_LeadingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_TrailingMu_phi"), 
 		"mc/unpolarized/h_Gen_Mu_phi",
@@ -81,117 +81,117 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		); 
 
 	// gen unpolarized photon
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Photon_pt"), 
 		"mc/unpolarized/h_Gen_Photon_pt",
 		"Photon",
 		true
 		); 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Photon_eta"), 
 		"mc/unpolarized/h_Gen_Photon_eta",
 		"Photon",
 		false
 		); 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Photon_phi"), 
 		"mc/unpolarized/h_Gen_Photon_phi",
 		"Photon",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_deltaR_Leading_Trailing"), 
 		"mc/unpolarized/h_Gen_deltaR_Leading_Trailing",
 		"",
 		false
 		); 
 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_deltaR_Leading_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_deltaR_Trailing_Photon"), 
 		"mc/unpolarized/h_Gen_deltaR_Mu_Photon",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_deltaR_Upsilon_Photon"), 
 		"mc/unpolarized/h_Gen_deltaR_Upsilon_Photon",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_deltaPhi_Upsilon_Photon"), 
 		"mc/unpolarized/h_Gen_deltaPhi_Upsilon_Photon",
 		"",
 		false
 		); 
 	
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Upsilon_Mass"), 
 		"mc/unpolarized/h_Gen_Upsilon_Mass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Upsilon_Pt"), 
 		"mc/unpolarized/h_Gen_Upsilon_Pt",
 		"",
 		true
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Upsilon_eta"), 
 		"mc/unpolarized/h_Gen_Upsilon_eta",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Upsilon_phi"), 
 		"mc/unpolarized/h_Gen_Upsilon_phi",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Z_Mass"), 
 		"mc/unpolarized/h_Gen_Z_Mass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Z_Pt"), 
 		"mc/unpolarized/h_Gen_Z_Pt",
 		"",
 		true
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Z_eta"), 
 		"mc/unpolarized/h_Gen_Z_eta",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_Z_phi"), 
 		"mc/unpolarized/h_Gen_Z_phi",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_upsilonPt_over_zMass"), 
 		"mc/unpolarized/h_Gen_upsilonPt_over_zMass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_photonPt_over_zMass"), 
 		"mc/unpolarized/h_Gen_photonPt_over_zMass",
 		"",
@@ -210,19 +210,19 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// GEN - UNPOLARIZED
 	// gen unpolarized muons
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_LeadingMu_pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_TrailingMu_pt"), 
 		"mc/polarized/h_Gen_withPolWeight_Mu_pt",
 		true
 		); 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_LeadingMu_eta"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_TrailingMu_eta"), 
 		"mc/polarized/h_Gen_withPolWeight_Mu_eta",
 		false
 		); 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_LeadingMu_phi"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_TrailingMu_phi"), 
 		"mc/polarized/h_Gen_withPolWeight_Mu_phi",
@@ -230,117 +230,117 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		); 
 
 	// gen unpolarized photon
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Photon_pt"), 
 		"mc/polarized/h_Gen_withPolWeight_Photon_pt",
 		"Photon",
 		true
 		); 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Photon_eta"), 
 		"mc/polarized/h_Gen_withPolWeight_Photon_eta",
 		"Photon",
 		false
 		); 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Photon_phi"), 
 		"mc/polarized/h_Gen_withPolWeight_Photon_phi",
 		"Photon",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_deltaR_Leading_Trailing"), 
 		"mc/polarized/h_Gen_withPolWeight_deltaR_Leading_Trailing",
 		"",
 		false
 		); 
 
-	plotter_LeadingTrailing(
+	plotter_LeadingTrailing(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_deltaR_Leading_Photon"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_deltaR_Trailing_Photon"), 
 		"mc/polarized/h_Gen_withPolWeight_deltaR_Mu_Photon",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_deltaR_Upsilon_Photon"), 
 		"mc/polarized/h_Gen_withPolWeight_deltaR_Upsilon_Photon",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_deltaPhi_Upsilon_Photon"), 
 		"mc/polarized/h_Gen_withPolWeight_deltaPhi_Upsilon_Photon",
 		"",
 		false
 		); 
 	
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Upsilon_Mass"), 
 		"mc/polarized/h_Gen_withPolWeight_Upsilon_Mass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Upsilon_Pt"), 
 		"mc/polarized/h_Gen_withPolWeight_Upsilon_Pt",
 		"",
 		true
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Upsilon_eta"), 
 		"mc/polarized/h_Gen_withPolWeight_Upsilon_eta",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Upsilon_phi"), 
 		"mc/polarized/h_Gen_withPolWeight_Upsilon_phi",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Z_Mass"), 
 		"mc/polarized/h_Gen_withPolWeight_Z_Mass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Z_Pt"), 
 		"mc/polarized/h_Gen_withPolWeight_Z_Pt",
 		"",
 		true
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Z_eta"), 
 		"mc/polarized/h_Gen_withPolWeight_Z_eta",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_Z_phi"), 
 		"mc/polarized/h_Gen_withPolWeight_Z_phi",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_upsilonPt_over_zMass"), 
 		"mc/polarized/h_Gen_withPolWeight_upsilonPt_over_zMass",
 		"",
 		false
 		); 
 
-	plotter_Single(
+	plotter_Single(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_withPolWeight_photonPt_over_zMass"), 
 		"mc/polarized/h_Gen_withPolWeight_photonPt_over_zMass",
 		"",
@@ -717,7 +717,7 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// POLARIZATION
- 	plotter_Pol(
+ 	plotter_Pol(analysisBranch,
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genHistos/h_Gen_UnPol"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/genwithPolWeightHistos/h_Gen_Pol"), 
 		"mc/polarizatioReweight/h_Gen_COS_theta",

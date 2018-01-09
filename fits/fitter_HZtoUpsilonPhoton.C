@@ -434,6 +434,8 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	// legend
 	auto legend = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
 	legend->SetBorderSize(0);
 	legend->SetFillStyle(0);
 	legend->AddEntry(xframe1->findObject("data"), "Data", "lpe");
@@ -525,6 +527,8 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	// legend
 	auto legendSignal = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legendSignal->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legendSignal->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
 	legendSignal->SetBorderSize(0);
 	legendSignal->SetFillStyle(0);
 	legendSignal->AddEntry(xframeSignal->findObject("signal"), "Signal MC", "lpe");
@@ -625,6 +629,8 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	// legend
 	auto legendPeakingBackground = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legendPeakingBackground->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legendPeakingBackground->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
 	legendPeakingBackground->SetBorderSize(0);
 	legendPeakingBackground->SetFillStyle(0);
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Z #rightarrow #mu#mu + #gamma MC", "lpe");
@@ -726,7 +732,7 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
 	}
 	if (analysisBranch == "Upsilon")  {
-		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon.root");
+		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root");
 		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
 	}
 
@@ -791,17 +797,21 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	outHistoSignal->SetLineColor(kOrange+8);
 	outHistoSignal->SetLineStyle(1);
 	// outHistoSignal->Scale(30.0/(outHistoSignal->Integral()));
-	outHistoSignal->Scale(120.0);
+	if (analysisBranch == "JPsi") outHistoSignal->Scale(120.0);
+	if (analysisBranch == "Upsilon") outHistoSignal->Scale(100000.0);
 	outHistoSignal->Rebin(5);
 	outHistoSignal->Draw("hist same");
 
 	// legend
 	auto legend = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legend->SetHeader("H #rightarrow #Upsilon + #gamma Analysis");
 	legend->SetBorderSize(0);
 	legend->SetFillStyle(0);
 	legend->AddEntry(xframe1->findObject("data"), "Data", "lpe");
 	legend->AddEntry(xframe1->findObject("Bernstein"), "Background Model", "l");
-	legend->AddEntry(outHistoSignal, "Expected Signal (#times 120)", "l");
+	if (analysisBranch == "JPsi") legend->AddEntry(outHistoSignal, "Expected Signal (#times 120)", "l");
+	if (analysisBranch == "Upsilon") legend->AddEntry(outHistoSignal, "Expected Signal (#times 100000)", "l");
 	legend->Draw();
 
 	// CMS decoration
@@ -848,25 +858,41 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	////////////////////////////////////////////////////////////////////////////////////
 	// SIGNAL MODEL
 	// CB params
+
+	// Jpsi - Default
 	RooRealVar mean_Higgs("mean_Higgs", "Mean" ,125,100,150) ;
-	RooRealVar sigma_cb("sigma_cb", "Width" ,  2., 0.5, 4.) ;
+	RooRealVar sigma_cb("sigma_cb", "Width", 2., 0.5, 4.) ;
 	RooRealVar n("n","", 0.5, 0.1, 50.);
 	RooRealVar alpha_cb("alpha_cb","", 3., 0.1, 50.);
-	
-	// GAUSSIAN params
-	RooRealVar sigma_gauss("sigma_cb", "Width" ,  2., 0.5, 4.) ;
+	RooRealVar sigma_gauss("sigma_gauss", "Width" ,  2., 0.5, 4.) ;
+
+	// Upsilon params
+	if (analysisBranch == "Upsilon") {
+		sigma_cb.setRange(0.5, 3.0) ;
+		sigma_cb.setVal(1.5) ;
+
+		alpha_cb.setRange(0.01, 10.);
+		alpha_cb.setVal(1.5);
+		
+		n.setRange(0.1, 10.);
+		n.setVal(4.);
+		
+		sigma_gauss.setRange(0.5, 4.) ;
+		sigma_gauss.setVal(2.) ;
+	}
 
 
 	RooCBShape signal_cb("signal_cb", "Crystal Ball Signal component", mHZSignal, mean_Higgs, sigma_cb, alpha_cb, n);
 	RooGaussian signal_gauss("signal_gauss","Gaussian Signal component", mHZSignal, mean_Higgs, sigma_gauss) ;
 
 	// add gaussian to CB
-	RooRealVar cb_fraction("cb_fraction", "cb_fraction",  0.5, 0.0, 1.0);
+	RooRealVar cb_fraction("cb_fraction", "cb_fraction",  0.9, 0.0, 100.0);
 	RooAddPdf signal_model("signal_model", "signal_model", RooArgList(signal_cb, signal_gauss), cb_fraction); 
 
 
 	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit\n\n" << endl;
-	RooFitResult * fitResultSignal = signal_model.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
+	// RooFitResult * fitResultSignal = signal_model.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
+	RooFitResult * fitResultSignal = signal_cb.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultSignal->Print();
 	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit\n\n" << endl;
 
@@ -880,9 +906,12 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	RooPlot* xframeSignal = mHZSignal.frame(Title("M_{#mu#mu#gamma}")) ;
 	signal.plotOn(xframeSignal,Binning(50),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
 	// dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kAzure+7));
+
 	signal_model.plotOn(xframeSignal,RooFit::Name("signal_cb"), RooFit::Components(signal_cb), LineColor(kBlack), LineStyle(7));
 	signal_model.plotOn(xframeSignal,RooFit::Name("signal_gauss"), RooFit::Components(signal_gauss), LineColor(kGray+1), LineStyle(7));
 	signal_model.plotOn(xframeSignal,RooFit::Name("signal_model"),LineColor(kOrange+8));
+	// signal_cb.plotOn(xframeSignal,RooFit::Name("signal_model"),LineColor(kOrange+8));
+	
 	// signal_cb.plotOn(xframeSignal,RooFit::Name("signal_cb"),LineColor(kAzure+7));
 	// signal_gauss.plotOn(xframeSignal,RooFit::Name("signal_gauss"),LineColor(kBlack));
 	signal.plotOn(xframeSignal,Binning(50),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
@@ -898,6 +927,8 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	// legend
 	auto legendSignal = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legendSignal->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legendSignal->SetHeader("H #rightarrow #Upsilon + #gamma Analysis");
 	legendSignal->SetBorderSize(0);
 	legendSignal->SetFillStyle(0);
 	legendSignal->AddEntry(xframeSignal->findObject("signal"), "Signal MC", "lpe");
@@ -989,6 +1020,8 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	// legend
 	auto legendPeakingBackground = new TLegend(0.6,0.7,0.9,0.87);
+	if (analysisBranch == "JPsi") legendPeakingBackground->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "Upsilon") legendPeakingBackground->SetHeader("H #rightarrow #Upsilon + #gamma Analysis");
 	legendPeakingBackground->SetBorderSize(0);
 	legendPeakingBackground->SetFillStyle(0);
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Higgs Dalitz MC", "lpe");
@@ -1025,34 +1058,34 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
 	}
 
-	// ////////////////////////////////////////////////////////////////////////////////////
-	// // C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
-	// RooWorkspace *w = new RooWorkspace("w","workspace") ;  
+	////////////////////////////////////////////////////////////////////////////////////
+	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
+	RooWorkspace *w = new RooWorkspace("w","workspace") ;  
 	
-	// // data
-	// w->import(mHZData);
-	// w->import(data,Rename("data_obs"));
-	// w->import(Bernstein);
-	// // signal
-	// // w->import(mHZSignal,Rename("mHZSignal"));
-	// w->import(signal,Rename("signal"));
-	// w->import(dcball);
-	// //peaking background
-	// // w->import(mHZPeakingBackground);
-	// w->import(peakingBackground,Rename("peakingBackground"));
-	// w->import(dcballPeakingBackground);
+	// data
+	w->import(mHZData);
+	w->import(data,Rename("data_obs"));
+	w->import(Bernstein);
+	// signal
+	// w->import(mHZSignal,Rename("mHZSignal"));
+	w->import(signal,Rename("signal"));
+	w->import(signal_model);
+	//peaking background
+	// w->import(mHZPeakingBackground);
+	w->import(peakingBackground,Rename("peakingBackground"));
+	w->import(PeakingBackground_cb);
 
-	// w->Print();
+	w->Print();
 
-	// if (analysisBranch == "JPsi") {
-	// 	system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root`"));
-	// 	w->writeToFile("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root");
-	// }
+	if (analysisBranch == "JPsi") {
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace.root`"));
+		w->writeToFile("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace.root");
+	}
 
-	// if (analysisBranch == "Upsilon") {
-	// 	system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root`"));
-	// 	w->writeToFile("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root");
-	// }
+	if (analysisBranch == "Upsilon") {
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace.root`"));
+		w->writeToFile("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace.root");
+	}
 
 }
 
