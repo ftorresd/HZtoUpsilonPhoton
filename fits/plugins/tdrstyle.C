@@ -33,8 +33,6 @@ void setTDRStyle() {
   tdrStyle->SetGridColor(0);
   tdrStyle->SetGridStyle(3);
   tdrStyle->SetGridWidth(1);
-  // tdrStyle->SetPadRightMargin(0.05); 
-  // tdrStyle->SetPadTopMargin(0.08);
 
 // For the frame:
   tdrStyle->SetFrameBorderMode(0);
@@ -76,7 +74,7 @@ void setTDRStyle() {
   tdrStyle->SetOptFile(0);
   tdrStyle->SetOptStat(0); // To display the mean and RMS:   SetOptStat("mr");
   tdrStyle->SetStatColor(kWhite);
-  tdrStyle->SetStatFont(42);
+  tdrStyle->SetStatFont(43);
   tdrStyle->SetStatFontSize(0.025);
   tdrStyle->SetStatTextColor(1);
   tdrStyle->SetStatFormat("6.4g");
@@ -116,7 +114,7 @@ void setTDRStyle() {
   // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
   // tdrStyle->SetTitleYSize(Float_t size = 0.02);
   tdrStyle->SetTitleXOffset(1.0);
-  tdrStyle->SetTitleYOffset(1.5);
+  tdrStyle->SetTitleYOffset(0.9);
   // tdrStyle->SetTitleOffset(1.0, "X"); // Another way to set the Offset
   // tdrStyle->SetTitleOffset(1.5, "Y"); // Another way to set the Offset
 
