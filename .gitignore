@@ -14,12 +14,12 @@ plotFiles/mc/unpolarized/
 
 plotFiles/data_x_mc/
 
-plotFiles/
+plotFiles/*
 
-fits/fitPlotFiles/
+fits/fitPlotFiles/*
 
 *.csv
 
-outputPlots/
+outputPlots/*
 
-evtsCountFiles/
+evtsCountFiles/*

@@ -128,34 +128,34 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	string mumugammaLatexName = "";
 
 	// dimuon cut
-	if (analysisBranch == "ZtoJpsi" || analysisBranch == "HtoJpsi") {
-		minUpsilonMassHistoRange = 3.0;
+	if (analysisBranch == "ZtoJPsi" || analysisBranch == "HtoJPsi") {
+		minUpsilonMassHistoRange = 2.9;
 		minUpsilonMass = 3.0;
 		maxUpsilonMass = 3.2;
-		maxUpsilonMassHistoRange = 3.2;
-		nBinsUpsilonMass = 20;
+		maxUpsilonMassHistoRange = 3.3;
+		nBinsUpsilonMass = 40;
 		dimuonLatexName = "J/#Psi";
 	}
 	if (analysisBranch == "ZtoUpsilon") {
-		minUpsilonMassHistoRange = 8.0;
+		minUpsilonMassHistoRange = 8.9;
 		minUpsilonMass = 9.0;
 		maxUpsilonMass = 9.8;
-		maxUpsilonMassHistoRange = 12.0;
+		maxUpsilonMassHistoRange = 9.9;
 		nBinsUpsilonMass = 25;
 		dimuonLatexName = "#Upsilon";
 	}
 
 	if (analysisBranch == "HtoUpsilon") {
-		minUpsilonMassHistoRange = 8.0;
+		minUpsilonMassHistoRange = 8.4;
 		minUpsilonMass = 8.5;
 		maxUpsilonMass = 11.0;
-		maxUpsilonMassHistoRange = 12.0;
-		nBinsUpsilonMass = 80;
+		maxUpsilonMassHistoRange = 11.1;
+		nBinsUpsilonMass = 50;
 		dimuonLatexName = "#Upsilon";
 	}
 
 	// mumugamma cut 
-	if (analysisBranch == "ZtoJpsi" || analysisBranch == "ZtoUpsilon") {
+	if (analysisBranch == "ZtoJPsi" || analysisBranch == "ZtoUpsilon") {
 		minHZMassLeft = 70.;
 		maxHZMassLeft = 80.;
 		minHZMassRight = 100.;
@@ -163,7 +163,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 		nBinsHZMass = 20;
 		mumugammaLatexName = "Z";
 	}
-	if (analysisBranch == "HtoJpsi" || analysisBranch == "HtoUpsilon") {
+	if (analysisBranch == "HtoJPsi" || analysisBranch == "HtoUpsilon") {
 		minHZMassLeft = 100.;
 		maxHZMassLeft = 115.;
 		minHZMassRight = 135.;
@@ -336,9 +336,9 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	auto * h_noKin_deltaR_Leading_Trailing = new TH1D("h_noKin_deltaR_Leading_Trailing", ";#DeltaR(lead #mu, trail #mu);", 100, 0.0, 1.0);
 	h_noKin_deltaR_Leading_Trailing->Sumw2();
-	auto * h_noKin_deltaR_Leading_Photon = new TH1D("h_noKin_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_noKin_deltaR_Leading_Photon = new TH1D("h_noKin_deltaR_Leading_Photon", ";#DeltaR(lead #mu, #gamma);", 100, 0.0, 5.0);
 	h_noKin_deltaR_Leading_Photon->Sumw2();
-	auto * h_noKin_deltaR_Trailing_Photon = new TH1D("h_noKin_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_noKin_deltaR_Trailing_Photon = new TH1D("h_noKin_deltaR_Trailing_Photon", ";#DeltaR(trail #mu, #gamma);", 100, 0.0, 5.0);
 	h_noKin_deltaR_Trailing_Photon->Sumw2();
 	auto * h_noKin_deltaR_Upsilon_Photon = new TH1D("h_noKin_deltaR_Upsilon_Photon", ";#DeltaR(#mu#mu, #gamma);", 100, 0.0, 5.0);
 	h_noKin_deltaR_Upsilon_Photon->Sumw2();
@@ -347,7 +347,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	auto * h_noKin_Upsilon_Mass_LargeRange = new TH1D("h_noKin_Upsilon_Mass_LargeRange", ";#mu#mu Mass (GeV);", 100, 0.0, 20.0);
 	h_noKin_Upsilon_Mass_LargeRange->Sumw2();
-	auto * h_noKin_Upsilon_Mass = new TH1D("h_noKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
+	auto * h_noKin_Upsilon_Mass = new TH1D("h_noKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange);
 	h_noKin_Upsilon_Mass->Sumw2();
 	auto * h_noKin_Upsilon_Pt = new TH1D("h_noKin_Upsilon_Pt", ";p_{T}^{#mu#mu} (GeV);", 160, 0.0, 160.0);
 	h_noKin_Upsilon_Pt->Sumw2();
@@ -408,9 +408,9 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	auto * h_withKin_deltaR_Leading_Trailing = new TH1D("h_withKin_deltaR_Leading_Trailing", ";#DeltaR(lead #mu, trail #mu);", 100, 0.0, 1.0);
 	h_withKin_deltaR_Leading_Trailing->Sumw2();
-	auto * h_withKin_deltaR_Leading_Photon = new TH1D("h_withKin_deltaR_Leading_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_withKin_deltaR_Leading_Photon = new TH1D("h_withKin_deltaR_Leading_Photon", ";#DeltaR(lead #mu, #gamma);", 100, 0.0, 5.0);
 	h_withKin_deltaR_Leading_Photon->Sumw2();
-	auto * h_withKin_deltaR_Trailing_Photon = new TH1D("h_withKin_deltaR_Trailing_Photon", ";#DeltaR(#mu, #gamma);", 100, 0.0, 5.0);
+	auto * h_withKin_deltaR_Trailing_Photon = new TH1D("h_withKin_deltaR_Trailing_Photon", ";#DeltaR(trail #mu, #gamma);", 100, 0.0, 5.0);
 	h_withKin_deltaR_Trailing_Photon->Sumw2();
 	auto * h_withKin_deltaR_Upsilon_Photon = new TH1D("h_withKin_deltaR_Upsilon_Photon", ";#DeltaR(#mu#mu, #gamma);", 100, 0.0, 5.0);
 	h_withKin_deltaR_Upsilon_Photon->Sumw2();
@@ -679,11 +679,15 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			goodUpsilonMassCut = ((recoUpsilon.M() > minUpsilonMass && recoUpsilon.M() < maxUpsilonMass)) ? true : false;
 			// goodKinCuts *= (recoUpsilon.M() >minUpsilonMass && recoUpsilon.M() < maxUpsilonMass) ? true : false;
 			goodKinCuts *= goodUpsilonMassCut;
-			if (analysisBranch == "ZtoJpsi" || analysisBranch == "ZtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) && (leadingPhoton->Et()/recoZ.M() > (35.0/91.2))) ? true : false;
-			if (analysisBranch == "HtoJpsi" || analysisBranch == "HtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/125.0)) && (leadingPhoton->Et()/recoZ.M() > (35.0/125.0))) ? true : false;
+			if (analysisBranch == "ZtoJPsi" || analysisBranch == "ZtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) && (leadingPhoton->Et()/recoZ.M() > (35.0/91.2))) ? true : false;
+			if (analysisBranch == "HtoJPsi" || analysisBranch == "HtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/125.0)) && (leadingPhoton->Et()/recoZ.M() > (35.0/125.0))) ? true : false;
 			// goodKinCuts *= (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) ? true : false;
 			// goodKinCuts *= (leadingPhoton->Et()/recoZ.M() > (35.0/91.2)) ? true : false;
 			goodKinCuts *= goodRatioCuts;
+
+			// if (analysisBranch == "ZtoUpsilon" || analysisBranch == "HtoUpsilon" ) goodKinCuts *= (deltaR(leadingMuon->Eta(), leadingMuon->Phi(), trailingMuon->Eta(), trailingMuon->Phi()) > 0.25);
+			// if (analysisBranch == "ZtoUpsilon" || analysisBranch == "HtoUpsilon" ) goodKinCuts *= ((deltaR(leadingMuon->Eta(), leadingMuon->Phi(), trailingMuon->Eta(), trailingMuon->Phi()) > 0.25) && (deltaR(leadingMuon->Eta(), leadingMuon->Phi(), trailingMuon->Eta(), trailingMuon->Phi()) < 0.95));
+
 
 			goodZMassCut = (recoZ.M() > minHZMassLeft && recoZ.M() < maxHZMassRight) ? true : false;
 

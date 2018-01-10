@@ -7,7 +7,20 @@
     // clear 
 	system(("rm -rf outputPlots/*"));
 
+	//////////////////////////////////////////////////////////////////
+	// ZtoJPsi
+	plotter_ZtoUpsilonPhoton(
+		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_ZtoJPsi.root",
+		"outputHistos/outHistos_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi.root",
+		"outputHistos/outHistos_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi.root",
+		"ZtoJPsi"
+		); 
 
+	system(("mkdir -p outputPlots/ZtoJPsi"));
+	system(("mv plotFiles/* outputPlots/ZtoJPsi/."));
+	system(("rm -rf plotFiles"));
+
+	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon
 	plotter_ZtoUpsilonPhoton(
 		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_ZtoUpsilon.root",
@@ -20,36 +33,28 @@
 	system(("mv plotFiles/* outputPlots/ZtoUpsilon/."));
 	system(("rm -rf plotFiles"));
 
-	// ZtoJpsi
+
+
+	//////////////////////////////////////////////////////////////////
+	// HtoJPsi
 	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_ZtoJpsi.root",
-		"outputHistos/outHistos_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root",
-		"outputHistos/outHistos_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJpsi.root",
-		"ZtoJpsi"
+		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_HtoJPsi.root",
+		"outputHistos/outHistos_ZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi.root",
+		"outputHistos/outHistos_ZtoUpsilonPhoton_HDalitz_HtoJPsi.root",
+		"HtoJPsi"
 		); 
 
-	system(("mkdir -p outputPlots/ZtoJpsi"));
-	system(("mv plotFiles/* outputPlots/ZtoJpsi/."));
-	system(("rm -rf plotFiles"));
-
-	// HtoJpsi
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_HtoJpsi.root",
-		"outputHistos/outHistos_ZtoUpsilonPhoton_HToJPsiGamma_HtoJpsi.root",
-		"outputHistos/outHistos_ZtoUpsilonPhoton_HDalitz_HtoJpsi.root",
-		"HtoJpsi"
-		); 
-
-	system(("mkdir -p outputPlots/HtoJpsi"));
-	system(("mv plotFiles/* outputPlots/HtoJpsi/."));
+	system(("mkdir -p outputPlots/HtoJPsi"));
+	system(("mv plotFiles/* outputPlots/HtoJPsi/."));
 	system(("rm -rf plotFiles"));
 
 
+	//////////////////////////////////////////////////////////////////
 	// HtoUpsilon
 	plotter_ZtoUpsilonPhoton(
 		"outputHistos/outHistos_ZtoUpsilonPhoton_Data_HtoUpsilon.root",
 		"outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root",
-		// "outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon2SGamma_HtoUpsilon.root",
+		// "outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon.root",
 		"outputHistos/outHistos_ZtoUpsilonPhoton_HDalitz_HtoUpsilon.root",
 		"HtoUpsilon"
 		); 
@@ -57,5 +62,7 @@
 	system(("mkdir -p outputPlots/HtoUpsilon"));
 	system(("mv plotFiles/* outputPlots/HtoUpsilon/."));
 	system(("rm -rf plotFiles"));
+
+	
 
 }

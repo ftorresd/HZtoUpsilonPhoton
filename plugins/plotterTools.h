@@ -73,9 +73,9 @@ void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string out
 	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
 	// auto legend = new TLegend(0.67,0.76,0.96,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
 	auto legend = new TLegend(0.67,0.76,0.96,0.93);
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
 	if (analysisBranch == "ZtoUpsilon")
 		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
@@ -142,9 +142,9 @@ void plotter_Single(string analysisBranch, TH1D * h1, string outputFilePath, str
 	
 	// auto legend = new TLegend(0.74,0.76,1.03,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
 	auto legend = new TLegend(0.74,0.76,1.03,0.93);
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
 	if (analysisBranch == "ZtoUpsilon")
 		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
@@ -228,9 +228,9 @@ void plotter_LeadingTrailing(string analysisBranch, TH1D * h_Lead, TH1D * h_Trai
 	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
 	// auto legend = new TLegend(0.74,0.76,1.03,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
 	auto legend = new TLegend(0.74,0.76,1.03,0.93);
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
 	if (analysisBranch == "ZtoUpsilon")
 		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
@@ -337,9 +337,9 @@ void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOri
 
 	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
 	auto legend = new TLegend(0.68,0.76,.97,0.93);
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
 	if (analysisBranch == "ZtoUpsilon")
 		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
@@ -393,9 +393,9 @@ void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOri
 	delete h_Data;
 
 	// break recursive function
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 50 , isLogX);
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 1000 , isLogX);
 	if (analysisBranch == "ZtoUpsilon")
 		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 100 , isLogX);
@@ -476,9 +476,9 @@ void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal
 	gPad->SetBottomMargin(0.2);
 
 	auto legend = new TLegend(0.66,0.74,0.95,0.91);
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
 	if (analysisBranch == "ZtoUpsilon")
 		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
@@ -534,14 +534,14 @@ void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal
 	delete h_Data;
 
 	// break recursive function
-	if (analysisBranch == "ZtoJpsi")
+	if (analysisBranch == "ZtoJPsi")
 		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100, 60, isLogX);
-	if (analysisBranch == "HtoJpsi")
+	if (analysisBranch == "HtoJPsi")
 		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 1600, 400, isLogX);
 	if (analysisBranch == "ZtoUpsilon")
 		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100, 3, isLogX);
 	if (analysisBranch == "HtoUpsilon")
-		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 1000, 400, isLogX);
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100000, 400, isLogX);
 	
 	if (mcSignalScale > 0) return;
 
