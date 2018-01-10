@@ -1100,10 +1100,10 @@ void fitter_HZtoUpsilonPhoton()
 
 	// fitter
 	// DCBZPeakUpsilonfit2D();
-	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi");
+	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Jpsi");
 	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
 
-	HToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi");
+	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Jpsi");
 	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
 
 } //end plotter_ZtoUpsilonPhoton

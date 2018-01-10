@@ -5,7 +5,7 @@
 	gStyle->SetOptStat(0);
 
     // clear 
-	system(("rm -rf outputPlots"));
+	system(("rm -rf outputPlots/*"));
 
 
 	// ZtoUpsilon

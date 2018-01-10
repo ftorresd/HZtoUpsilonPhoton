@@ -113,8 +113,10 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	////////////////////////////////////////////////////////////////////
 	// cuts setup
+	double minUpsilonMassHistoRange = 1;
 	double minUpsilonMass = 1;
 	double maxUpsilonMass = 1;
+	double maxUpsilonMassHistoRange = 1;
 	int nBinsUpsilonMass = 1;
 
 	double minHZMassLeft = 1;
@@ -127,21 +129,27 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 	// dimuon cut
 	if (analysisBranch == "ZtoJpsi" || analysisBranch == "HtoJpsi") {
+		minUpsilonMassHistoRange = 3.0;
 		minUpsilonMass = 3.0;
 		maxUpsilonMass = 3.2;
+		maxUpsilonMassHistoRange = 3.2;
 		nBinsUpsilonMass = 20;
 		dimuonLatexName = "J/#Psi";
 	}
 	if (analysisBranch == "ZtoUpsilon") {
+		minUpsilonMassHistoRange = 8.0;
 		minUpsilonMass = 9.0;
 		maxUpsilonMass = 9.8;
+		maxUpsilonMassHistoRange = 12.0;
 		nBinsUpsilonMass = 25;
 		dimuonLatexName = "#Upsilon";
 	}
 
 	if (analysisBranch == "HtoUpsilon") {
+		minUpsilonMassHistoRange = 8.0;
 		minUpsilonMass = 8.5;
 		maxUpsilonMass = 11.0;
+		maxUpsilonMassHistoRange = 12.0;
 		nBinsUpsilonMass = 80;
 		dimuonLatexName = "#Upsilon";
 	}
@@ -209,7 +217,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	h_Gen_deltaPhi_Upsilon_Photon->Sumw2();
 
 
-	auto * h_Gen_Upsilon_Mass = new TH1D("h_Gen_Upsilon_Mass", ";#Upsilon Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
+	auto * h_Gen_Upsilon_Mass = new TH1D("h_Gen_Upsilon_Mass", ";#Upsilon Mass (GeV);", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange);
 	h_Gen_Upsilon_Mass->Sumw2();
 	auto * h_Gen_Upsilon_Pt = new TH1D("h_Gen_Upsilon_Pt", ";p_{T}^{#Upsilon} (GeV);", 250, 0.0, 250.0);
 	h_Gen_Upsilon_Pt->Sumw2();
@@ -273,7 +281,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_Gen_withPolWeight_deltaPhi_Upsilon_Photon = new TH1D("h_Gen_withPolWeight_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#Upsilon, #gamma)|;", 100, 0.0, 4.0);
 	h_Gen_withPolWeight_deltaPhi_Upsilon_Photon->Sumw2();
 
-	auto * h_Gen_withPolWeight_Upsilon_Mass = new TH1D("h_Gen_withPolWeight_Upsilon_Mass", ";#Upsilon Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
+	auto * h_Gen_withPolWeight_Upsilon_Mass = new TH1D("h_Gen_withPolWeight_Upsilon_Mass", ";#Upsilon Mass (GeV);", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange);
 	h_Gen_withPolWeight_Upsilon_Mass->Sumw2();
 	auto * h_Gen_withPolWeight_Upsilon_Pt = new TH1D("h_Gen_withPolWeight_Upsilon_Pt", ";p_{T}^{#Upsilon} (GeV);", 250, 0.0, 250.0);
 	h_Gen_withPolWeight_Upsilon_Pt->Sumw2();
@@ -337,6 +345,8 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_noKin_deltaPhi_Upsilon_Photon = new TH1D("h_noKin_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#mu#mu, #gamma)|;", 100, 0.0, 4.0);
 	h_noKin_deltaPhi_Upsilon_Photon->Sumw2();
 
+	auto * h_noKin_Upsilon_Mass_LargeRange = new TH1D("h_noKin_Upsilon_Mass_LargeRange", ";#mu#mu Mass (GeV);", 100, 0.0, 20.0);
+	h_noKin_Upsilon_Mass_LargeRange->Sumw2();
 	auto * h_noKin_Upsilon_Mass = new TH1D("h_noKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
 	h_noKin_Upsilon_Mass->Sumw2();
 	auto * h_noKin_Upsilon_Pt = new TH1D("h_noKin_Upsilon_Pt", ";p_{T}^{#mu#mu} (GeV);", 160, 0.0, 160.0);
@@ -363,10 +373,10 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	h_noKin_photonPt_over_zMass->Sumw2();
 
 	//2D masss plot
-	auto * h_noKin_Upsilon_Mass_Z_Mass = new TH2D("h_noKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, nBinsHZMass, minHZMassLeft, maxHZMassRight);
+	auto * h_noKin_Upsilon_Mass_Z_Mass = new TH2D("h_noKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange, nBinsHZMass, minHZMassLeft, maxHZMassRight);
 	h_noKin_Upsilon_Mass_Z_Mass->Sumw2();
 	//3D masss plot
-	auto * h_noKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_noKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, nBinsHZMass, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
+	auto * h_noKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_noKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange, nBinsHZMass, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
 	h_noKin_Upsilon_Mass_Z_Mass_Z_Pt->Sumw2();
 
 
@@ -407,8 +417,10 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	auto * h_withKin_deltaPhi_Upsilon_Photon = new TH1D("h_withKin_deltaPhi_Upsilon_Photon", ";|#Delta#phi(#mu#mu, #gamma)|;", 100, 0.0, 4.0);
 	h_withKin_deltaPhi_Upsilon_Photon->Sumw2();
 
-	auto * h_withKin_Upsilon_Mass = new TH1D("h_withKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass);
+	auto * h_withKin_Upsilon_Mass = new TH1D("h_withKin_Upsilon_Mass", ";#mu#mu Mass (GeV);", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange);
 	h_withKin_Upsilon_Mass->Sumw2();
+	auto * h_withKin_Upsilon_Mass_LargeRange = new TH1D("h_withKin_Upsilon_Mass_LargeRange", ";#mu#mu Mass (GeV);", 100, 0.0, 20.0);
+	h_withKin_Upsilon_Mass_LargeRange->Sumw2();
 	auto * h_withKin_Upsilon_Pt = new TH1D("h_withKin_Upsilon_Pt", ";p_{T}^{#mu#mu} (GeV);", 160, 0.0, 160.0);
 	h_withKin_Upsilon_Pt->Sumw2();
 	auto * h_withKin_Upsilon_eta = new TH1D("h_withKin_Upsilon_eta", ";#eta^{#mu#mu};", 50, -2.5, 2.5);
@@ -433,10 +445,10 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	h_withKin_photonPt_over_zMass->Sumw2();
 
 	//2D masss plot
-	auto * h_withKin_Upsilon_Mass_Z_Mass = new TH2D("h_withKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, minHZMassLeft, minHZMassLeft, maxHZMassRight);
+	auto * h_withKin_Upsilon_Mass_Z_Mass = new TH2D("h_withKin_Upsilon_Mass_Z_Mass", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV)", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange, minHZMassLeft, minHZMassLeft, maxHZMassRight);
 	h_withKin_Upsilon_Mass_Z_Mass->Sumw2();
 	//3D masss plot
-	auto * h_withKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_withKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMass, maxUpsilonMass, minHZMassLeft, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
+	auto * h_withKin_Upsilon_Mass_Z_Mass_Z_Pt = new TH3D("h_withKin_Upsilon_Mass_Z_Mass_Z_Pt", ";#mu#mu Mass (GeV); #mu#mu#gamma Mass (GeV); p_{T}^{#mu#mu#gamma} (GeV)", nBinsUpsilonMass, minUpsilonMassHistoRange, maxUpsilonMassHistoRange, minHZMassLeft, minHZMassLeft, maxHZMassRight, 160, 0.0, 160.0);
 	h_withKin_Upsilon_Mass_Z_Mass_Z_Pt->Sumw2();
 
 
@@ -627,6 +639,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			h_noKin_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(recoUpsilon.Phi(), leadingPhoton->Phi())),totalWeight);
 
 			h_noKin_Upsilon_Mass->Fill(recoUpsilon.M(),totalWeight);
+			h_noKin_Upsilon_Mass_LargeRange->Fill(recoUpsilon.M(),totalWeight);
 			h_noKin_Upsilon_Pt->Fill(recoUpsilon.Pt(),totalWeight);
 			h_noKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
 			h_noKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
@@ -707,6 +720,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 				h_withKin_deltaPhi_Upsilon_Photon->Fill(fabs(deltaPhi(recoUpsilon.Phi(), leadingPhoton->Phi())),totalWeight);
 
 				h_withKin_Upsilon_Mass->Fill(recoUpsilon.M(),totalWeight);
+				h_withKin_Upsilon_Mass_LargeRange->Fill(recoUpsilon.M(),totalWeight);
 				h_withKin_Upsilon_Pt->Fill(recoUpsilon.Pt(),totalWeight);
 				h_withKin_Upsilon_eta->Fill(recoUpsilon.Eta(),totalWeight);
 				h_withKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);

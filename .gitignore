@@ -21,3 +21,5 @@ fits/fitPlotFiles/
 *.csv
 
 outputPlots/
+
+evtsCountFiles/

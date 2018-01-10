@@ -54,6 +54,7 @@ void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string out
 	if (h_unPol->GetMaximum() > h_Pol->GetMaximum()) {
 		h_unPol->SetMaximum(h_unPol->GetMaximum()*1.3);
 		h_unPol->Draw("hist");	
+		h_unPol->GetXaxis()->SetTitleSize(.08);
 		h_unPol->GetYaxis()->SetTitle("a.u.");
 		h_unPol->GetXaxis()->SetTitleOffset(1.0);
 		h_unPol->GetYaxis()->SetTitleOffset(1.5);
@@ -61,6 +62,7 @@ void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string out
 	} else {
 		h_Pol->SetMaximum(h_Pol->GetMaximum()*1.3);
 		h_Pol->Draw("hist");	
+		h_Pol->GetXaxis()->SetTitleSize(.08);
 		h_Pol->GetYaxis()->SetTitle("a.u.");
 		h_Pol->GetXaxis()->SetTitleOffset(1.0);
 		h_Pol->GetYaxis()->SetTitleOffset(1.5);
@@ -99,6 +101,12 @@ void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string out
     latex->SetTextAlign(31);
     latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
 
+	// h_MC->GetXaxis()->SetTitleSize(.08);
+	// gPad->SetLeftMargin(0.17); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
+
 	c1->Update();
 
 	system(("mkdir -p  `dirname plotFiles/"+outputFilePath+".png`").c_str());
@@ -129,6 +137,7 @@ void plotter_Single(string analysisBranch, TH1D * h1, string outputFilePath, str
 	h1->GetXaxis()->SetTitleOffset(1.0);
 	h1->GetYaxis()->SetTitleOffset(1.5);
 	h1->Draw("hist");	
+	h1->GetXaxis()->SetTitleSize(.08);
 	h1->GetYaxis()->SetTitle("a.u.");
 	
 	// auto legend = new TLegend(0.74,0.76,1.03,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
@@ -159,6 +168,12 @@ void plotter_Single(string analysisBranch, TH1D * h1, string outputFilePath, str
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
     latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	// h_MC->GetXaxis()->SetTitleSize(.08);
+	// gPad->SetLeftMargin(0.17); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
 
 	c1->Update();
 
@@ -194,6 +209,7 @@ void plotter_LeadingTrailing(string analysisBranch, TH1D * h_Lead, TH1D * h_Trai
 	if (h_Lead->GetMaximum() > h_Trail->GetMaximum()) {
 		h_Lead->SetMaximum(h_Lead->GetMaximum()*1.3);
 		h_Lead->Draw("hist");	
+		h_Lead->GetXaxis()->SetTitleSize(.08);
 		h_Lead->GetYaxis()->SetTitle("a.u.");
 		h_Lead->GetXaxis()->SetTitleOffset(1.0);
 		h_Lead->GetYaxis()->SetTitleOffset(1.5);
@@ -201,6 +217,7 @@ void plotter_LeadingTrailing(string analysisBranch, TH1D * h_Lead, TH1D * h_Trai
 	} else {
 		h_Trail->SetMaximum(h_Trail->GetMaximum()*1.3);
 		h_Trail->Draw("hist");	
+		h_Trail->GetXaxis()->SetTitleSize(.08);
 		h_Trail->GetYaxis()->SetTitle("a.u.");
 		h_Trail->GetXaxis()->SetTitleOffset(1.0);
 		h_Trail->GetYaxis()->SetTitleOffset(1.5);
@@ -238,6 +255,12 @@ void plotter_LeadingTrailing(string analysisBranch, TH1D * h_Lead, TH1D * h_Trai
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
     latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+    // h_MC->GetXaxis()->SetTitleSize(.08);
+	// gPad->SetLeftMargin(0.17); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
 
 	c1->Update();
 
@@ -285,6 +308,10 @@ void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOri
 	double histoMax = max(h_Data->GetMaximum(), h_MC->GetMaximum())*1.3;
 	h_MC->SetMaximum(histoMax);
 	h_MC->Draw("hist");	
+	h_MC->GetXaxis()->SetTitleSize(.08);
+
+
+
 	if (mcScale < 0) h_MC->GetYaxis()->SetTitle("a.u.");
 	else h_MC->GetYaxis()->SetTitle("Events (Data) / Yield (MC)");
 	h_MC->GetXaxis()->SetTitleOffset(1.0);
@@ -338,6 +365,12 @@ void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOri
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
     latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
+	
+	// h_MC->GetXaxis()->SetTitleSize(.08);
+	// gPad->SetLeftMargin(0.17); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
 
 	c1->Update();
 
@@ -428,6 +461,8 @@ void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal
 	h_MC->Draw("AXIS");	
 	h_MC->GetXaxis()->SetTitle(xAxisTitle.c_str());
 	h_MC->Draw("hist nostack");	
+	h_MC->GetXaxis()->SetTitleSize(.08);
+
 	// h_MC->GetYaxis()->SetTitle("a.u.");
 	if (mcSignalScale < 0) h_MC->GetYaxis()->SetTitle("a.u.");
 	else h_MC->GetYaxis()->SetTitle("Events (Data) / Yield (MC)");
@@ -438,6 +473,7 @@ void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal
 	gPad->SetLeftMargin(0.17); 
 	gPad->SetRightMargin(0.05); 
 	gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
 
 	auto legend = new TLegend(0.66,0.74,0.95,0.91);
 	if (analysisBranch == "ZtoJpsi")

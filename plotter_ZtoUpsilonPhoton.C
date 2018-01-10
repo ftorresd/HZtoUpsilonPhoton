@@ -468,6 +468,22 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		); 
 
  	plotter_DataMC(analysisBranch,
+		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass_LargeRange"), 
+		"data_x_mc/noKinCuts/h_noKin_Upsilon_Mass_LargeRange",
+		false
+		); 
+
+ 	plotter_DataMCSignalBackground(analysisBranch,
+		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCBackgroundFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Mass_LargeRange"), 
+		"data_x_mc/noKinCuts/h_noKin_Upsilon_Mass_Signal_and_Background_LargeRange",
+		"#mu#mu Mass (GeV)",
+		false
+		); 
+
+ 	plotter_DataMC(analysisBranch,
 		(TH1D*)histoDataFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Pt"), 
 		(TH1D*)histoMCSignalFile->Get("outputHistos/noKinCutsHistos/h_noKin_Upsilon_Pt"), 
 		"data_x_mc/noKinCuts/h_noKin_Upsilon_Pt",
@@ -646,6 +662,22 @@ void plotter_ZtoUpsilonPhoton(string histoDataFilePath, string histoMCSignalFile
 		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		(TH1D*)histoMCBackgroundFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass"), 
 		"data_x_mc/withKinCuts/h_withKin_Upsilon_Mass_Signal_and_Background",
+		"#mu#mu Mass (GeV)",
+		false
+		); 
+  	
+ 	plotter_DataMC(analysisBranch,
+		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_LargeRange"), 
+		"data_x_mc/withKinCuts/h_withKin_Upsilon_Mass_LargeRange",
+		false
+		); 
+
+  	plotter_DataMCSignalBackground(analysisBranch,
+		(TH1D*)histoDataFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_LargeRange"), 
+		(TH1D*)histoMCBackgroundFile->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_LargeRange"), 
+		"data_x_mc/withKinCuts/h_withKin_Upsilon_Mass_Signal_and_Background_LargeRange",
 		"#mu#mu Mass (GeV)",
 		false
 		); 
