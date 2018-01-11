@@ -7,9 +7,11 @@ ZtoUpsilonPhoton @ CMS
 ```
 cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src
-git clone git@github.com:ftorresd/ZtoUpsilonPhoton.git
-cd ZtoUpsilonPhoton/
+git clone git@github.com:ftorresd/HZtoUpsilonPhoton.git
+cd HZtoUpsilonPhoton/
 git checkout 2016Data
+chmod +x setup.sh
+./setup.sh
 ```
 
 ### Pushing
@@ -17,6 +19,29 @@ After ```git add``` and ```git commit -m```:
 ```
 git push origin 2016Data
 ```
+
+### Analysis Workflow
+Produce HZToUpsilonGGNtuples (after propper configurarion for MC or Data):
+```
+./runZToUpsilonPhoton_ana.sh
+```
+
+Produce Histograms and TTres for fitting:
+```
+./runZToUpsilonPhoton_plots.sh
+```
+
+Produce plots:
+```
+./runZToUpsilonPhoton_plotter.sh
+```
+
+Fitting:
+```
+cd fits
+./runHZToUpsilonPhoton_fitter.sh
+```
+
 
 ## ggNtuples Code
 https://github.com/cmkuo/ggAnalysis
