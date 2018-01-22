@@ -61,285 +61,285 @@ using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////////
 // 2D Fit
-void DCBZPeakUpsilonfit2D() {
+// void DCBZPeakUpsilonfit2D() {
 
-	setTDRStyle();
+// 	setTDRStyle();
 
-	TFile* _file0 = new TFile("../outputHistos/outHistos_ZtoUpsilonPhoton_Data.root","read");
-	//	TFile* _file0 = new TFile("HaddHistos_ZtoUpsilonPhoton_ZToUpsilonGamma.root","read");
+// 	TFile* _file0 = new TFile("../outputHistos/outHistos_ZtoUpsilonPhoton_Data.root","read");
+// 	//	TFile* _file0 = new TFile("HaddHistos_ZtoUpsilonPhoton_ZToUpsilonGamma.root","read");
 
-	TCanvas* c = new TCanvas("2DFits","2DFits",800,400) ;
+// 	TCanvas* c = new TCanvas("2DFits","2DFits",800,400) ;
 
-	TH2* mass2DHist = (TH2D*)_file0->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_Z_Mass");
-	TString title="signal+bckg";
+// 	TH2* mass2DHist = (TH2D*)_file0->Get("outputHistos/withKinCutsHistos/h_withKin_Upsilon_Mass_Z_Mass");
+// 	TString title="signal+bckg";
 
 
 
-	// Upsilon Fit
+// 	// Upsilon Fit
 
-	TString xtitle="m_{#mu^{-}#mu^{+}} [GeV/c^{2}]";
-	TString ytitle="m_{#mu^{-}#mu^{+}+#gamma} [GeV/c^{2}]";
-	const double M1S = 9.46;   //upsilon 1S pgd mass value
-	const double M2S = 10.02;  //upsilon 2S pgd mass value
-	const double M3S = 10.35; //upsilon 3S pgd mass value
-	const double M4S = 10.579; //upsilon 4S pgd mass value
+// 	TString xtitle="m_{#mu^{-}#mu^{+}} [GeV/c^{2}]";
+// 	TString ytitle="m_{#mu^{-}#mu^{+}+#gamma} [GeV/c^{2}]";
+// 	const double M1S = 9.46;   //upsilon 1S pgd mass value
+// 	const double M2S = 10.02;  //upsilon 2S pgd mass value
+// 	const double M3S = 10.35; //upsilon 3S pgd mass value
+// 	const double M4S = 10.579; //upsilon 4S pgd mass value
 
-	double minMass=8.0;
-	double maxMass=12.0;
+// 	double minMass=8.0;
+// 	double maxMass=12.0;
 
-	TH1 * Dimuon = mass2DHist->ProjectionX();//dimuon
+// 	TH1 * Dimuon = mass2DHist->ProjectionX();//dimuon
 
-	RooRealVar mass("mass",xtitle,minMass,maxMass);
-	RooDataHist dimuonData("dimuonData","dimuonData",mass,Import(*Dimuon));
+// 	RooRealVar mass("mass",xtitle,minMass,maxMass);
+// 	RooDataHist dimuonData("dimuonData","dimuonData",mass,Import(*Dimuon));
 
-	RooRealVar mean("mass_mean","#Upsilon mean",M1S,M1S-0.5,M1S+0.5,"GeV");
-	RooRealVar shift21("shift2","mass diff #Upsilon(1,2S)",M2S-M1S);
-	RooRealVar shift31("shift3","mass diff #Upsilon(1,3S)",M3S-M1S);
-	RooRealVar shift41("shift4","mass diff #Upsilon(1,4S)",M4S-M1S);
+// 	RooRealVar mean("mass_mean","#Upsilon mean",M1S,M1S-0.5,M1S+0.5,"GeV");
+// 	RooRealVar shift21("shift2","mass diff #Upsilon(1,2S)",M2S-M1S);
+// 	RooRealVar shift31("shift3","mass diff #Upsilon(1,3S)",M3S-M1S);
+// 	RooRealVar shift41("shift4","mass diff #Upsilon(1,4S)",M4S-M1S);
 
-	RooRealVar mscale("mscale","mass scale factor",1.,1.0,1.0);
-	mscale.setConstant(kTRUE); /* the def. parameter value is fixed in the fit */
-	// double mscale = 1.0;//  check it for MC 
+// 	RooRealVar mscale("mscale","mass scale factor",1.,1.0,1.0);
+// 	mscale.setConstant(kTRUE); /* the def. parameter value is fixed in the fit */
+// 	// double mscale = 1.0;//  check it for MC 
 
-	RooFormulaVar mean1S("mean1S","@0",RooArgList(mean));
-	RooFormulaVar mean2S("mean2S","@0+@1*@2",RooArgList(mean,mscale,shift21));
-	RooFormulaVar mean3S("mean3S","@0+@1*@2",RooArgList(mean,mscale,shift31));
-	RooFormulaVar mean4S("mean4S","@0+@1*@2",RooArgList(mean,mscale,shift41));
+// 	RooFormulaVar mean1S("mean1S","@0",RooArgList(mean));
+// 	RooFormulaVar mean2S("mean2S","@0+@1*@2",RooArgList(mean,mscale,shift21));
+// 	RooFormulaVar mean3S("mean3S","@0+@1*@2",RooArgList(mean,mscale,shift31));
+// 	RooFormulaVar mean4S("mean4S","@0+@1*@2",RooArgList(mean,mscale,shift41));
 
 
-	RooRealVar sigma1("sigma1","Sigma_1",0.06,0.01,0.30);
-	RooRealVar sigma2("sigma2","Sigma_2",0.10,0.01,0.30);
+// 	RooRealVar sigma1("sigma1","Sigma_1",0.06,0.01,0.30);
+// 	RooRealVar sigma2("sigma2","Sigma_2",0.10,0.01,0.30);
 
-	/// to describe final state radiation tail on the left of the peaks
-	RooRealVar alpha("alpha","tail shift",1.5,0.2,4);
-	RooRealVar npow("npow","power order",2);
-	npow.setConstant(kTRUE);
-	alpha.setConstant(kTRUE);
+// 	/// to describe final state radiation tail on the left of the peaks
+// 	RooRealVar alpha("alpha","tail shift",1.5,0.2,4);
+// 	RooRealVar npow("npow","power order",2);
+// 	npow.setConstant(kTRUE);
+// 	alpha.setConstant(kTRUE);
 
-	/// relative fraction of the two peak components 
-	RooRealVar sigmaFraction("sigmaFraction","Sigma Fraction",0.3,0.,1.);
+// 	/// relative fraction of the two peak components 
+// 	RooRealVar sigmaFraction("sigmaFraction","Sigma Fraction",0.3,0.,1.);
 
-	/// Upsilon 1S
-	RooGaussian gauss1S1("gauss1S1","1S Gaussian_1",mass,mean1S,sigma1);
-	RooCBShape  gauss1S2("gauss1S2", "FSR cb 1s",mass,mean1S,sigma2,alpha,npow); 
-	RooAddPdf sig1S("sig1S","1S mass pdf",RooArgList(gauss1S1,gauss1S2),sigmaFraction);
+// 	/// Upsilon 1S
+// 	RooGaussian gauss1S1("gauss1S1","1S Gaussian_1",mass,mean1S,sigma1);
+// 	RooCBShape  gauss1S2("gauss1S2", "FSR cb 1s",mass,mean1S,sigma2,alpha,npow); 
+// 	RooAddPdf sig1S("sig1S","1S mass pdf",RooArgList(gauss1S1,gauss1S2),sigmaFraction);
 
-	/// Upsilon 2S
-	RooGaussian gauss2S1("gauss2S1","2S Gaussian_1",mass,mean2S,sigma1);
-	RooCBShape  gauss2S2("gauss2S2", "FSR cb 2s", mass,mean2S,sigma2,alpha,npow); 
-	RooAddPdf sig2S("sig2S","2S mass pdf",RooArgList(gauss2S1,gauss2S2),sigmaFraction);
+// 	/// Upsilon 2S
+// 	RooGaussian gauss2S1("gauss2S1","2S Gaussian_1",mass,mean2S,sigma1);
+// 	RooCBShape  gauss2S2("gauss2S2", "FSR cb 2s", mass,mean2S,sigma2,alpha,npow); 
+// 	RooAddPdf sig2S("sig2S","2S mass pdf",RooArgList(gauss2S1,gauss2S2),sigmaFraction);
 
-	/// Upsilon 3S
-	RooGaussian gauss3S1("gauss3S1","3S Gaussian_1",mass,mean3S,sigma1);
-	RooGaussian gauss3S2("gauss3S2","3S Gaussian_2",mass,mean3S,sigma2);
-	RooAddPdf sig3S("sig3S","3S mass pdf",RooArgList(gauss3S1,gauss3S2),sigmaFraction);
+// 	/// Upsilon 3S
+// 	RooGaussian gauss3S1("gauss3S1","3S Gaussian_1",mass,mean3S,sigma1);
+// 	RooGaussian gauss3S2("gauss3S2","3S Gaussian_2",mass,mean3S,sigma2);
+// 	RooAddPdf sig3S("sig3S","3S mass pdf",RooArgList(gauss3S1,gauss3S2),sigmaFraction);
 
-	/// Upsilon 4S
-	RooGaussian gauss4S1("gauss4S1","4S Gaussian_1",mass,mean4S,sigma1);
-	RooGaussian gauss4S2("gauss4S2","4S Gaussian_2",mass,mean4S,sigma2);
-	RooAddPdf sig4S("sig4S","4S mass pdf",RooArgList(gauss4S1,gauss4S2),sigmaFraction);
+// 	/// Upsilon 4S
+// 	RooGaussian gauss4S1("gauss4S1","4S Gaussian_1",mass,mean4S,sigma1);
+// 	RooGaussian gauss4S2("gauss4S2","4S Gaussian_2",mass,mean4S,sigma2);
+// 	RooAddPdf sig4S("sig4S","4S mass pdf",RooArgList(gauss4S1,gauss4S2),sigmaFraction);
 
 
-	/// Background
-	RooRealVar *bkg_a1  = new RooRealVar("bkg_a1", "background a1", 0, -1, 1);
-	RooRealVar *bkg_a2  = new RooRealVar("bkg_a2", "background a2", 0, -1, 1);
-	RooAbsPdf  *bkgPdf  = new RooChebychev("bkg","linear background",mass, RooArgList(*bkg_a1,*bkg_a2));
+// 	/// Background
+// 	RooRealVar *bkg_a1  = new RooRealVar("bkg_a1", "background a1", 0, -1, 1);
+// 	RooRealVar *bkg_a2  = new RooRealVar("bkg_a2", "background a2", 0, -1, 1);
+// 	RooAbsPdf  *bkgPdf  = new RooChebychev("bkg","linear background",mass, RooArgList(*bkg_a1,*bkg_a2));
 
 
-	/// Combined pdf
-	int nt = 30000;
-	RooRealVar *nsig1 = new RooRealVar("nsig1","signal 1s yield",nt*0.25*0.6,0,10*nt); 
-	RooRealVar *nsig2 = new RooRealVar("nsig2","signal 2s yield",nt*0.25*0.3,0,10*nt); 
-	RooRealVar *nsig3 = new RooRealVar("nsig3","signal 3s yield",nt*0.25*0.1,0,10*nt); 
-	RooRealVar *nsig4 = new RooRealVar("nsig4","signal 3s yield",nt*0.25*0.05,0,10*nt);
-	RooRealVar *nbkgd = new RooRealVar("nbkgd","brackground yield",nt*0.75,0,10*nt); 
-	RooAbsPdf  *pdf   = new RooAddPdf ("pdf","total signal+background pdf",RooArgList(sig1S,sig2S,sig3S,sig4S,*bkgPdf),RooArgList(*nsig1,*nsig2,*nsig3,*nsig4,*nbkgd));
-	pdf->fitTo( dimuonData, Extended());
+// 	/// Combined pdf
+// 	int nt = 30000;
+// 	RooRealVar *nsig1 = new RooRealVar("nsig1","signal 1s yield",nt*0.25*0.6,0,10*nt); 
+// 	RooRealVar *nsig2 = new RooRealVar("nsig2","signal 2s yield",nt*0.25*0.3,0,10*nt); 
+// 	RooRealVar *nsig3 = new RooRealVar("nsig3","signal 3s yield",nt*0.25*0.1,0,10*nt); 
+// 	RooRealVar *nsig4 = new RooRealVar("nsig4","signal 3s yield",nt*0.25*0.05,0,10*nt);
+// 	RooRealVar *nbkgd = new RooRealVar("nbkgd","brackground yield",nt*0.75,0,10*nt); 
+// 	RooAbsPdf  *pdf   = new RooAddPdf ("pdf","total signal+background pdf",RooArgList(sig1S,sig2S,sig3S,sig4S,*bkgPdf),RooArgList(*nsig1,*nsig2,*nsig3,*nsig4,*nbkgd));
+// 	pdf->fitTo( dimuonData, Extended());
 
-	RooPlot* frame = mass.frame(Title(title));
-	dimuonData.plotOn(frame,Name("theData"),DataError(RooDataHist::SumW2));
-	pdf->plotOn(frame,Name("thePdf"));
-	pdf->plotOn(frame,Components("sig1S"),LineStyle(kDashed),LineColor(kGreen));
-	pdf->plotOn(frame,Components("sig2S"),LineStyle(kDashed),LineColor(kMagenta));
-	pdf->plotOn(frame,Components("sig3S"),LineStyle(kDashed),LineColor(kYellow));
-	pdf->plotOn(frame,Components("sig4S"),LineStyle(kDashed),LineColor(kOrange)); 
-	pdf->plotOn(frame,Components("bkg"),LineStyle(kDashed),LineColor(kRed));
+// 	RooPlot* frame = mass.frame(Title(title));
+// 	dimuonData.plotOn(frame,Name("theData"),DataError(RooDataHist::SumW2));
+// 	pdf->plotOn(frame,Name("thePdf"));
+// 	pdf->plotOn(frame,Components("sig1S"),LineStyle(kDashed),LineColor(kGreen));
+// 	pdf->plotOn(frame,Components("sig2S"),LineStyle(kDashed),LineColor(kMagenta));
+// 	pdf->plotOn(frame,Components("sig3S"),LineStyle(kDashed),LineColor(kYellow));
+// 	pdf->plotOn(frame,Components("sig4S"),LineStyle(kDashed),LineColor(kOrange)); 
+// 	pdf->plotOn(frame,Components("bkg"),LineStyle(kDashed),LineColor(kRed));
 
-	// Adding Dataset box and PDF parameters box 
-	RooArgSet * dpars = pdf->getParameters(dimuonData);
-	int dnfloatpars = dpars->selectByAttrib("Constant",kFALSE)->getSize();
-	double dmychsq = frame->chiSquare("thePdf","theData", dnfloatpars);
-	double dmyndof = Dimuon->GetNbinsX() - dnfloatpars;
-	pdf->paramOn(frame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", dmyndof*dmychsq, dmyndof))
-		);
+// 	// Adding Dataset box and PDF parameters box 
+// 	RooArgSet * dpars = pdf->getParameters(dimuonData);
+// 	int dnfloatpars = dpars->selectByAttrib("Constant",kFALSE)->getSize();
+// 	double dmychsq = frame->chiSquare("thePdf","theData", dnfloatpars);
+// 	double dmyndof = Dimuon->GetNbinsX() - dnfloatpars;
+// 	pdf->paramOn(frame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", dmyndof*dmychsq, dmyndof))
+// 		);
 
 
 
-	//////////////////////////////////////////
-	//  DiMuons Gamma  Fit
+// 	//////////////////////////////////////////
+// 	//  DiMuons Gamma  Fit
 
-	TH1 * DimuonGamma = mass2DHist->ProjectionY();// Boson Z
-	RooRealVar dimuongamma("dimuongamma", ytitle, 70, 130);
-	RooDataHist dimuonGammaData("dimuonGammaData","dimuonGammaData",dimuongamma,Import(*DimuonGamma));
+// 	TH1 * DimuonGamma = mass2DHist->ProjectionY();// Boson Z
+// 	RooRealVar dimuongamma("dimuongamma", ytitle, 70, 130);
+// 	RooDataHist dimuonGammaData("dimuonGammaData","dimuonGammaData",dimuongamma,Import(*DimuonGamma));
 
-	RooRealVar mean_dcb("mean_dcb", "Mean" ,91.1876,70,130) ;
-	RooRealVar sigma_dcb("sigma_dcb", "Width" ,  2., 0.5, 4.) ;
-	RooRealVar n1("n1","", 0.5, 0.1, 50.);//dCBPowerL
-	RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
+// 	RooRealVar mean_dcb("mean_dcb", "Mean" ,91.1876,70,130) ;
+// 	RooRealVar sigma_dcb("sigma_dcb", "Width" ,  2., 0.5, 4.) ;
+// 	RooRealVar n1("n1","", 0.5, 0.1, 50.);//dCBPowerL
+// 	RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
 
 
-	RooRealVar alpha1("alpha1","", 3., 0.1, 50.);//dCBCutL
+// 	RooRealVar alpha1("alpha1","", 3., 0.1, 50.);//dCBCutL
 
-	RooRealVar alpha2("alpha2","", 3., 0.1, 50.);//dCBCutR
+// 	RooRealVar alpha2("alpha2","", 3., 0.1, 50.);//dCBCutR
 
 
-	//RooRealVar lambda("lambda", "slope", -0.1, -5., 0.);
-	//RooRealVar s_bw("signal_bw", "signal", 100, 0, 10000);
-	RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
+// 	//RooRealVar lambda("lambda", "slope", -0.1, -5., 0.);
+// 	//RooRealVar s_bw("signal_bw", "signal", 100, 0, 10000);
+// 	RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
 
 
-	RooDCBShape cball("cball", "double crystal ball", dimuongamma, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
+// 	RooDCBShape cball("cball", "double crystal ball", dimuongamma, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
 
-	//	RooExponential expo("expo", "exponential PDF", dimuongamma, lambda);
+// 	//	RooExponential expo("expo", "exponential PDF", dimuongamma, lambda);
 
 
-	//--------------------------------//
-	// Background fit                 //
-	// Using Bernstein 2nd polynomial //
-	//                                //
-	//--------------------------------//
+// 	//--------------------------------//
+// 	// Background fit                 //
+// 	// Using Bernstein 2nd polynomial //
+// 	//                                //
+// 	//--------------------------------//
 
-	RooRealVar p0("p0", " ", 0, 1); // coefficient of x^0 term
-	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
-	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
-	RooBernstein BkgPdf_2016("BkgPdf_2016", " ", dimuongamma, RooArgList(RooConst(1),p1,p2));
-	RooRealVar b("BernsteinBackground", "background yield", 100, 0, 10000);
+// 	RooRealVar p0("p0", " ", 0, 1); // coefficient of x^0 term
+// 	RooRealVar p1("p1", " ", 0, 1); // coefficient of x^1 term
+// 	RooRealVar p2("p2", " ", 0, 1); // coefficient of x^2 term
+// 	RooBernstein BkgPdf_2016("BkgPdf_2016", " ", dimuongamma, RooArgList(RooConst(1),p1,p2));
+// 	RooRealVar b("BernsteinBackground", "background yield", 100, 0, 10000);
 
 
-	//RooAddPdf sum("sum", "double crystal ball and exponential PDF", RooArgList(cball, expo), RooArgList(s_dcb, b));
-	RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(cball, BkgPdf_2016), RooArgList(s_dcb, b));
-    // RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(BkgPdf_2016), RooArgList(s_dcb, b));
-	RooPlot * xFrame = dimuongamma.frame(Title("Z-peak")) ;
+// 	//RooAddPdf sum("sum", "double crystal ball and exponential PDF", RooArgList(cball, expo), RooArgList(s_dcb, b));
+// 	RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(cball, BkgPdf_2016), RooArgList(s_dcb, b));
+//     // RooAddPdf sum("sum", "double crystal ball and Bernstein 2nd polynomial", RooArgList(BkgPdf_2016), RooArgList(s_dcb, b));
+// 	RooPlot * xFrame = dimuongamma.frame(Title("Z-peak")) ;
 
-        // Z fiting and blind regions 
-        //dimuongamma.setRange("blind_signal", 70, 120);
-        //dimuongamma.setRange("blind_bck1", 80, 100);
-        //dimuongamma.setRange("blind_bck2", 120, 135);
+//         // Z fiting and blind regions 
+//         //dimuongamma.setRange("blind_signal", 70, 120);
+//         //dimuongamma.setRange("blind_bck1", 80, 100);
+//         //dimuongamma.setRange("blind_bck2", 120, 135);
 
 
-	sum.fitTo(dimuonGammaData, RooFit::Extended());  
-	dimuonGammaData.plotOn(xFrame,DataError(RooDataHist::SumW2)) ;
-	sum.plotOn(xFrame) ;
+// 	sum.fitTo(dimuonGammaData, RooFit::Extended());  
+// 	dimuonGammaData.plotOn(xFrame,DataError(RooDataHist::SumW2)) ;
+// 	sum.plotOn(xFrame) ;
 
-	//sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
-	sum.plotOn(xFrame, RooFit::Components(BkgPdf_2016),RooFit::LineStyle(kDashed),LineColor(kRed)) ; 
-	sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
+// 	//sum.plotOn(xFrame, RooFit::Components(expo),RooFit::LineStyle(kDashed),LineColor(kRed)) ;  
+// 	sum.plotOn(xFrame, RooFit::Components(BkgPdf_2016),RooFit::LineStyle(kDashed),LineColor(kRed)) ; 
+// 	sum.paramOn(xFrame,Layout(0.65), Format("NEU", AutoPrecision(1)), Parameters( RooArgList(s_dcb, b, mean_dcb,sigma_dcb )));
 
-	// Adding Dataset box and PDF parameters box 
-	RooArgSet * pars = sum.getParameters(dimuongamma);
-	int nfloatpars = pars->selectByAttrib("Constant",kFALSE)->getSize();
-	double mychsq = xFrame->chiSquare(nfloatpars);
-	double myndof = DimuonGamma->GetNbinsX() - nfloatpars;
-	sum.paramOn(xFrame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", myndof*mychsq, myndof))
-		);
+// 	// Adding Dataset box and PDF parameters box 
+// 	RooArgSet * pars = sum.getParameters(dimuongamma);
+// 	int nfloatpars = pars->selectByAttrib("Constant",kFALSE)->getSize();
+// 	double mychsq = xFrame->chiSquare(nfloatpars);
+// 	double myndof = DimuonGamma->GetNbinsX() - nfloatpars;
+// 	sum.paramOn(xFrame,Layout(0.65,0.99,0.99),Format("NE"),Label(Form("#chi^{2}/ndf = %2.0f/%2.0f", myndof*mychsq, myndof))
+// 		);
 
 
-	////////////
-	// Creating 2D fit using projection 
-	///
+// 	////////////
+// 	// Creating 2D fit using projection 
+// 	///
 
-	RooProdPdf sig2DpdfUSZ("sig2DpdfUZ", "2D Signal PDF Upsilon and Z boson", RooArgList(*pdf,sum));
+// 	RooProdPdf sig2DpdfUSZ("sig2DpdfUZ", "2D Signal PDF Upsilon and Z boson", RooArgList(*pdf,sum));
 
-	RooDataHist data2D("data2D","Th2D Dataset",RooArgList(mass,dimuongamma),mass2DHist);
+// 	RooDataHist data2D("data2D","Th2D Dataset",RooArgList(mass,dimuongamma),mass2DHist);
 
-	TH1* hmodel2d = sig2DpdfUSZ.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
+// 	TH1* hmodel2d = sig2DpdfUSZ.createHistogram("hmodel2d",mass,Binning(50),YVar(dimuongamma,Binning(100))) ;
 
-	// Z fiting and blind regions 
-	//dimuongamma.setRange("blind_signal", 70, 120);
-	dimuongamma.setRange("blind_bck1", 80, 100);
-	dimuongamma.setRange("blind_bck2", 120, 135);	
-	// Upsilon Region
-	mass.setRange("blind_signal", 9., 11.);
-	//mass.setRange("blind_bck", 8, 8.9);
-	//mass.setRange("blind_bck", 11., 12.);
+// 	// Z fiting and blind regions 
+// 	//dimuongamma.setRange("blind_signal", 70, 120);
+// 	dimuongamma.setRange("blind_bck1", 80, 100);
+// 	dimuongamma.setRange("blind_bck2", 120, 135);	
+// 	// Upsilon Region
+// 	mass.setRange("blind_signal", 9., 11.);
+// 	//mass.setRange("blind_bck", 8, 8.9);
+// 	//mass.setRange("blind_bck", 11., 12.);
 
 
-	sig2DpdfUSZ.fitTo(data2D,Save(kTRUE));
-	//sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal,blind_bck"));
+// 	sig2DpdfUSZ.fitTo(data2D,Save(kTRUE));
+// 	//sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal,blind_bck"));
 
 
 
-	// Fit p.d.f to all data
-	RooFitResult* r_full = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE)) ;
-	// Fit p.d.f only to data in "signal" range
-	RooFitResult* r_sig = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal")) ;
+// 	// Fit p.d.f to all data
+// 	RooFitResult* r_full = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE)) ;
+// 	// Fit p.d.f only to data in "signal" range
+// 	RooFitResult* r_sig = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal")) ;
 
-	//  Fit p.d.f only to data in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region 
-	RooFitResult* r_Z = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal"),CutRange("blind_bck1,blind_bck2")) ;
+// 	//  Fit p.d.f only to data in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region 
+// 	RooFitResult* r_Z = sig2DpdfUSZ.fitTo(data2D,Save(kTRUE),Range("blind_signal"),CutRange("blind_bck1,blind_bck2")) ;
 
 
 
-	// --- Fit ---
-	RooPlot* xyFrame = dimuongamma.frame() ;
-	data2D.plotOn(xyFrame) ;
-	sig2DpdfUSZ.plotOn(xyFrame) ;
+// 	// --- Fit ---
+// 	RooPlot* xyFrame = dimuongamma.frame() ;
+// 	data2D.plotOn(xyFrame) ;
+// 	sig2DpdfUSZ.plotOn(xyFrame) ;
 
 
-	// Print fit results 
-	cout << "result of fit on all data " << endl ;
-	r_full->Print() ; 
+// 	// Print fit results 
+// 	cout << "result of fit on all data " << endl ;
+// 	r_full->Print() ; 
 
-	cout << "result of fit in in upsilon region (note increased error on signal fraction)" << endl ;
-	r_sig->Print() ;
+// 	cout << "result of fit in in upsilon region (note increased error on signal fraction)" << endl ;
+// 	r_sig->Print() ;
 
-	cout << "result of fit in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region   (note increased error on signal fraction)" << endl ;
-	r_Z->Print() ;
+// 	cout << "result of fit in excluded region 80, 100 and 120, 135 for Z and  selection upsilon region   (note increased error on signal fraction)" << endl ;
+// 	r_Z->Print() ;
 
-	//-----------------------------------//
+// 	//-----------------------------------//
 
 
-	/*
-	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l,
-	// 2D fit
-	*/      
-	RooWorkspace *w = new RooWorkspace("w","workspace") ;   
-	w->import(sig2DpdfUSZ); 
-	w->import(data2D);
-	w->Print();
+// 	/*
+// 	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l,
+// 	// 2D fit
+// 	*/      
+// 	RooWorkspace *w = new RooWorkspace("w","workspace") ;   
+// 	w->import(sig2DpdfUSZ); 
+// 	w->import(data2D);
+// 	w->Print();
 
-	system(("mkdir -p  `dirname fitPlotFiles/DCBZPeakUpsilonfit2D/DCBZPeakUpsilonfit2D.root`"));
-	w->writeToFile("fitPlotFiles/DCBZPeakUpsilonfit2D/workspace_DCBZPeakUpsilonfit2D.root"); 
-	//gDirectory->Add(w) ;  
+// 	system(("mkdir -p  `dirname fitPlotFiles/DCBZPeakUpsilonfit2D/DCBZPeakUpsilonfit2D.root`"));
+// 	w->writeToFile("fitPlotFiles/DCBZPeakUpsilonfit2D/workspace_DCBZPeakUpsilonfit2D.root"); 
+// 	//gDirectory->Add(w) ;  
 
-	// Draw the 'sigar'
-	gStyle->SetCanvasPreferGL(true);
-	gStyle->SetPalette(1);       
-	// Draw all frames on a canvas
-	//c->Divide(2,2) ;
-	c->Divide(2,1);
-	c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
-	//	c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
-	c->cd(2); hmodel2d->Draw("Surf3") ;
+// 	// Draw the 'sigar'
+// 	gStyle->SetCanvasPreferGL(true);
+// 	gStyle->SetPalette(1);       
+// 	// Draw all frames on a canvas
+// 	//c->Divide(2,2) ;
+// 	c->Divide(2,1);
+// 	c->cd(1) ; gPad->SetLeftMargin(0.25) ; frame->GetYaxis()->SetTitleOffset(0.9) ;  frame->Draw() ; // dimuons
+// 	//	c->cd(2) ; gPad->SetLeftMargin(0.25) ; xFrame->GetYaxis()->SetTitleOffset(0.9) ;  xFrame->Draw(); // dimuons + gamma 
+// 	c->cd(2); hmodel2d->Draw("Surf3") ;
 
-	system(("mkdir -p  `dirname fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.png`"));
-	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.png");
-	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.gif");
-	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.pdf");
-	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.root");
-}
+// 	system(("mkdir -p  `dirname fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.png`"));
+// 	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.png");
+// 	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.gif");
+// 	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.pdf");
+// 	c->SaveAs("fitPlotFiles/DCBZPeakUpsilonfit2D/UpsilonZ2Dfit.root");
+// }
 
 ////////////////////////////////////////////////////////////////////////////////////
 // 1D Fit
 // Z Fit
-void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
+void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string selCategory) {
 	setTDRStyle();
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA 
 	TFile * outTreeToFitFileData;
-	if (analysisBranch == "JPsi") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoJPsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_ZtoUpsilon.root");
-	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
+	if (analysisBranch == "JPsi") outTreeToFitFileData = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_Data_ZtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_Data_ZtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_HZtoUpsilonPhoton");
 	RooRealVar mHZData("mHZ", "mHZ", 70, 120, "GeV") ;
 	mHZData.setRange("LS", 70, 80);
 	mHZData.setRange("RS", 100, 120);
@@ -359,11 +359,11 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	TFile * outHistoSignalFile;
 	TH1D * outHistoSignal;
 	if (analysisBranch == "JPsi")  {
-		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root");
+		outHistoSignalFile = TFile::Open(("../outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
 		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
 	}
 	if (analysisBranch == "Upsilon")  {
-		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon.root");
+		outHistoSignalFile = TFile::Open(("../outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
 		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
 	}
 
@@ -374,24 +374,58 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// RooRealVar p2("p2", " ", 0, 10); // coefficient of x^2 term
 	// RooRealVar p3("p3", " ", 0, 10); // coefficient of x^3 term
 	// RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
-	RooRealVar p0("p0", " ", 10, 0.1, 20); // coefficient of x^0 term
-	RooRealVar p1("p1", " ", 10, 0.1, 20); // coefficient of x^1 term
-	RooRealVar p2("p2", " ", 10, 0.1, 20); // coefficient of x^2 term
-	RooRealVar p3("p3", " ", 10, 0.1, 20); // coefficient of x^3 term
-	RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+	// RooRealVar p0("p0", " ", 1, 0., 10); // coefficient of x^0 term
+	// RooRealVar p1("p1", " ", 1, 0., 10); // coefficient of x^1 term
+	// RooRealVar p2("p2", " ", 1, 0., 10); // coefficient of x^2 term
+	// RooRealVar p3("p3", " ", 1, 0., 10); // coefficient of x^3 term
 
-	RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(p0, p1, p2, p3));
-	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2, p3));
-	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), RooConst(1), RooConst(1.12), p3));
-	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
-	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1 ) );
+	// JPsi - Default
+	RooRealVar p0("p0", " ", 1, 0., 10); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 1, 0., 10); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 1, 0., 10); // coefficient of x^2 term
+	RooRealVar p3("p3", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p4("p4", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p5("p5", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p6("p6", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p7("p7", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p8("p8", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p9("p9", " ", 1, 0., 10); // coefficient of x^3 term
+	RooRealVar p10("p10", " ", 1, 0., 10); // coefficient of x^3 term
+
+
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, argumentsList);
 	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit\n\n" << endl;
+	RooArgList argumentsList(RooConst(1), p1, p2, p3);
+	
+	// Upsilon params
+	if (analysisBranch == "Upsilon") {
+		argumentsList.add(p4);
+		argumentsList.add(p5);
+		// argumentsList.add(p6);
+		// argumentsList.add(p7);
+		// argumentsList.add(p8);
+		// argumentsList.add(p9);
+		// argumentsList.add(p10);
+		// p1.setVal(5) ;
+		// p2.setVal(5) ;
+		// p3.setVal(5) ;
+		// p4.setVal(5) ;
+		// p5.setVal(5) ;
+		// p2.setVal(1) ;
+		// p3.setVal(1) ;
+		// p4.setVal(1) ;
+		// p5.setVal(1) ;
+
+	}
+
+	RooBernstein Bernstein("Bernstein", " ", mHZData, argumentsList);
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + ")\n\n" << endl;
 	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
 	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + ")\n\n" << endl;
 
 
 
@@ -405,18 +439,17 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// mHZData.setRange("leftSide",70,80) ;
 	// mHZData.setRange("rightSide",100,120);
 	RooPlot* xframe1 = mHZData.frame(Title("M_{#mu#mu#gamma}")) ;
-	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ; 
 	// data.plotOn(xframe1,Binning(20),CutRange("RS"), MarkerSize(3)) ;
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,2),FillColor(kYellow), Range("full"), NormRange("full") ) ;
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),VisualizeError(*fitResultBackground,1),FillColor(kGreen), Range("full"), NormRange("full") ) ;
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7), Range("full"), NormRange("full")   );
 	// Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7)   );
 	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
-	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
-	data.plotOn(xframe1,Binning(20),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
+	// data.plotOn(xframe1,Binning(25),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
+	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
 	xframe1->SetMinimum(0.00001);
 	xframe1->GetXaxis()->SetTitle("M_{#mu#mu#gamma} (GeV)");
 	xframe1->GetXaxis()->SetLabelOffset(0.02);
@@ -459,26 +492,26 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
 
 	if (analysisBranch == "JPsi")  {
-		system(("mkdir -p  `dirname fitPlotFiles/ZToJpsiPhotonSignalAndBackgroundFit/ZToJpsiPhotonSignalAndBackgroundFit_Data.png`"));
-		c1->SaveAs("fitPlotFiles/ZToJpsiPhotonSignalAndBackgroundFit/ZToJpsiPhotonSignalAndBackgroundFit_Data.root");
-		c1->SaveAs("fitPlotFiles/ZToJpsiPhotonSignalAndBackgroundFit/ZToJpsiPhotonSignalAndBackgroundFit_Data.png");
-		c1->SaveAs("fitPlotFiles/ZToJpsiPhotonSignalAndBackgroundFit/ZToJpsiPhotonSignalAndBackgroundFit_Data.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Data.png`"));
+		c1->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".root").c_str());
+		c1->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".png").c_str());
+		c1->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon")  {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png`"));
-		c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.root");
-		c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.png");
-		c1->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data.pdf");
+		c1->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".root").c_str());
+		c1->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".png").c_str());
+		c1->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".pdf").c_str());
 	}
 
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA - SIGNAL
 	TFile * outTreeToFitFileSignal;
-	if (analysisBranch == "JPsi") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToJPsiGamma_ZtoJpsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon.root");
-	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_ZtoUpsilonPhoton");
+	if (analysisBranch == "JPsi") outTreeToFitFileSignal = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+	if (analysisBranch == "Upsilon") outTreeToFitFileSignal = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_ZToUpsilon1SGamma_ZtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_HZtoUpsilonPhoton");
 	RooRealVar mHZSignal("mHZ", "mHZ", 70, 120, "GeV") ;
 	RooRealVar weightsSignal("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet signal("signal", " ", RooArgSet(mHZSignal, weightsSignal), Import(*outTreeToFitSignal), WeightVar(weightsSignal));
@@ -498,11 +531,11 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	RooDCBShape dcball("dcball", "double sided crystal ball", mHZSignal, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + ")\n\n" << endl;
 	RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	// RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kFALSE) ) ;
 	fitResultSignal->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -554,24 +587,24 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	if (analysisBranch == "JPsi")  {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal.png`"));
-		cSignal->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal.root");
-		cSignal->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal.png");
-		cSignal->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal.pdf");
+		cSignal->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".root").c_str());
+		cSignal->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon")  {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png`"));
-		cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.root");
-		cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.png");
-		cSignal->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal.pdf");
+		cSignal->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".root").c_str());
+		cSignal->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".pdf").c_str());
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA - PEAKING BACKGROUND
 	TFile * outTreeToFitFilePeakingBackground;
-	if (analysisBranch == "JPsi") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJpsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon.root");
-	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_ZtoUpsilonPhoton");
+	if (analysisBranch == "JPsi") outTreeToFitFilePeakingBackground = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+	if (analysisBranch == "Upsilon") outTreeToFitFilePeakingBackground = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_HZtoUpsilonPhoton");
 	RooRealVar mHZPeakingBackground("mHZ", "mHZ", 70, 120, "GeV") ;
 	RooRealVar weightsPeakingBackground("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet peakingBackground("peakingBackground", " ", RooArgSet(mHZPeakingBackground, weightsPeakingBackground), Import(*outTreeToFitPeakingBackground), WeightVar(weightsPeakingBackground));
@@ -601,10 +634,10 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 		n2PeakingBackground
 		);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
 	RooFitResult * fitResultPeakingBackground = dcballPeakingBackground.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultPeakingBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -655,16 +688,16 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 	if (analysisBranch == "JPsi") {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.root");
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png");
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".root").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon") {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.root");
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png");
-		cPeakingBackground->SaveAs("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".root").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".pdf").c_str());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////
@@ -683,58 +716,106 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// w->import(mHZPeakingBackground);
 	w->import(peakingBackground,Rename("peakingBackground"));
 	w->import(dcballPeakingBackground);
+	w->importClassCode();
+
+	w->var("alpha1")->setConstant(true);
+	w->var("alpha1PeakingBackground")->setConstant(true);
+	w->var("alpha2")->setConstant(true);
+	w->var("alpha2PeakingBackground")->setConstant(true);
+	w->var("mean_dcb")->setConstant(true);
+	w->var("mean_dcbPeakingBackground")->setConstant(true);
+	w->var("n1")->setConstant(true);
+	w->var("n1PeakingBackground")->setConstant(true);
+	w->var("n2")->setConstant(true);
+	w->var("n2PeakingBackground")->setConstant(true);
+	w->var("p1")->setConstant(true);
+	w->var("p2")->setConstant(true);
+	w->var("p3")->setConstant(true);
+	w->var("sigma_dcb")->setConstant(true);
+	w->var("sigma_dcbPeakingBackground")->setConstant(true);
 
 	w->Print();
 
 	if (analysisBranch == "JPsi") {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root`"));
-		w->writeToFile("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace.root");
+		w->writeToFile(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
 	}
 
 	if (analysisBranch == "Upsilon") {
 		system(("mkdir -p  `dirname fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root`"));
-		w->writeToFile("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace.root");
+		w->writeToFile(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
 	}
 
-}
+
+	// For FlashGG
+	// create file
+	TFile * outFile_forFLASHGG;
+	if (analysisBranch == "JPsi") outFile_forFLASHGG = TFile::Open(("fitPlotFiles/ZToJPsiPhotonSignalAndBackgroundFit/ZToJPsiPhotonSignalAndBackgroundFit_workspace_forFLASHGG_"+selCategory+".root").c_str(),"RECREATE");
+	if (analysisBranch == "Upsilon") outFile_forFLASHGG = TFile::Open(("fitPlotFiles/ZToUpsilonPhotonSignalAndBackgroundFit/ZToUpsilonPhotonSignalAndBackgroundFit_workspace_forFLASHGG_"+selCategory+".root").c_str(),"RECREATE");
+	TDirectory *cdtof = outFile_forFLASHGG->mkdir("tagsDumper");
+  	cdtof->cd();    // make the "tof" directory the current director
+
+  	// create and load the WS
+  	RooWorkspace *w_forFLASHGG = new RooWorkspace("cms_hgg_13TeV","cms_hgg_13TeV");
+
+  	RooRealVar CMS_hgg_mass("CMS_hgg_mass", "CMS_hgg_mass", 70, 120, "GeV") ;
+  	outTreeToFitData->GetBranch("mHZ")->SetName("CMS_hgg_mass");	
+  	RooDataSet Data_13TeV_UntaggedTag_0("Data_13TeV_UntaggedTag_0", "", RooArgSet(CMS_hgg_mass), Import(*outTreeToFitData)); 
+  	w_forFLASHGG->import(Data_13TeV_UntaggedTag_0);
+
+
+  	RooRealVar IntLumi("IntLumi","IntLumi",0);
+  	w_forFLASHGG->import(IntLumi);
+  	RooRealVar weight("weight","weight",1);
+  	w_forFLASHGG->import(weight);
+  	w_forFLASHGG->Print();
+
+	// save WS
+  	w_forFLASHGG->Write();
+  	outFile_forFLASHGG->Close();
+
+
+
+
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Higgs Fit
-void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
-	setTDRStyle();
+void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string selCategory) {
+  	setTDRStyle();
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA 
-	TFile * outTreeToFitFileData;
-	if (analysisBranch == "JPsi") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_HtoJPsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_Data_HtoUpsilon.root");
-	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_ZtoUpsilonPhoton");
-	RooRealVar mHZData("mHZ", "mHZ", 100, 150, "GeV") ;
-	mHZData.setRange("LS", 100, 115);
-	mHZData.setRange("RS", 135, 150);
+  	TFile * outTreeToFitFileData;
+  	if (analysisBranch == "JPsi") outTreeToFitFileData = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_Data_HtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+  	if (analysisBranch == "Upsilon") outTreeToFitFileData = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_Data_HtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+  	auto * outTreeToFitData = (TTree*)outTreeToFitFileData->Get("outTree_HZtoUpsilonPhoton");
+  	RooRealVar mHZData("mHZ", "mHZ", 100, 150, "GeV") ;
+  	mHZData.setRange("LS", 100, 115);
+  	mHZData.setRange("RS", 135, 150);
 	// RooRealVar mHZData("mHZ", "mHZ", 80, 100, "GeV") ;
 	// RooRealVar weightsData("mHZWeight", "mHZWeight", -100, 100, "");
-	RooDataSet data("data", "", RooArgSet(mHZData), Import(*outTreeToFitData)); 
+  	RooDataSet data("data", "", RooArgSet(mHZData), Import(*outTreeToFitData)); 
 
 	// data.Print("v");
 	// for (int i = 0 ; i <190 ; i++) {
 	// 	data.get(i)->Print("v");
 	// }
-	
+
 	// data.PrintValue();
 
 
 	// SIGNAL HISTO
-	TFile * outHistoSignalFile;
-	TH1D * outHistoSignal;
-	if (analysisBranch == "JPsi")  {
-		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToJPsiGamma_HtoJpsi.root");
-		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
-	}
-	if (analysisBranch == "Upsilon")  {
-		outHistoSignalFile = TFile::Open("../outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root");
-		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
-	}
+  	TFile * outHistoSignalFile;
+  	TH1D * outHistoSignal;
+  	if (analysisBranch == "JPsi")  {
+  		outHistoSignalFile = TFile::Open(("../outputHistos/outHistos_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+  		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+  	}
+  	if (analysisBranch == "Upsilon")  {
+  		outHistoSignalFile = TFile::Open(("../outputHistos/outHistos_HZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+  		outHistoSignal = (TH1D*)outHistoSignalFile->Get("outputHistos/withKinCutsHistos/h_withKin_Z_Mass");
+  	}
 
 	////////////////////////////////////////////////////////////////////////////////////
 	// BACKGROUND MODEL
@@ -743,24 +824,54 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// RooRealVar p2("p2", " ", 0, 10); // coefficient of x^2 term
 	// RooRealVar p3("p3", " ", 0, 10); // coefficient of x^3 term
 	// RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
-	RooRealVar p0("p0", " ", 10, 0.1, 20); // coefficient of x^0 term
-	RooRealVar p1("p1", " ", 10, 0.1, 20); // coefficient of x^1 term
-	RooRealVar p2("p2", " ", 10, 0.1, 20); // coefficient of x^2 term
-	RooRealVar p3("p3", " ", 10, 0.1, 20); // coefficient of x^3 term
-	RooRealVar p4("p4", " ", 0, 10); // coefficient of x^3 term
+	RooRealVar p0("p0", " ", 5, 0., 10); // coefficient of x^0 term
+	RooRealVar p1("p1", " ", 5, 0., 10); // coefficient of x^1 term
+	RooRealVar p2("p2", " ", 5, 0., 10); // coefficient of x^2 term
+	RooRealVar p3("p3", " ", 5, 0., 10); // coefficient of x^3 term
+	RooRealVar p4("p4", " ", 5, 0., 10); // coefficient of x^4 term
+	RooRealVar p5("p5", " ", 5, 0., 10); // coefficient of x^5 term
+	RooRealVar p6("p6", " ", 5, 0., 10); // coefficient of x^6 term
+	RooRealVar p7("p7", " ", 5, 0., 10); // coefficient of x^7 term
+	RooRealVar p8("p8", " ", 5, 0., 10); // coefficient of x^8 term
+	RooRealVar p9("p9", " ", 5, 0., 10); // coefficient of x^9 term
+	RooRealVar p10("p01", " ", 5, 0., 10); // coefficient of x^10 term
 
 	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(p0, p1, p2));
-	RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
+	RooArgList argumentsList(RooConst(1), p1, p2);
+	
+	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2, p3));
 	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), RooConst(1), RooConst(1.12), p3));
 	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1, p2));
 	// RooBernstein Bernstein("Bernstein", " ", mHZData, RooArgList(RooConst(1), p1 ) );
 	// RooRealVar b("BernsteinBackground", "", 100, 0, 10000);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit\n\n" << endl;
+
+
+	// Upsilon params
+	if (analysisBranch == "Upsilon") {
+		// argumentsList.add(p3);
+		// argumentsList.add(p4);
+		// argumentsList.add(p5);
+		// argumentsList.add(p6);
+		// argumentsList.add(p7);
+		// argumentsList.add(p8);
+		// argumentsList.add(p9);
+		// argumentsList.add(p10);
+		// p1.setVal(1) ;
+		// p2.setVal(1) ;
+		// p3.setVal(1) ;
+		// p4.setVal(1) ;
+		// p5.setVal(1) ;
+
+	}
+
+	RooBernstein Bernstein("Bernstein", " ", mHZData, argumentsList);
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + ")\n\n" << endl;
 	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
 	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + ")\n\n" << endl;
 
 
 
@@ -774,7 +885,6 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// mHZData.setRange("leftSide",70,80) ;
 	// mHZData.setRange("rightSide",100,120);
 	RooPlot* xframe1 = mHZData.frame(Title("M_{#mu#mu#gamma}")) ;
-	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ; 
 	// data.plotOn(xframe1,Binning(20),CutRange("RS"), MarkerSize(3)) ;
@@ -783,7 +893,7 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7), Range("full"), NormRange("full")   );
 	// Bernstein.plotOn(xframe1,RooFit::Name("Bernstein"),LineColor(kAzure+7)   );
 	// Bernstein.paramOn(xframe1,Layout(0.65,0.92,0.89));
-	// data.plotOn(xframe1,Binning(20),RooFit::Name("data"), MarkerSize(3)) ; 
+	// data.plotOn(xframe1,Binning(25),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(25),CutRange("LS"),RooFit::Name("data"), MarkerSize(3)) ; 
 	data.plotOn(xframe1,Binning(25),CutRange("RS"),RooFit::Name("data"), MarkerSize(3)) ;
 	xframe1->SetMinimum(0.00001);
@@ -830,26 +940,26 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	latex->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
 
 	if (analysisBranch == "JPsi")  {
-		system(("mkdir -p  `dirname fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.png`"));
-		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.root");
-		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.png");
-		c1->SaveAs("fitPlotFiles/HToJpsiPhotonSignalAndBackgroundFit/HToJpsiPhotonSignalAndBackgroundFit_Data.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".png`").c_str());
+		c1->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".root").c_str());
+		c1->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".png").c_str());
+		c1->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Data_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon")  {
-		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.png`"));
-		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.root");
-		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.png");
-		c1->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".png`").c_str());
+		c1->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".root").c_str());
+		c1->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".png").c_str());
+		c1->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Data_"+selCategory+".pdf").c_str());
 	}
 
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA - SIGNAL
 	TFile * outTreeToFitFileSignal;
-	if (analysisBranch == "JPsi") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToJPsiGamma_HtoJpsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFileSignal = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon.root");
-	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_ZtoUpsilonPhoton");
+	if (analysisBranch == "JPsi") outTreeToFitFileSignal = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+	if (analysisBranch == "Upsilon") outTreeToFitFileSignal = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+	auto * outTreeToFitSignal = (TTree*)outTreeToFitFileSignal->Get("outTree_HZtoUpsilonPhoton");
 	RooRealVar mHZSignal("mHZ", "mHZ", 100, 150, "GeV") ;
 	RooRealVar weightsSignal("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet signal("signal", " ", RooArgSet(mHZSignal, weightsSignal), Import(*outTreeToFitSignal), WeightVar(weightsSignal));
@@ -859,7 +969,7 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	// SIGNAL MODEL
 	// CB params
 
-	// Jpsi - Default
+	// JPsi - Default
 	RooRealVar mean_Higgs("mean_Higgs", "Mean" ,125,100,150) ;
 	RooRealVar sigma_cb("sigma_cb", "Width", 2., 0.5, 4.) ;
 	RooRealVar n("n","", 0.5, 0.1, 50.);
@@ -890,11 +1000,11 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	RooAddPdf signal_model("signal_model", "signal_model", RooArgList(signal_cb, signal_gauss), cb_fraction); 
 
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + ")\n\n" << endl;
 	// RooFitResult * fitResultSignal = signal_model.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	RooFitResult * fitResultSignal = signal_cb.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultSignal->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -955,25 +1065,25 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 
 
 	if (analysisBranch == "JPsi")  {
-		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.png`"));
-		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.root");
-		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.png");
-		cSignal->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".root").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_Signal_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon")  {
-		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.png`"));
-		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.root");
-		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.png");
-		cSignal->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".root").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".png").c_str());
+		cSignal->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_Signal_"+selCategory+".pdf").c_str());
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////
 	// LOAD DATA - PEAKING BACKGROUND
 	TFile * outTreeToFitFilePeakingBackground;
-	if (analysisBranch == "JPsi") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HDalitz_HtoJpsi.root");
-	if (analysisBranch == "Upsilon") outTreeToFitFilePeakingBackground = TFile::Open("../outputHistos/outTreeToFit_ZtoUpsilonPhoton_HDalitz_HtoUpsilon.root");
-	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_ZtoUpsilonPhoton");
+	if (analysisBranch == "JPsi") outTreeToFitFilePeakingBackground = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_HDalitz_HtoJPsi_"+selCategory+"_ZZZZZ.root").c_str());
+	if (analysisBranch == "Upsilon") outTreeToFitFilePeakingBackground = TFile::Open(("../outputHistos/outTreeToFit_HZtoUpsilonPhoton_HDalitz_HtoUpsilon_"+selCategory+"_ZZZZZ.root").c_str());
+	auto * outTreeToFitPeakingBackground = (TTree*)outTreeToFitFilePeakingBackground->Get("outTree_HZtoUpsilonPhoton");
 	RooRealVar mHZPeakingBackground("mHZ", "mHZ", 100, 150, "GeV") ;
 	RooRealVar weightsPeakingBackground("mHZWeight", "mHZWeight", -100, 100, "");
 	RooDataSet peakingBackground("peakingBackground", " ", RooArgSet(mHZPeakingBackground, weightsPeakingBackground), Import(*outTreeToFitPeakingBackground), WeightVar(weightsPeakingBackground));
@@ -991,10 +1101,10 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	RooCBShape PeakingBackground_cb("PeakingBackground_cb", "Crystal Ball Peaking Background component", mHZSignal, mean_cbPeakingBackground, sigma_cbPeakingBackground, alphaPeakingBackground, nPeakingBackground);
 
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
 	RooFitResult * fitResultPeakingBackground = PeakingBackground_cb.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultPeakingBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -1045,21 +1155,22 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	latexPeakingBackground->DrawLatex(0.96, 0.93, "35.86 fb^{-1} (13 TeV, 2016) ");
 
 	if (analysisBranch == "JPsi") {
-		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
-		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.root");
-		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.png");
-		cPeakingBackground->SaveAs("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png`").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".root").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".pdf").c_str());
 	}
 
 	if (analysisBranch == "Upsilon") {
-		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png`"));
-		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.root");
-		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.png");
-		cPeakingBackground->SaveAs("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground.pdf");
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png`").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".root").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".png").c_str());
+		cPeakingBackground->SaveAs(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_PeakingBackground_"+selCategory+".pdf").c_str());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////
 	// C r e a t e   w o r k s p a c e ,   i m p o r t   d a t a   a n d   m o d e l 
+	// For COMIBINE
 	RooWorkspace *w = new RooWorkspace("w","workspace") ;  
 	
 	// data
@@ -1075,36 +1186,96 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch) {
 	w->import(peakingBackground,Rename("peakingBackground"));
 	w->import(PeakingBackground_cb);
 
+ 	w->importClassCode();
+
+
+	w->var("alphaPeakingBackground")->setConstant(true);
+	w->var("alpha_cb")->setConstant(true);
+	w->var("cb_fraction")->setConstant(true);
+	w->var("mean_Higgs")->setConstant(true);
+	w->var("mean_cbPeakingBackground")->setConstant(true);
+	w->var("n")->setConstant(true);
+	w->var("nPeakingBackground")->setConstant(true);
+	w->var("p1")->setConstant(true);
+	w->var("p2")->setConstant(true);
+	w->var("sigma_cb")->setConstant(true);
+	w->var("sigma_cbPeakingBackground")->setConstant(true);
+	w->var("sigma_gauss")->setConstant(true);
+
+
 	w->Print();
 
 	if (analysisBranch == "JPsi") {
-		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace.root`"));
-		w->writeToFile("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace.root");
+		system(("mkdir -p  `dirname fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
+		w->writeToFile(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
 	}
 
 	if (analysisBranch == "Upsilon") {
-		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace.root`"));
-		w->writeToFile("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace.root");
+		system(("mkdir -p  `dirname fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
+		w->writeToFile(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace_"+selCategory+".root").c_str());
 	}
 
-}
+	// For FlashGG
+	// create file
+	TFile * outFile_forFLASHGG;
+	if (analysisBranch == "JPsi") outFile_forFLASHGG = TFile::Open(("fitPlotFiles/HToJPsiPhotonSignalAndBackgroundFit/HToJPsiPhotonSignalAndBackgroundFit_workspace_forFLASHGG_"+selCategory+".root").c_str(),"RECREATE");
+	if (analysisBranch == "Upsilon") outFile_forFLASHGG = TFile::Open(("fitPlotFiles/HToUpsilonPhotonSignalAndBackgroundFit/HToUpsilonPhotonSignalAndBackgroundFit_workspace_forFLASHGG_"+selCategory+".root").c_str(),"RECREATE");
+	TDirectory *cdtof = outFile_forFLASHGG->mkdir("tagsDumper");
+  	cdtof->cd();    // make the "tof" directory the current director
+
+  	// create and load the WS
+  	RooWorkspace *w_forFLASHGG = new RooWorkspace("cms_hgg_13TeV","cms_hgg_13TeV");
+
+  	RooRealVar CMS_hgg_mass("CMS_hgg_mass", "CMS_hgg_mass", 100, 150, "GeV") ;
+  	outTreeToFitData->GetBranch("mHZ")->SetName("CMS_hgg_mass");	
+  	RooDataSet Data_13TeV_UntaggedTag_0("Data_13TeV_UntaggedTag_0", "", RooArgSet(CMS_hgg_mass), Import(*outTreeToFitData));
+  	// for (int i = 0 ; i <190 ; i++) {
+  		// Data_13TeV_UntaggedTag_0.get(i)->Print("v");
+  	// }	
+  	// Data_13TeV_UntaggedTag_0.printValue(cout); 
+  	w_forFLASHGG->import(Data_13TeV_UntaggedTag_0);
+
+
+  	RooRealVar IntLumi("IntLumi","IntLumi",0);
+  	w_forFLASHGG->import(IntLumi);
+  	RooRealVar weight("weight","weight",1);
+  	w_forFLASHGG->import(weight);
+  	w_forFLASHGG->Print();
+
+	// save WS
+  	w_forFLASHGG->Write();
+  	outFile_forFLASHGG->Close();
+
+
+
+  }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DOES THE ACTUAL FITTING
-void fitter_HZtoUpsilonPhoton()  
-{
-	setTDRStyle();
-	system("rm -fr fitPlotFiles; mkdir fitPlotFiles");
+  void fitter_HZtoUpsilonPhoton()  
+  {
+  	setTDRStyle();
+	// system("rm -fr fitPlotFiles; mkdir fitPlotFiles");
+  	system("rm -fr fitPlotFiles/*");
 
 	// fitter
-	// DCBZPeakUpsilonfit2D();
-	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Jpsi");
-	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
+	// workspace_DCBZPeakUpsilonfit2Dpsilonfit2D();
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi", "Cat0");
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon", "Cat0");
 
-	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Jpsi");
-	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon");
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi", "Cat1");
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon", "Cat1");
+
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi", "Cat2");
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon", "Cat2");
+
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi", "Cat3");
+  	ZToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon", "Cat3");
+
+  	HToJPsiUpsilonPhotonSignalAndBackgroundFit("JPsi", "Cat0");
+  	HToJPsiUpsilonPhotonSignalAndBackgroundFit("Upsilon", "Cat0");
 
 } //end plotter_ZtoUpsilonPhoton
 

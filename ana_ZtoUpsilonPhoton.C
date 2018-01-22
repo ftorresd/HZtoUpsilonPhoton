@@ -65,7 +65,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	////////////////////////////////////////////////////////////////////
 	// define readers
 	// event
-	TTreeReaderValue< int > run(*dataReader, "run");
+	// TTreeReaderValue< int > run(*dataReader, "run");
 	TTreeReaderValue< ULong64_t > HLTEleMuX(*dataReader, "HLTEleMuX");
 
 
@@ -85,7 +85,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	const unsigned int StandAloneMuon =  1<<3;
 	const unsigned int CaloMuon =  1<<4;
 	const unsigned int PFMuon =  1<<5;
-	const unsigned int RPCMuon =  1<<6;
+	const unsigned int RPCMuon =  1<<6; 
 	const unsigned int GEMMuon =  1<<7;
 	const unsigned int ME0Muon =  1<<8;
 	TTreeReaderArray< unsigned short > muIDbit(*dataReader, "muIDbit");
@@ -183,11 +183,17 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	outTree->Branch("isMC",&isMC);
 
 	//output objects -  PU weight
-	double puWgt = 1.0;
-	outTree->Branch("puWgt",&puWgt);	
+	double puWgt_nominal = 1.0;
+	outTree->Branch("puWgt_nominal",&puWgt_nominal);	
 
-	double puWgtErr = 1.0;
-	outTree->Branch("puWgtErr",&puWgtErr);	
+	double puWgt_up = 1.0;
+	outTree->Branch("puWgt_up",&puWgt_up);	
+	
+	double puWgt_down = 1.0;
+	outTree->Branch("puWgt_down",&puWgt_down);	
+	
+	// double puWgtErr = 1.0;
+	// outTree->Branch("puWgtErr",&puWgtErr);	
 
 	//output objects -  gen particles
 	anaGenPart genMuPlus = anaGenPart();
@@ -255,7 +261,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	// numer of entries
 	auto totalEvts = dataTree->GetEntries();
 	// auto printEvery = 100000;
-	auto printEvery = 1000;
+	auto printEvery = 10000;
+	if (!isMC) printEvery = 1000000;
 	cout << "\nN. Entries (" << outFileAppend <<  "): " << totalEvts << endl;
 	cout << "\nPrinting every: " << printEvery << " events" << endl;
 	cout << "\nLooping over events... \n" << endl;
@@ -280,7 +287,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		genMuPlus.clear();
 		genMuMinus.clear();
 		genPhoton.clear();
-		puWgt = 1.0;
+		puWgt_nominal = 1.0;
+		puWgt_up = 1.0;
+		puWgt_down = 1.0;
 		polWgt = 1.0;
 		muonIDSF = {1.0, 0.0};
 		photonMVAIDSF = {1.0, 0.0};
@@ -291,8 +300,10 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		if (isMC){
 			#ifdef IS_MC
 			// PU reweighting
-			puWgt = puInfo->getWeight(puTrue[1]); 
-			puWgtErr = puInfo->getWeightErr(puTrue[1]); 
+			puWgt_nominal = puInfo->getWeight_nominal(puTrue[1]); 
+			puWgt_up = puInfo->getWeight_up(puTrue[1]); 
+			puWgt_down = puInfo->getWeight_down(puTrue[1]); 
+			// puWgtErr = puInfo->getWeightErr(puTrue[1]); 
 
 			// ZToUpsilonGamma - Signal
 			if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma") {
@@ -356,6 +367,13 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 				}
 			}
 
+			// for Z signal samples, exclude events with mass_Z < 50 GeV
+			if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma" || sampleSource.GetString() == "ZToJPsiGamma") {
+				// cout << "(genMuPlus+genMuMinus+genPhoton).M(): " << (genMuPlus+genMuMinus+genPhoton).M() << endl;
+				if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) continue;
+				// if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) cout << "Menor que 50 GeV!" << endl;
+			}			
+
 			// ZToMuMuGamma - Background
 			if (sampleSource.GetString() == "ZGTo2MuG_MMuMu-2To15") {
 			// gen info
@@ -375,7 +393,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 								genMuMinus.charge = -1;
 								genMuMinus.partIndex = iPart;
 								genMuMinus.pdgID = -13;
-							} 
+							} else{
+								// cout << "oi!" << endl;
+							}
 						}
 					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 23) {
 						// cout << "Photon!" << endl;
@@ -385,7 +405,12 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 						genPhoton.pdgID = 22;
 					}
 				}
+			// cout << "Gen Mu Plus: " << genMuPlus.Pt() << endl;
+			// cout << "Gen Mu Minus: " << genMuMinus.Pt() << endl;
+			// cout << "Gen Photon: " << genPhoton.Pt() << endl;
+			// cout << "#############################################################" << endl;
 			}
+
 
 			// HToUpsilonGamma - Signal
 			if (sampleSource.GetString() == "HToUpsilon1SGamma" || sampleSource.GetString() == "HToUpsilon2SGamma" || sampleSource.GetString() == "HToUpsilon3SGamma") {
@@ -551,13 +576,14 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 			// loose ID
 			auto isMuonLooseID = true; //candidate muon loose id
-			isMuonLooseID *= (muonsCandCollection[iCandMuon].Pt() > 5.0) ? true : false; // pT > 4.0 GeV
+			isMuonLooseID *= (muonsCandCollection[iCandMuon].Pt() > 4.0) ? true : false; // pT > 4.0 GeV
 		 	isMuonLooseID *= (fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) ? true : false;  //abs(eta) < 2.4
 		 	isMuonLooseID *= (fabs(muD0[muIndex]) < 0.5) ? true : false;  //dxy < 2.4
 		 	isMuonLooseID *= (fabs(muDz[muIndex]) < 1.0) ? true : false;  //dz < 1.0
 		 	isMuonLooseID *= (muBestTrkType[muIndex] != 2) ? true : false;  //muBestTrkType != 2
-		 	isMuonLooseID *= ( (muType[muIndex] & GlobalMuon) || ((muType[muIndex] & TrackerMuon) && (muMatches[muIndex] > 0)) ) ? true : false;
-		 	isMuonLooseID *= (muSIP[muIndex] < 4) ? true : false;  //muon SIP < 4
+		 	isMuonLooseID *= (muMatches[muIndex] > 0 ) ? true : false;
+		 	isMuonLooseID *= ( (muType[muIndex] & GlobalMuon) || (muType[muIndex] & TrackerMuon) ) ? true : false;
+		 	isMuonLooseID *= (muSIP[muIndex]) < 4 ? true : false;  //muon |SIP| < 4
 		 	muonsCandCollection[iCandMuon].muonIsLooseID = isMuonLooseID; // set loose ID flag
 
 		 	//tightID
@@ -584,7 +610,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			muonsCandCollection[iCandMuon].muonIsISO = isMuonISO; 
 
 			// clean muon collection 
-			if (!(muonsCandCollection[iCandMuon].muonIsTightID) || !(fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4)) {
+			if (!(muonsCandCollection[iCandMuon].muonIsTightID) || !(fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) || !(muonsCandCollection[iCandMuon].Pt() > 4.0)) {
 				muonsCandCollection.erase(muonsCandCollection.begin() + iCandMuon);
 			}
 		}
@@ -592,19 +618,42 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// muons selection
 		// sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
+		int indexLeadCand = -99;
+		int indexTrailCand = -99;
 		goodMuonPairSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
-			goodMuonPairSel *= (muonsCandCollection[0].muonIsISO) ? true : false; // leading muon is ISO
-			goodMuonPairSel *= (muonsCandCollection[0].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
-			// goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
-			goodMuonPairSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
+			for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {
+				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
+					indexLeadCand = iLeadMuon;
+					break;
+				}
+				// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].muonIsISO) ? true : false; // leading muon is ISO
+				// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
+				// goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
+				// for (unsigned int iTrailMuon == 1; muonsCandCollection.size(); iTrailMuon++) {
+				// 	if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[0].charge) < 1.0){
+				// 	}
+				// }
+			}
+			if (indexLeadCand != -99) {
+				for (unsigned int iTrailMuon = indexLeadCand+1; iTrailMuon < muonsCandCollection.size(); iTrailMuon++) {
+					if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[indexLeadCand].charge) < 0){ //oposite charge
+						indexTrailCand = iTrailMuon;
+						break;
+					}
+				}
+			}
+			// goodMuonPairSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
 			// goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
 		} else {
 			goodMuonPairSel = false;
 		}
-		if (goodMuonPairSel == true) {
-			leadingMuon = muonsCandCollection[0];
-			trailingMuon = muonsCandCollection[1];
+		if (indexLeadCand != -99 && indexTrailCand != -99) {
+			goodMuonPairSel = true;
+			leadingMuon = muonsCandCollection[indexLeadCand];
+			trailingMuon = muonsCandCollection[indexTrailCand];
+		} else {
+			goodMuonPairSel = false;
 		}
 
 

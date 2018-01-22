@@ -400,7 +400,7 @@ void plotter_DataMC(string analysisBranch, TH1D * h_DataOriginal, TH1D * h_MCOri
 	if (analysisBranch == "ZtoUpsilon")
 		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 100 , isLogX);
 	if (analysisBranch == "HtoUpsilon")
-		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 100000 , isLogX);
+		if (mcScale < 0) plotter_DataMC(analysisBranch, h_DataOriginal, h_MCOriginal, outputFilePath, isLogY, 600000 , isLogX);
 
 	if (mcScale > 0) return;
 
@@ -541,7 +541,7 @@ void plotter_DataMCSignalBackground(string analysisBranch, TH1D * h_DataOriginal
 	if (analysisBranch == "ZtoUpsilon")
 		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100, 3, isLogX);
 	if (analysisBranch == "HtoUpsilon")
-		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 100000, 400, isLogX);
+		if (mcSignalScale < 0) plotter_DataMCSignalBackground(analysisBranch, h_DataOriginal, h_MCSignalOriginal, h_MCBackgroundOriginal, outputFilePath, xAxisTitle, isLogY, 600000, 400, isLogX);
 	
 	if (mcSignalScale > 0) return;
 
