@@ -49,6 +49,7 @@
 #include "../plugins/tdrstyle.C"
 // #include "plugins/tdrstyle.C"
 #include "plugins/RooDCBShape/RooDCBShape.h"
+#include "plugins/getEffSigma.h"
 
 #ifdef __CINT__
 #pragma link C++ class RooDCBShape+;
@@ -421,11 +422,11 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 
 	RooBernstein Bernstein("Bernstein", " ", mHZData, argumentsList);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
 	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
 
@@ -521,21 +522,28 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	// SIGNAL MODEL
 	RooRealVar mean_dcb("mean_dcb", "Mean" ,91.1876,70,120) ;
 	RooRealVar sigma_dcb("sigma_dcb", "Width" ,  2., 0.5, 4.) ;
+	// RooRealVar sigma_dcb("sigma_dcb", "Width" ,  2.4952) ;
+	// ///////////////
+	// RooRealVar n1("n1","", 0.5, 0.1, 50.);//dCBPowerL
+	// RooRealVar n2("n2","", 0.5, 0.1, 50.);//dCBPowerR
+	// RooRealVar alpha1("alpha1","", 3., 0.1, 50.);//dCBCutL
+	// RooRealVar alpha2("alpha2","", 3., 0.1, 50.);//dCBCutR
+	///////////////
 	RooRealVar n1("n1","", 0.5, 0.1, 50.);//dCBPowerL
-	// RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
 	RooRealVar n2("n2","", 0.5, 0.1, 50.);//dCBPowerR
-	RooRealVar alpha1("alpha1","", 3., 0.1, 50.);//dCBCutL
-	RooRealVar alpha2("alpha2","", 3., 0.1, 50.);//dCBCutR
+	RooRealVar alpha1("alpha1","", 3., 0.0, 10.);//dCBCutL
+	RooRealVar alpha2("alpha2","", 3., 0.0, 10.);//dCBCutR
 	// RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
 
 
 	RooDCBShape dcball("dcball", "double sided crystal ball", mHZSignal, mean_dcb,sigma_dcb,alpha1,alpha2,n1,n2);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + ")\n\n" << endl;
+
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	// RooFitResult * fitResultSignal = dcball.fitTo(signal, Save(kTRUE), SumW2Error(kFALSE) ) ;
 	fitResultSignal->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -545,8 +553,11 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	gPad->SetRightMargin(0.05); 
 	gPad->SetTopMargin(0.08);
 	RooPlot* xframeSignal = mHZSignal.frame(Title("M_{#mu#mu#gamma}")) ;
+	// getEffSigma(RooRealVar *mass, RooAbsPdf *pdf, double wmin=110., double wmax=130., double step=0.002, double epsilon=1.e-4){
 	signal.plotOn(xframeSignal,Binning(40),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
-	// dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kAzure+7));
+	// dcball.plotOn(xframeSignal,Range(effSigma.first,effSigma.second),FillColor(kGray),DrawOption("F"),LineWidth(2),FillStyle(1001),VLines(),LineColor(kBlack));
+	// dcball.plotOn(xframeSignal,Range(effSigma.first,effSigma.second),FillColor(kGray),DrawOption("F"),LineWidth(2),FillStyle(1001),VLines(),LineColor(kBlack));
+	// dcball.plotOn(xframeSignal,Range(88.,100.),LineColor(15),LineWidth(2),FillStyle(1001),VLines());
 	dcball.plotOn(xframeSignal,RooFit::Name("dcball"),LineColor(kOrange+8));
 	signal.plotOn(xframeSignal,Binning(40),RooFit::Name("signal"), MarkerSize(3), DataError(RooAbsData::SumW2)) ; 
 	// dcball.paramOn(xframeSignal,Layout(0.65,0.92,0.89));
@@ -567,6 +578,9 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	legendSignal->AddEntry(xframeSignal->findObject("signal"), "Signal MC", "lpe");
 	legendSignal->AddEntry(xframeSignal->findObject("dcball"), "Signal Model", "l");
 	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	pair<double,double> effSigma_ZSignal = getEffSigma(&mHZSignal, &dcball, 70, 120);
+	legendSignal->AddEntry((TObject*)0,Form("#sigma_{eff} = %1.2f GeV",0.5*(effSigma_ZSignal.second-effSigma_ZSignal.first)),"");
+
 	legendSignal->Draw();
 
 	// CMS decoration
@@ -617,8 +631,11 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	RooRealVar n1PeakingBackground("n1PeakingBackground","", 0.5, 0.1, 50.);//dCBPowerL
 	// RooRealVar n2("n2","", 1., 0.1, 50.);//dCBPowerR
 	RooRealVar n2PeakingBackground("n2PeakingBackground","", 0.5, 0.1, 50.);//dCBPowerR
-	RooRealVar alpha1PeakingBackground("alpha1PeakingBackground","", 3., 0.1, 50.);//dCBCutL
-	RooRealVar alpha2PeakingBackground("alpha2PeakingBackground","", 3., 0.1, 50.);//dCBCutR
+	RooRealVar alpha1PeakingBackground("alpha1PeakingBackground","", 3., 0.0, 10.);//dCBCutL
+	RooRealVar alpha2PeakingBackground("alpha2PeakingBackground","", 3., 0.0, 10.);//dCBCutR
+
+
+
 	// RooRealVar s_dcb("signal_dcb", "signal", 100, 0, 10000);
 
 
@@ -634,10 +651,10 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 		n2PeakingBackground
 		);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	RooFitResult * fitResultPeakingBackground = dcballPeakingBackground.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultPeakingBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -669,6 +686,8 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Z #rightarrow #mu#mu + #gamma MC", "lpe");
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("dcballPeakingBackground"), "Peaking Background Model", "l");
 	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	pair<double,double> effSigma_ZPBckg = getEffSigma(&mHZPeakingBackground, &dcballPeakingBackground, 70, 120);
+	legendPeakingBackground->AddEntry((TObject*)0,Form("#sigma_{eff} = %1.2f GeV",0.5*(effSigma_ZPBckg.second-effSigma_ZPBckg.first)),"");
 	legendPeakingBackground->Draw();
 
 	// CMS decoration
@@ -731,6 +750,10 @@ void ZToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	w->var("p1")->setConstant(true);
 	w->var("p2")->setConstant(true);
 	w->var("p3")->setConstant(true);
+		if (analysisBranch == "Upsilon") {
+		w->var("p4")->setConstant(true);
+		w->var("p5")->setConstant(true);
+	}
 	w->var("sigma_dcb")->setConstant(true);
 	w->var("sigma_dcbPeakingBackground")->setConstant(true);
 
@@ -867,11 +890,11 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 
 	RooBernstein Bernstein("Bernstein", " ", mHZData, argumentsList);
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	// RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE), Range("LS,RS"));
 	RooFitResult * fitResultBackground = Bernstein.fitTo(data, Save(kTRUE) );
 	fitResultBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
 
@@ -1000,11 +1023,11 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	RooAddPdf signal_model("signal_model", "signal_model", RooArgList(signal_cb, signal_gauss), cb_fraction); 
 
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Signal Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	// RooFitResult * fitResultSignal = signal_model.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	RooFitResult * fitResultSignal = signal_cb.fitTo(signal, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultSignal->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Signal Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -1046,6 +1069,8 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	legendSignal->AddEntry(xframeSignal->findObject("signal_cb"), "CB Component", "l");
 	legendSignal->AddEntry(xframeSignal->findObject("signal_gauss"), "Gauss Component", "l");
 	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	pair<double,double> effSigma_HSignal = getEffSigma(&mHZSignal, &signal_cb, 100, 150);
+	legendSignal->AddEntry((TObject*)0,Form("#sigma_{eff} = %1.2f GeV",0.5*(effSigma_HSignal.second-effSigma_HSignal.first)),"");
 	legendSignal->Draw();
 
 	// CMS decoration
@@ -1101,10 +1126,10 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	RooCBShape PeakingBackground_cb("PeakingBackground_cb", "Crystal Ball Peaking Background component", mHZSignal, mean_cbPeakingBackground, sigma_cbPeakingBackground, alphaPeakingBackground, nPeakingBackground);
 
 
-	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> Begin Peaking Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 	RooFitResult * fitResultPeakingBackground = PeakingBackground_cb.fitTo(peakingBackground, Save(kTRUE), SumW2Error(kTRUE) ) ;
 	fitResultPeakingBackground->Print();
-	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + ")\n\n" << endl;
+	cout << "\n\n---------------------------------------------------------------------------------------------------> End Peaking Background Fit (" + analysisBranch + " - " + selCategory + ")\n\n" << endl;
 
 
   	////////////////////////////////////////////////////////////////////////////////////
@@ -1137,6 +1162,8 @@ void HToJPsiUpsilonPhotonSignalAndBackgroundFit(string analysisBranch, string se
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("peakingBackground"), "Higgs Dalitz MC", "lpe");
 	legendPeakingBackground->AddEntry(xframePeakingBackground->findObject("PeakingBackground_cb"), "Higgs Dalitz Model", "l");
 	// legendSignal->AddEntry(outHistoSignal, "Expected Signal (#times 30)", "l");
+	pair<double,double> effSigma_HPBckg = getEffSigma(&mHZPeakingBackground, &PeakingBackground_cb, 100, 150);
+	legendPeakingBackground->AddEntry((TObject*)0,Form("#sigma_{eff} = %1.2f GeV",0.5*(effSigma_HPBckg.second-effSigma_HPBckg.first)),"");
 	legendPeakingBackground->Draw();
 
 	// CMS decoration

@@ -14,6 +14,7 @@
 
 
 	gROOT->ProcessLine(".L fitter_HZtoUpsilonPhoton.C+"); 
+	gROOT->ProcessLine(".L fitter_HZtoUpsilonPhoton2DFit.C+"); 
 
 	// fitter_HZtoUpsilonPhoton(
 	// 	"outputHistos/outHistos_ZtoUpsilonPhoton_Data.root",

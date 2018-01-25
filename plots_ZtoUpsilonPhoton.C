@@ -493,6 +493,8 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	TTree * outTree = new TTree("outTree_HZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
 	double mHZ = -99.0;
 	outTree->Branch("mHZ", &mHZ) ;
+	double mMuMNU = -99.0;
+	outTree->Branch("mMuMNU", &mMuMNU) ;
 	double mHZWeight = 1.;
 	outTree->Branch("mHZWeight", &mHZWeight) ;
 
@@ -791,6 +793,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 				h_withKin_Upsilon_phi->Fill(recoUpsilon.Phi(),totalWeight);
 
 				mHZ = recoZ.M();
+				mMuMNU = recoUpsilon.M();
 				mHZWeight = totalWeight;
 				if (isData){
 					if (recoZ.M() < maxHZMassLeft || recoZ.M() > minHZMassRight) {
