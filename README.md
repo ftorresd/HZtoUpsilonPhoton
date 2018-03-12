@@ -73,13 +73,11 @@ scram b -j8
 
 - ***signal Z:*** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
 
-- ***signal H:*** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=HToUpsilon*SG_ToMuMuG_allProdMode_M125_TuneCP5_13TeV_Pythia8
+- ***signal H:*** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FHToUpsilon*SG_ToMuMuG_allProdMode_M125_TuneCP5_13TeV_Pythia8*%2F*%2FMINIAODSIM
 
-- ***bckg Z:*** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=ZGTo2MuG_MMuMu-2To15_*&shown=274877907071
+- ***bckg Z:*** 
 
 - ***bckg H:*** ??? GluGluHToMuMuG_M125_mll-0To50_Dalitz_13TeV_madgraph_pythia8
-
-- ***ggNutples:***:
 
 | **Sample**         | **Location @ EOS**  |
 | ------- |:-------|
@@ -93,7 +91,16 @@ scram b -j8
 | ```ZToUpsilon2SGamma```   |	2.281 | 0.7118 | 0.1194 |
 | ```ZToUpsilon3SGamma```   |	2.269 | 0.7389 | 0.1157 |
 
-**(*)**: From McM (https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00001&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00002&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00003&page=0). 
+**(*)**: From McM 
+(https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00001&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00002&page=0; https://cms-pdmv.cern.ch/mcm/requests?prepid=SMP-RunIIFall17GS-00003&page=0)
+
+- ***signal H:*** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=HToUpsilon*SG_ToMuMuG_allProdMode_M125_TuneCP5_13TeV_Pythia8
+
+- ***bckg Z:*** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=ZGTo2MuG_MMuMu-2To15_*&shown=274877907071
+
+- ***bckg H:*** ??? GluGluHToMuMuG_M125_mll-0To50_Dalitz_13TeV_madgraph_pythia8
+
+- ***ggNutples:***:
 
 
 
