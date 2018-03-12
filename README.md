@@ -69,7 +69,12 @@ scram b -j8
 
 ## 2017 Samples
 ### MC 
-- **CMS DAS:** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
+- **CMS DAS:** 
+**signal Z :** https://cmsweb.cern.ch/das/request?view=list&limit=50&instance=prod%2Fglobal&input=dataset%3D%2FZToUpsilon1SGamma-TuneCP5_13TeV-pythia8*%2F*%2FMINIAODSIM
+** signal H :** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=HToUpsilon*SG_ToMuMuG_allProdMode_M125_TuneCP5_13TeV_Pythia8
+** bckg Z: ** https://cms-pdmv.cern.ch/mcm/requests?page=0&dataset_name=ZGTo2MuG_MMuMu-2To15_*&shown=274877907071
+** bckg H: ** 
+
 - **ggNutples:**:
 
 | **Sample**         | **Location @ EOS**  |
