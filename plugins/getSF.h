@@ -25,10 +25,6 @@ pair<double,double> getTriggerSF(bool isMC, anaMuon muon, anaPhoton photon, TFil
 	}
 
 	return sf;
-
-
-
-
 }
 
 pair<double,double> getMuonIDSF(bool isMC, anaMuon muon, TFile * sfFile) {

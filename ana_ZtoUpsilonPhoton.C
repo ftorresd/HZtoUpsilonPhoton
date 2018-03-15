@@ -36,6 +36,7 @@
 #include "plugins/puWeight.h"
 #include "plugins/upsilonPolarizationAngle.h"
 #include "plugins/getSF.h"
+#include "plugins/getR9Transform.h"
 
 
 #ifdef __CINT__
@@ -676,7 +677,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			goodPhoton *= (!(fabs(phoSCEta[phoIndex]) > 1.4442 && fabs(phoSCEta[phoIndex]) < 1.566)) ? true : false;
 			goodPhoton *= (phoEleVeto[phoIndex] != 0) ? true : false; 
 			goodPhoton *= (phoIDMVA[phoIndex] > 0.2) ? true : false;
-			photonsCandCollection[iCandPhoton].photonR9 = phoR9[phoIndex];
+			// photonsCandCollection[iCandPhoton].photonR9 = phoR9[phoIndex];
+			photonsCandCollection[iCandPhoton].photonR9 = getR9Transform(isMC, phoR9[phoIndex], phoSCEta[phoIndex]);
 			photonsCandCollection[iCandPhoton].photonSCEta = phoSCEta[phoIndex];
 			
 			// clean photon collection 

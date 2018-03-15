@@ -30,61 +30,61 @@ echo "$run_Ana" > run_Ana_temp1.C
 root -b -q -l run_Ana_temp1.C+ & 
 # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016C_FebReminiAOD.txt\"), ${totalEvts}, \"Run2016C\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp2.C  
-# cat run_Ana_temp2.C 
-root -b -q -l run_Ana_temp2.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016C_FebReminiAOD.txt\"), ${totalEvts}, \"Run2016C\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp2.C  
+# # cat run_Ana_temp2.C 
+# root -b -q -l run_Ana_temp2.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016D_FebReminiAOD.txt\") , ${totalEvts}, \"Run2016D\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp3.C 
-# cat run_Ana_temp3.C  
-root -b -q -l run_Ana_temp3.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016D_FebReminiAOD.txt\") , ${totalEvts}, \"Run2016D\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp3.C 
+# # cat run_Ana_temp3.C  
+# root -b -q -l run_Ana_temp3.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016E_FebReminiAOD.txt\"), ${totalEvts}, \"Run2016E\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp4.C 
-# cat run_Ana_temp4.C  
-root -b -q -l run_Ana_temp4.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016E_FebReminiAOD.txt\"), ${totalEvts}, \"Run2016E\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp4.C 
+# # cat run_Ana_temp4.C  
+# root -b -q -l run_Ana_temp4.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016F_FebReminiAOD1.txt\"), ${totalEvts}, \"Run2016F1\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp5.C 
-# cat run_Ana_temp5.C  
-root -b -q -l run_Ana_temp5.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016F_FebReminiAOD1.txt\"), ${totalEvts}, \"Run2016F1\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp5.C 
+# # cat run_Ana_temp5.C  
+# root -b -q -l run_Ana_temp5.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016F_FebReminiAOD2.txt\"), ${totalEvts}, \"Run2016F2\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp6.C 
-# cat run_Ana_temp6.C  
-root -b -q -l run_Ana_temp6.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016F_FebReminiAOD2.txt\"), ${totalEvts}, \"Run2016F2\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp6.C 
+# # cat run_Ana_temp6.C  
+# root -b -q -l run_Ana_temp6.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016G_SepRereco.txt\"), ${totalEvts}, \"Run2016G\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp7.C  
-# cat run_Ana_temp7.C 
-root -b -q -l run_Ana_temp7.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016G_SepRereco.txt\"), ${totalEvts}, \"Run2016G\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp7.C  
+# # cat run_Ana_temp7.C 
+# root -b -q -l run_Ana_temp7.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016H_PRv2.txt\"), ${totalEvts}, \"Run2016H2\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp8.C 
-# cat run_Ana_temp8.C 
-root -b -q -l run_Ana_temp8.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016H_PRv2.txt\"), ${totalEvts}, \"Run2016H2\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp8.C 
+# # cat run_Ana_temp8.C 
+# root -b -q -l run_Ana_temp8.C+ & 
+# # sleep 1
 
-execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016H_PRv3.txt\"), ${totalEvts}, \"Run2016H3\");"
-run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
-echo "$run_Ana" > run_Ana_temp9.C  
-# cat run_Ana_temp9.C 
-root -b -q -l run_Ana_temp9.C+ & 
-# sleep 1
+# execString="ana_ZtoUpsilonPhoton(getFilesList(\"filesLists/filesFromUERJPOWER/Data2016/job_MuEG_Run2016H_PRv3.txt\"), ${totalEvts}, \"Run2016H3\");"
+# run_Ana="${run_Ana_template/___EXECSTRING___/$execString}" 
+# echo "$run_Ana" > run_Ana_temp9.C  
+# # cat run_Ana_temp9.C 
+# root -b -q -l run_Ana_temp9.C+ & 
+# # sleep 1
  
 
 

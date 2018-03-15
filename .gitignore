@@ -25,3 +25,5 @@ outputPlots/*
 evtsCountFiles/*
 
 !puWeight/*root
+!data/*root
+fits/fitPlotFiles_BKP

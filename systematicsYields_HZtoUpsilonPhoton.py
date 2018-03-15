@@ -13,56 +13,64 @@ def getSysterror(nominal, up, down):
 
 
 ############################################################
-# <BEGIN> Higgs to Upsilon + Photon - MERGE
-# Merge Higgs Upsilon files
-HtoUpsilonSystMasks = [
-				"ZZZZZ", 
-				"PZZZZ", 
-				"MZZZZ", 
-				"ZPZZZ", 
-				"ZMZZZ", 
-				"ZZPZZ", 
-				"ZZMZZ", 
-				"ZZZPZ", 
-				"ZZZMZ", 
-				"ZZZZP", 
-				"ZZZZM", 
-				]
-for hMask in HtoUpsilonSystMasks:
-	H1SFile = open("evtsCountFiles/evtsCountFile_HToUpsilon1SGamma_HtoUpsilon_Cat0_"+hMask+".json","r")
-	H2SFile = open("evtsCountFiles/evtsCountFile_HToUpsilon2SGamma_HtoUpsilon_Cat0_"+hMask+".json","r")
-	H3SFile = open("evtsCountFiles/evtsCountFile_HToUpsilon3SGamma_HtoUpsilon_Cat0_"+hMask+".json","r")
-	H1SJSON = json.load(H1SFile)
-	H2SJSON = json.load(H2SFile)
-	H3SJSON = json.load(H3SFile)
-	with open("evtsCountFiles/evtsCountFile_HToUpsilonGamma_HtoUpsilon_Cat0_"+hMask+".json", "w") as outputHJSONFile:  
-	    outputHJSONFile.write("{\n")
-	    outputHJSONFile.write("\"sample\" : \"HToUpsilonGamma\",\n")
-	    outputHJSONFile.write("\"analysisBranch\" : \"HtoUpsilon\",\n")
-	    outputHJSONFile.write("\"selCategory\" : \"Cat0\",\n")
-	    outputHJSONFile.write("\"systMaskYields\" : \""+hMask+"\",\n")
-	    paramsList = [
-	    			"total", 
-	    			"trigger", 
-	    			"muon_presel", 
-	    			"muon_id", 
-	    			"photon_sel", 
-	    			"deltaR_muon_to_photon", 
-	    			"deltaRPhi_quarkonia_to_photon", 
-	    			"quarkonia_mass_cut", 
-	    			"ratio_cuts",
-	    			"hz_mass_cut",
-	    		 	]
-	    for param in paramsList:
-			if (param == "hz_mass_cut"):
-				outputHJSONFile.write("\""+param+"\" : "+str(H1SJSON[param]+H2SJSON[param]+H3SJSON[param])+"\n")
-			else:
-				outputHJSONFile.write("\""+param+"\" : "+str(H1SJSON[param]+H2SJSON[param]+H3SJSON[param])+",\n")
-	    outputHJSONFile.write("}")
-	H1SFile.close()
-	H2SFile.close()
-	H3SFile.close()
-# <END> Higgs to Upsilon + Photon - MERGE
+# <BEGIN> Higgs/Z to Upsilon + Photon - MERGE
+# Merge Higgs/Z Upsilon files
+def mergaHZ (analysisBranch, selCategory):
+	boson = analysisBranch[0]
+	HZtoUpsilonSystMasks = [
+					"ZZZZZ", 
+					"PZZZZ", 
+					"MZZZZ", 
+					"ZPZZZ", 
+					"ZMZZZ", 
+					"ZZPZZ", 
+					"ZZMZZ", 
+					"ZZZPZ", 
+					"ZZZMZ", 
+					"ZZZZP", 
+					"ZZZZM", 
+					]
+	for hzMask in HZtoUpsilonSystMasks:
+		HZ1SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon1SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
+		HZ2SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon2SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
+		HZ3SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon3SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
+		HZ1SJSON = json.load(HZ1SFile)
+		HZ2SJSON = json.load(HZ2SFile)
+		HZ3SJSON = json.load(HZ3SFile)
+		with open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilonGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json", "w") as outputHZJSONFile:  
+		    outputHZJSONFile.write("{\n")
+		    outputHZJSONFile.write("\"sample\" : \""+boson+"ToUpsilonGamma\",\n")
+		    outputHZJSONFile.write("\"analysisBranch\" : \""+boson+"toUpsilon\",\n")
+		    outputHZJSONFile.write("\"selCategory\" : \""+selCategory+"\",\n")
+		    outputHZJSONFile.write("\"systMaskYields\" : \""+hzMask+"\",\n")
+		    paramsList = [
+		    			"total", 
+		    			"trigger", 
+		    			"muon_presel", 
+		    			"muon_id", 
+		    			"photon_sel", 
+		    			"deltaR_muon_to_photon", 
+		    			"deltaRPhi_quarkonia_to_photon", 
+		    			"quarkonia_mass_cut", 
+		    			"ratio_cuts",
+		    			"hz_mass_cut",
+		    		 	]
+		    for param in paramsList:
+				if (param == "hz_mass_cut"):
+					outputHZJSONFile.write("\""+param+"\" : "+str(HZ1SJSON[param]+HZ2SJSON[param]+HZ3SJSON[param])+"\n")
+				else:
+					outputHZJSONFile.write("\""+param+"\" : "+str(HZ1SJSON[param]+HZ2SJSON[param]+HZ3SJSON[param])+",\n")
+		    outputHZJSONFile.write("}")
+		HZ1SFile.close()
+		HZ2SFile.close()
+		HZ3SFile.close()
+
+mergaHZ ("ZtoUpsilon", "Cat0")
+mergaHZ ("ZtoUpsilon", "Cat1")
+mergaHZ ("ZtoUpsilon", "Cat2")
+mergaHZ ("ZtoUpsilon", "Cat3")
+mergaHZ ("HtoUpsilon", "Cat0")
+# <END> Higgs/Z to Upsilon + Photon - MERGE
 ############################################################
 
 
@@ -79,8 +87,6 @@ samplesBranches = {
 		"HtoUpsilon_Cat0":["HToUpsilon1SGamma", "HToUpsilon2SGamma", "HToUpsilon3SGamma", "HToUpsilonGamma", "HDalitz"],
 		"HtoJPsi_Cat0":["HToJPsiGamma", "HDalitz"]
 		}
-
-# print samplesBranches
 
 outputJSON = {
 			"ZtoUpsilon_Cat0":[],
