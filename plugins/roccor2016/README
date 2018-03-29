@@ -33,8 +33,8 @@ For MC, when switching to different error sets/members for a given muon, random 
 -------------------------------------------------------------------------------------
 Following variations are provided currently
 -------------------------------------------------------------------------------------
-	 set        members	comment
-Default  0	    1		default, reference based on madgraph sample, with pt distribution reweighted to data in |Y| bins. 
+	     set        members	    comment
+Default  0	        1		    default, reference based on madgraph sample, with pt distribution reweighted to data in |Y| bins. 
 Stat     1          100         pre-generated stat. variations; can include more (e.g. 400). RMS over these would give stat. uncertainty
 Zpt      2          1           derived without reweighting reference to data. Difference wrt central can be taken as systematics
 Ewk      3          1           Ad-hoc weighting applied to reference to change sw2 and Zw. Use for x-check for now. Need to compare with Powheg (may become default). 

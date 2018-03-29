@@ -120,15 +120,16 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 	//MC info
 	#ifdef IS_MC
-	TTreeReaderArray< float > puTrue(*dataReader, "puTrue");
-	TTreeReaderValue< int > nMC(*dataReader, "nMC");
-	TTreeReaderArray< int > mcPID(*dataReader, "mcPID");
-	TTreeReaderArray< int > mcMomPID(*dataReader, "mcMomPID");
-	TTreeReaderArray< int > mcGMomPID(*dataReader, "mcGMomPID");
-	TTreeReaderArray< float > mcPt(*dataReader, "mcPt");
-	TTreeReaderArray< float > mcEta(*dataReader, "mcEta");
-	TTreeReaderArray< float > mcPhi(*dataReader, "mcPhi");
+		TTreeReaderArray< float > puTrue(*dataReader, "puTrue");
+		TTreeReaderValue< int > nMC(*dataReader, "nMC");
+		TTreeReaderArray< int > mcPID(*dataReader, "mcPID");
+		TTreeReaderArray< int > mcMomPID(*dataReader, "mcMomPID");
+		TTreeReaderArray< int > mcGMomPID(*dataReader, "mcGMomPID");
+		TTreeReaderArray< float > mcPt(*dataReader, "mcPt");
+		TTreeReaderArray< float > mcEta(*dataReader, "mcEta");
+		TTreeReaderArray< float > mcPhi(*dataReader, "mcPhi");
 	#endif 
+
 	auto * puInfo = new puWeight(isMC, puFile);
 	auto * sfMVAIDFile = new TFile("data/SFs/egammaEffi.txt_EGM2D.root"); // photon MVA ID scale factor
 	auto * sfMuonIDFile = new TFile("data/SFs/final_HZZ_Moriond17Preliminary_v4.root"); // photon MVA ID scale factor
@@ -527,8 +528,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// trigger test 
 		// auto goodTriggerEvt = true;
-		// goodTriggerEvt = (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
-		goodTriggerEvt = ((((*HLTEleMuX >> 51) & 1) == 1) || (((*HLTEleMuX >> 52) & 1) == 1)) ? true : false; // HLT_Dimuon13_Upsilon_v* OR HLT_Dimuon8_Upsilon_Barrel_v*
+		goodTriggerEvt = (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
+		// goodTriggerEvt = ((((*HLTEleMuX >> 51) & 1) == 1) || (((*HLTEleMuX >> 52) & 1) == 1)) ? true : false; // HLT_Dimuon13_Upsilon_v* OR HLT_Dimuon8_Upsilon_Barrel_v*
 		// if (goodTriggerEvt == false) continue;
 		// cout << "Pass HLT!" << endl;
 
@@ -541,6 +542,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// get RocCor SF
 			// TRandom *rand3 = new TRandom3();
 			shared_ptr<TRandom3> rand3(new TRandom3);
+
+			
 			auto getRocCorRandom1 = rand3->Rndm();
 			auto getRocCorRandom2 = rand3->Rndm();
 			double rocCorSF = 1.0;
