@@ -137,7 +137,6 @@
 	plotter_ZtoUpsilonPhoton(
 		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoUpsilon_Cat0_ZZZZZ.root",
 		"outputHistos/outHistos_HZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon_Cat0_ZZZZZ.root",
-		// "outputHistos/outHistos_ZtoUpsilonPhoton_HToUpsilon1SGamma_HtoUpsilon_Cat0_ZZZZZ.root",
 		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoUpsilon_Cat0_ZZZZZ.root",
 		"HtoUpsilon"
 		); 

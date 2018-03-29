@@ -42,6 +42,9 @@
 
 using namespace std;
 
+const double intLumi = 3.5860E+04;
+// const double intLumi = 3.5910E+04;
+
 void genFiller(bool plusIsLeading, TH1D * h_Gen_Leading, TH1D * h_Gen_Trailing, double plusVar, double minusVar, double weight = 1.0) {
 	if (plusIsLeading) {
 		h_Gen_Leading->Fill(plusVar, weight); 
@@ -139,10 +142,14 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 		dimuonLatexName = "J/#Psi";
 	}
 	if (analysisBranch == "ZtoUpsilon") {
-		minUpsilonMassHistoRange = 8.9;
-		minUpsilonMass = 9.25;
-		maxUpsilonMass = 9.67;
-		maxUpsilonMassHistoRange = 9.9;
+		// minUpsilonMassHistoRange = 8.9;
+		// minUpsilonMass = 9.25;
+		// maxUpsilonMass = 9.67;
+		// maxUpsilonMassHistoRange = 9.9;
+		minUpsilonMassHistoRange = 8.4;
+		minUpsilonMass = 8.5;
+		maxUpsilonMass = 11.0;
+		maxUpsilonMassHistoRange = 11.1;
 		nBinsUpsilonMass = 30;
 		dimuonLatexName = "#Upsilon";
 	}
@@ -561,42 +568,42 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 		
 
 		if (sampleSource->GetString() == "ZToUpsilon1SGamma" && !isData) 
-			totalWeight = (6.7965E-05*0.7222*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (6.7965E-05*0.7222*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 
 		if (sampleSource->GetString() == "ZToUpsilon2SGamma" && !isData) 
-			totalWeight = (2.6887E-05*0.6667*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (2.6887E-05*0.6667*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "ZToUpsilon3SGamma" && !isData) 
-			totalWeight = (2.3400E-05*0.6146*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (2.3400E-05*0.6146*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 
 
 		if (sampleSource->GetString() == "ZToJPsiGamma" && !isData) 
-			totalWeight = (3.0494E-04*0.7015*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (3.0494E-04*0.7015*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "ZGTo2MuG_MMuMu-2To15" && !isData) 
-			totalWeight = (7.9260E-02*3.5860E+04/(double)totalEvts)*(puWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (7.9260E-02*intLumi/(double)totalEvts)*(puWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 
 		
 		if (sampleSource->GetString() == "HToUpsilon1SGamma" && !isData) 
-			// totalWeight = (8.4271E-10*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
-			totalWeight = (7.1996E-09*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			// totalWeight = (8.4271E-10*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (7.1996E-09*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "HToUpsilon2SGamma" && !isData) 
-			// totalWeight = (2.1682E-09*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
-			totalWeight = (1.5242E-09*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			// totalWeight = (2.1682E-09*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (1.5242E-09*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "HToUpsilon3SGamma" && !isData) 
-			// totalWeight = (2.9582E-09*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
-			totalWeight = (1.1033E-09*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			// totalWeight = (2.9582E-09*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (1.1033E-09*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "HToJPsiGamma" && !isData) 
-			totalWeight = (9.9123E-06*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
-			// totalWeight = (9.7797E-06*3.5860E+04/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (9.9123E-06*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			// totalWeight = (9.7797E-06*intLumi/(double)totalEvts)*(puWgt)*(*polWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		if (sampleSource->GetString() == "HDalitz" && !isData) 
-			totalWeight = (1.8614E-03*3.5860E+04/(double)totalEvts)*(puWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
+			totalWeight = (1.8614E-03*intLumi/(double)totalEvts)*(puWgt)*(muonIDWgt)*(photonMVAIDWgt)*(photonEleVetoWgt)*(triggerWgt);
 		
 		// MC
 		if (!isData) { 
@@ -744,8 +751,13 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			goodUpsilonMassCut = ((recoUpsilon.M() > minUpsilonMass && recoUpsilon.M() < maxUpsilonMass)) ? true : false;
 			// goodKinCuts *= (recoUpsilon.M() >minUpsilonMass && recoUpsilon.M() < maxUpsilonMass) ? true : false;
 			goodKinCuts *= goodUpsilonMassCut;
+
 			if (analysisBranch == "ZtoJPsi" || analysisBranch == "ZtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) && (leadingPhoton->Et()/recoZ.M() > (35.0/91.2))) ? true : false;
 			if (analysisBranch == "HtoJPsi" || analysisBranch == "HtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt()/recoZ.M() > (35.0/125.0)) && (leadingPhoton->Et()/recoZ.M() > (35.0/125.0))) ? true : false;
+			
+			// if (analysisBranch == "ZtoJPsi" || analysisBranch == "ZtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt() > (16.)) && (leadingPhoton->Et()/recoZ.M() > (35.0/91.2))) ? true : false;
+			// if (analysisBranch == "HtoJPsi" || analysisBranch == "HtoUpsilon" ) goodRatioCuts = ( (recoUpsilon.Pt() > (16.)) && (leadingPhoton->Et()/recoZ.M() > (35.0/125.0))) ? true : false;
+			
 			// goodKinCuts *= (recoUpsilon.Pt()/recoZ.M() > (35.0/91.2)) ? true : false;
 			// goodKinCuts *= (leadingPhoton->Et()/recoZ.M() > (35.0/91.2)) ? true : false;
 			goodKinCuts *= goodRatioCuts;
@@ -838,48 +850,48 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 		// xSecs and BRs: https://docs.google.com/spreadsheets/d/1zP8P9kp-yFrkMu9bGt4fpIirKAKYlH-w2em_kVkYYKw/edit#gid=0
 		double mcWeight = 1.0;
 		if (sampleSource->GetString() == "ZToUpsilon1SGamma" && !isData) 
-			mcWeight = (6.7965E-05*0.7222*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (6.7965E-05*0.7222*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "ZToUpsilon2SGamma" && !isData) 
-			mcWeight = (2.6887E-05*6.6670E-01*3.5860E+04/(double)totalEvts)*(*polWgt); 
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (2.6887E-05*6.6670E-01*intLumi/(double)totalEvts)*(*polWgt); 
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "ZToUpsilon3SGamma" && !isData)  
-			mcWeight = (2.3400E-05*6.1460E-01*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (2.3400E-05*6.1460E-01*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(6.9806E-05*0.7222*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "ZToJPsiGamma" && !isData)  
-			mcWeight = (3.0494E-04*0.7015*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(3.3898E-04*0.7015*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (3.0494E-04*0.7015*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(3.3898E-04*0.7015*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "ZGTo2MuG_MMuMu-2To15" && !isData)  
-			mcWeight = (7.9260E-02*3.5860E+04/(double)totalEvts);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(7.9260E-02*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (7.9260E-02*intLumi/(double)totalEvts);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(7.9260E-02*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "HToUpsilon1SGamma" && !isData)  
-			mcWeight = (7.1996E-09*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// mcWeight = (8.4271E-10*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(8.4271E-10*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (7.1996E-09*intLumi/(double)totalEvts)*(*polWgt);
+			// mcWeight = (8.4271E-10*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(8.4271E-10*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "HToUpsilon2SGamma" && !isData)  
-			mcWeight = (1.5242E-09*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// mcWeight = (2.1682E-09*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(2.1682E-09*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (1.5242E-09*intLumi/(double)totalEvts)*(*polWgt);
+			// mcWeight = (2.1682E-09*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(2.1682E-09*intLumi/(double)totalEvts) : 1.0);
 
 		if (sampleSource->GetString() == "HToUpsilon3SGamma" && !isData)   
-			mcWeight = (1.1033E-09*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// mcWeight = (2.9582E-09*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(2.9582E-04*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (1.1033E-09*intLumi/(double)totalEvts)*(*polWgt);
+			// mcWeight = (2.9582E-09*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(2.9582E-04*intLumi/(double)totalEvts) : 1.0);
 		
 		if (sampleSource->GetString() == "HToJPsiGamma" && !isData)  
-			mcWeight = (9.9123E-06*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// mcWeight = (9.7797E-06*3.5860E+04/(double)totalEvts)*(*polWgt);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(9.2493E-06*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (9.9123E-06*intLumi/(double)totalEvts)*(*polWgt);
+			// mcWeight = (9.7797E-06*intLumi/(double)totalEvts)*(*polWgt);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(9.2493E-06*intLumi/(double)totalEvts) : 1.0);
 		
 		if (sampleSource->GetString() == "HDalitz" && !isData)  
-			mcWeight = (1.8614E-03*3.5860E+04/(double)totalEvts);
-			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(1.8614E-03*3.5860E+04/(double)totalEvts) : 1.0);
+			mcWeight = (1.8614E-03*intLumi/(double)totalEvts);
+			// countTotalEvts += 1.0*((!isData) ? (puWgt)*(*polWgt)*(1.8614E-03*intLumi/(double)totalEvts) : 1.0);
 		// if (isData) 
 
 		// countTotalEvts += 1.0; 
@@ -957,7 +969,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 			// systMaskYields:
 			// (PILE-UP, TRIGGER, MUON ID, PHOTON ID, PHOTON-ELECTRON VETO)
 			// P -> plus 1 sigma
-			// Z -> nominal value (zero sigmas)
+			// Z -> nominal value 
 			// M -> minus 1 sigma
 			plots_ZtoUpsilonPhoton(ntuplesToPlotFilesData, outHistoAppend, analysisBranch, selCategory, "PZZZZ", isData) ;
 			plots_ZtoUpsilonPhoton(ntuplesToPlotFilesData, outHistoAppend, analysisBranch, selCategory, "MZZZZ", isData) ;

@@ -15,7 +15,7 @@ def getSysterror(nominal, up, down):
 ############################################################
 # <BEGIN> Higgs/Z to Upsilon + Photon - MERGE
 # Merge Higgs/Z Upsilon files
-def mergaHZ (analysisBranch, selCategory):
+def mergeHZ(analysisBranch, selCategory):
 	boson = analysisBranch[0]
 	HZtoUpsilonSystMasks = [
 					"ZZZZZ", 
@@ -65,21 +65,21 @@ def mergaHZ (analysisBranch, selCategory):
 		HZ2SFile.close()
 		HZ3SFile.close()
 
-mergaHZ ("ZtoUpsilon", "Cat0")
-mergaHZ ("ZtoUpsilon", "Cat1")
-mergaHZ ("ZtoUpsilon", "Cat2")
-mergaHZ ("ZtoUpsilon", "Cat3")
-mergaHZ ("HtoUpsilon", "Cat0")
+mergeHZ("ZToUpsilon", "Cat0")
+mergeHZ("ZToUpsilon", "Cat1")
+mergeHZ("ZToUpsilon", "Cat2")
+mergeHZ("ZToUpsilon", "Cat3")
+mergeHZ("HToUpsilon", "Cat0")
 # <END> Higgs/Z to Upsilon + Photon - MERGE
 ############################################################
 
 
 
 samplesBranches = {
-		"ZtoUpsilon_Cat0":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat1":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat2":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat3":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat0":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat1":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat2":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat3":["ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat0":["ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat1":["ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat2":["ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
@@ -126,6 +126,8 @@ for branch in samplesBranches:
 		countsZZZZP = json.load(ZZZZPFile)
 		countsZZZZM = json.load(ZZZZMFile)
 
+		# print branch +" - "+ sample
+
 		outputJSON[branch].append({
 			"Analysis Branch": countsZZZZZ["analysisBranch"]+"Photon",
 			"Analysis Sample": countsZZZZZ["sample"],
@@ -156,10 +158,10 @@ with open('evtsCountFiles/systErrorYields.json', 'w') as outputJSONFile:
 ###############################
 # Print Final Yields
 samplesBranchesFinalYields = {
-		"ZtoUpsilon_Cat0":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat1":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat2":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoUpsilon_Cat3":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat0":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat1":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat2":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
+		"ZtoUpsilon_Cat3":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat0":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat1":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoJPsi_Cat2":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],

@@ -9,7 +9,7 @@
 // ######################################################
 
 
-// #define IS_MC 1
+#define IS_MC 1
 
 
 
@@ -26,7 +26,6 @@
 #include "TRandom3.h"
 #include "TROOT.h"
 #include "TObjString.h"
-// #include "TH1.h"
 
 
 #include "plugins/ggNtuplesFilesReader.h"
@@ -528,7 +527,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// trigger test 
 		// auto goodTriggerEvt = true;
-		goodTriggerEvt = (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
+		// goodTriggerEvt = (((*HLTEleMuX >> 8) & 1) == 1) ? true : false; // HLT_Mu17_Photon30_CaloIdL_L1ISO_v*
+		goodTriggerEvt = ((((*HLTEleMuX >> 51) & 1) == 1) || (((*HLTEleMuX >> 52) & 1) == 1)) ? true : false; // HLT_Dimuon13_Upsilon_v* OR HLT_Dimuon8_Upsilon_Barrel_v*
 		// if (goodTriggerEvt == false) continue;
 		// cout << "Pass HLT!" << endl;
 
@@ -563,6 +563,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		goodMuonPairPreSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
 			goodMuonPairPreSel *= (muonsCandCollection[0].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
+			// goodMuonPairPreSel *= (muonsCandCollection[0].Pt() > 10.) ? true : false; // leading muon pT > 20.0 GeV
 			goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
 			goodMuonPairPreSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
 			goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
@@ -624,7 +625,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		goodMuonPairSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
 			for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {
-				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
+				// if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
+				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 10.0) {
 					indexLeadCand = iLeadMuon;
 					break;
 				}
@@ -692,6 +694,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		goodPhotonSel = true; 
 		if (photonsCandCollection.size() >= 1) {
 			goodPhotonSel *= (photonsCandCollection[0].Pt() > 33.) ? true : false; // photon Et > 33.0 GeV
+			// goodPhotonSel *= (photonsCandCollection[0].Pt() > 20.) ? true : false; // photon Et > 33.0 GeV
 		} else {
 			goodPhotonSel = false;
 		}
@@ -746,7 +749,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// cout << "photonMVAIDSF: " << photonMVAIDSF.first << endl;
 			photonEleVetoSF = getPhotonEleVetoSF(isMC, leadingPhoton); // photon electron veto
 			// cout << "photonEleVetoSF: " << photonEleVetoSF.first << endl;
-			triggerSF = getTriggerSF(isMC, leadingMuon, leadingPhoton, sfTriggerFile); // photon electron veto
+			// triggerSF = getTriggerSF(isMC, leadingMuon, leadingPhoton, sfTriggerFile); // photon electron veto
+			triggerSF = {1.,0.}; // photon electron veto
 			// cout << "triggerSF: " << triggerSF.first << endl;
 		}
 		// fill the tree

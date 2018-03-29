@@ -36,11 +36,11 @@ Produce plots:
 ./runZToUpsilonPhoton_plotter.sh
 ```
 
-Fitting:
+<!-- Fitting:
 ```
 cd fits
 ./runHZToUpsilonPhoton_fitter.sh
-```
+``` -->
 
 
 ## ggNtuples Code

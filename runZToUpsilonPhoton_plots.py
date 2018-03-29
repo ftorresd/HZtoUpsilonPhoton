@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# MuonEG
 fileHeader = '''
 {
 	gSystem->AddIncludePath("-Iexternal");
@@ -24,6 +25,29 @@ fileHeader = '''
 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3.root"
 					};
 '''
+# MuOnia
+# fileHeader = '''
+# {
+# 	gSystem->AddIncludePath("-Iexternal");
+# 	gSystem->SetBuildDir("tmpdir", kTRUE);
+	
+# 	gROOT->ProcessLine(".L plugins/getFilesList.C+");
+# 	gROOT->ProcessLine(".L plots_ZtoUpsilonPhoton.C+"); 
+
+# 	gStyle->SetOptStat(0);
+
+# 	// system("rm -fr evtsCountFiles; mkdir evtsCountFiles");
+	
+# 	vector<string> ntuplesToPlotFilesData = {
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G.root", 
+# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H.root"
+# 					};
+# '''
 
 fileBotton = '''
 }
@@ -32,10 +56,10 @@ fileBotton = '''
 
 h_Cat0 = '''
 	// H - Cat0
-	// // Data - H
+	// Data - H
 	plots_ZtoUpsilonPhoton(ntuplesToPlotFilesData, "Data", "HtoJPsi", "Cat0"); // Data
 	plots_ZtoUpsilonPhoton(ntuplesToPlotFilesData, "Data", "HtoUpsilon", "Cat0"); // Data
-	// // MC - H
+	// MC - H
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon1SGamma.root"}, "HToUpsilon1SGamma", "HtoUpsilon", "Cat0", "ZZZZZ",  false); //MC
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon2SGamma.root"}, "HToUpsilon2SGamma", "HtoUpsilon", "Cat0", "ZZZZZ",  false); //MC
 	plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon3SGamma.root"}, "HToUpsilon3SGamma", "HtoUpsilon", "Cat0", "ZZZZZ",  false); //MC

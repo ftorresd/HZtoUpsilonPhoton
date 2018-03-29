@@ -65,6 +65,8 @@ rm run_Plots_Z_Cat3.C
 
 python systematicsYields_HZtoUpsilonPhoton.py
 
+python dumpEvtCountsAndSyst_HZtoUpsilonPhoton.py
+
 
 # rm evtsCountFiles/*_PZZZZ.json
 # rm evtsCountFiles/*_MZZZZ.json
