@@ -21,7 +21,7 @@ git push origin 2016Data
 ```
 
 ### Analysis Workflow
--- Produce HZToUpsilonGGNtuples (after propper configurarion for MC or Data):
+* **Produce HZToUpsilonGGNtuples (after propper configurarion for MC or Data):**
 
 Submit LSF jobs:
 ```
@@ -41,7 +41,7 @@ Colelct results (only when all jobs are OK):
 ```
 
 
--- Produce histograms:
+* **Produce histograms:**
 
 Submit LSF jobs:
 ```
@@ -63,13 +63,14 @@ Merge results :
 ./runHZToUpsilonPhoton_plots.sh merge
 ```
 
--- Produce plots:
+* **Produce plots:**
 ```
 ./runHZToUpsilonPhoton_plotter.sh
 ```
 
 
-relevant outputs:
+-- Relevant outputs:
+
 ```outputFiles```: HZToUpsilonGGNtuples.
 
 ```outputHistos```: histrograms and trees to fit.
