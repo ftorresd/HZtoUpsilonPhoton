@@ -29,3 +29,6 @@ evtsCountFiles/*
 fits/fitPlotFiles_BKP
 
 puWeight/*.root
+Plots_*.err
+Plots_*.out
+LSFJobs/

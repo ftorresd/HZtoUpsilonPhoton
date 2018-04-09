@@ -18,26 +18,28 @@ def getSysterror(nominal, up, down):
 def mergeHZ(analysisBranch, selCategory):
 	boson = analysisBranch[0]
 	HZtoUpsilonSystMasks = [
-					"ZZZZZ", 
-					"PZZZZ", 
-					"MZZZZ", 
-					"ZPZZZ", 
-					"ZMZZZ", 
-					"ZZPZZ", 
-					"ZZMZZ", 
-					"ZZZPZ", 
-					"ZZZMZ", 
-					"ZZZZP", 
-					"ZZZZM", 
+					"ZZZZZZ", 
+					"PZZZZZ", 
+					"MZZZZZ", 
+					"ZPZZZZ", 
+					"ZMZZZZ", 
+					"ZZPZZZ", 
+					"ZZMZZZ", 
+					"ZZZPZZ", 
+					"ZZZMZZ", 
+					"ZZZZPZ", 
+					"ZZZZMZ", 
+					"ZZZZZP", 
+					"ZZZZZM", 
 					]
 	for hzMask in HZtoUpsilonSystMasks:
-		HZ1SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon1SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
-		HZ2SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon2SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
-		HZ3SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon3SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json","r")
+		HZ1SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon1SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+"_default.json","r")
+		HZ2SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon2SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+"_default.json","r")
+		HZ3SFile = open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilon3SGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+"_default.json","r")
 		HZ1SJSON = json.load(HZ1SFile)
 		HZ2SJSON = json.load(HZ2SFile)
 		HZ3SJSON = json.load(HZ3SFile)
-		with open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilonGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+".json", "w") as outputHZJSONFile:  
+		with open("evtsCountFiles/evtsCountFile_"+boson+"ToUpsilonGamma_"+boson+"toUpsilon_"+selCategory+"_"+hzMask+"_default.json", "w") as outputHZJSONFile:  
 		    outputHZJSONFile.write("{\n")
 		    outputHZJSONFile.write("\"sample\" : \""+boson+"ToUpsilonGamma\",\n")
 		    outputHZJSONFile.write("\"analysisBranch\" : \""+boson+"toUpsilon\",\n")
@@ -103,52 +105,60 @@ outputJSON = {
 
 for branch in samplesBranches:
 	for sample in samplesBranches[branch]:
-		ZZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZ.json","r")  
-		PZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_PZZZZ.json","r")  
-		MZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_MZZZZ.json","r")  
-		ZPZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZPZZZ.json","r")  
-		ZMZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZMZZZ.json","r")  
-		ZZPZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZPZZ.json","r")  
-		ZZMZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZMZZ.json","r")  
-		ZZZPZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZPZ.json","r")  
-		ZZZMZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZMZ.json","r")  
-		ZZZZPFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZP.json","r")  
-		ZZZZMFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZM.json","r")  
-		countsZZZZZ = json.load(ZZZZZFile)
-		countsPZZZZ = json.load(PZZZZFile)
-		countsMZZZZ = json.load(MZZZZFile)
-		countsZPZZZ = json.load(ZPZZZFile)
-		countsZMZZZ = json.load(ZMZZZFile)
-		countsZZPZZ = json.load(ZZPZZFile)
-		countsZZMZZ = json.load(ZZMZZFile)
-		countsZZZPZ = json.load(ZZZPZFile)
-		countsZZZMZ = json.load(ZZZMZFile)
-		countsZZZZP = json.load(ZZZZPFile)
-		countsZZZZM = json.load(ZZZZMFile)
+		ZZZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZZ_default.json","r")  
+		PZZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_PZZZZZ_default.json","r")  
+		MZZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_MZZZZZ_default.json","r")  
+		ZPZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZPZZZZ_default.json","r")  
+		ZMZZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZMZZZZ_default.json","r")  
+		ZZPZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZPZZZ_default.json","r")  
+		ZZMZZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZMZZZ_default.json","r")  
+		ZZZPZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZPZZ_default.json","r")  
+		ZZZMZZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZMZZ_default.json","r")  
+		ZZZZPZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZPZ_default.json","r")  
+		ZZZZMZFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZMZ_default.json","r")  
+		ZZZZZPFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZP_default.json","r")  
+		ZZZZZMFile = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZM_default.json","r")  
+		countsZZZZZZ = json.load(ZZZZZZFile)
+		countsPZZZZZ = json.load(PZZZZZFile)
+		countsMZZZZZ = json.load(MZZZZZFile)
+		countsZPZZZZ = json.load(ZPZZZZFile)
+		countsZMZZZZ = json.load(ZMZZZZFile)
+		countsZZPZZZ = json.load(ZZPZZZFile)
+		countsZZMZZZ = json.load(ZZMZZZFile)
+		countsZZZPZZ = json.load(ZZZPZZFile)
+		countsZZZMZZ = json.load(ZZZMZZFile)
+		countsZZZZPZ = json.load(ZZZZPZFile)
+		countsZZZZMZ = json.load(ZZZZMZFile)
+		countsZZZZZP = json.load(ZZZZZPFile)
+		countsZZZZZM = json.load(ZZZZZMFile)
 
 		# print branch +" - "+ sample
 
 		outputJSON[branch].append({
-			"Analysis Branch": countsZZZZZ["analysisBranch"]+"Photon",
-			"Analysis Sample": countsZZZZZ["sample"],
-			"Category": countsZZZZZ["selCategory"],
-			"Pileup": getSysterror(countsZZZZZ["hz_mass_cut"], countsPZZZZ["hz_mass_cut"], countsMZZZZ["hz_mass_cut"]),
-			"Trigger": getSysterror(countsZZZZZ["hz_mass_cut"], countsZPZZZ["hz_mass_cut"], countsZMZZZ["hz_mass_cut"]),
-			"Muon ID": getSysterror(countsZZZZZ["hz_mass_cut"], countsZZPZZ["hz_mass_cut"], countsZZMZZ["hz_mass_cut"]),
-			"Photon ID": getSysterror(countsZZZZZ["hz_mass_cut"], countsZZZPZ["hz_mass_cut"], countsZZZMZ["hz_mass_cut"]),
-			"Electron Veto": getSysterror(countsZZZZZ["hz_mass_cut"], countsZZZZP["hz_mass_cut"], countsZZZZM["hz_mass_cut"]),
+			"Analysis Branch": countsZZZZZZ["analysisBranch"]+"Photon",
+			"Analysis Sample": countsZZZZZZ["sample"],
+			"Category": countsZZZZZZ["selCategory"],
+			"Pileup": getSysterror(countsZZZZZZ["hz_mass_cut"], countsPZZZZZ["hz_mass_cut"], countsMZZZZZ["hz_mass_cut"]),
+			"Trigger": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZPZZZZ["hz_mass_cut"], countsZMZZZZ["hz_mass_cut"]),
+			"Muon ID": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZPZZZ["hz_mass_cut"], countsZZMZZZ["hz_mass_cut"]),
+			"Photon ID": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZPZZ["hz_mass_cut"], countsZZZMZZ["hz_mass_cut"]),
+			"Electron Veto": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZZPZ["hz_mass_cut"], countsZZZZMZ["hz_mass_cut"]),
+			"Polarization": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZZZZ["hz_mass_cut"], countsZZZZZZ["hz_mass_cut"]),
 			})
 
-		ZZZZZFile.close()
-		PZZZZFile.close()
-		MZZZZFile.close()  
-		ZPZZZFile.close()  
-		ZMZZZFile.close()  
-		ZZPZZFile.close()  
-		ZZMZZFile.close()  
-		ZZZPZFile.close()  
-		ZZZMZFile.close()  
-		ZZZZPFile.close() 
+		ZZZZZZFile.close()
+		PZZZZZFile.close()
+		MZZZZZFile.close()  
+		ZPZZZZFile.close()  
+		ZMZZZZFile.close()  
+		ZZPZZZFile.close()  
+		ZZMZZZFile.close()  
+		ZZZPZZFile.close()  
+		ZZZMZZFile.close()  
+		ZZZZPZFile.close() 
+		ZZZZMZFile.close() 
+		ZZZZZPFile.close() 
+		ZZZZZMFile.close() 
 
 with open('evtsCountFiles/systErrorYields.json', 'w') as outputJSONFile:  
     json.dump(outputJSON, outputJSONFile, indent=2)
@@ -185,7 +195,7 @@ outputJSONFinalYields = {
 
 for branch in samplesBranchesFinalYields:
 	for sample in samplesBranchesFinalYields[branch]:
-		f = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZ.json","r")  
+		f = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZZ_default.json","r")  
 		counts = json.load(f)
 		# outputJSON[samplesBranches[sample]] = []
 		outputJSONFinalYields[branch].append({

@@ -1,7 +1,7 @@
 {
 	gSystem->AddIncludePath("-Iexternal");
 	gSystem->SetBuildDir("tmpdir", kTRUE);
-	gROOT->ProcessLine(".L plotter_ZtoUpsilonPhoton.C+"); 
+	gROOT->ProcessLine(".L plotter_HZtoUpsilonPhoton.C+"); 
 	gStyle->SetOptStat(0);
 
     // clear 
@@ -9,10 +9,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoJPsi - Cat0
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat0_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat0_ZZZZZZ.root",
 		"ZtoJPsi"
 		); 
 
@@ -23,10 +23,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon - Cat0
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat0_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat0_ZZZZZZ.root",
 		"ZtoUpsilon"
 		); 
 
@@ -36,10 +36,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoJPsi - Cat1
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat1_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat1_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat1_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat1_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat1_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat1_ZZZZZZ.root",
 		"ZtoJPsi"
 		); 
 
@@ -50,10 +50,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon - Cat1
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat1_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat1_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat1_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat1_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat1_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat1_ZZZZZZ.root",
 		"ZtoUpsilon"
 		); 
 
@@ -64,10 +64,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoJPsi - Cat2
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat2_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat2_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat2_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat2_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat2_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat2_ZZZZZZ.root",
 		"ZtoJPsi"
 		); 
 
@@ -78,10 +78,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon - Cat2
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat2_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat2_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat2_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat2_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat2_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat2_ZZZZZZ.root",
 		"ZtoUpsilon"
 		); 
 
@@ -92,10 +92,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoJPsi - Cat3
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat3_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat3_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat3_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat3_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat3_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat3_ZZZZZZ.root",
 		"ZtoJPsi"
 		); 
 
@@ -105,10 +105,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon - Cat3
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat3_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat3_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat3_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoUpsilon_Cat3_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToUpsilonGamma_ZtoUpsilon_Cat3_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoUpsilon_Cat3_ZZZZZZ.root",
 		"ZtoUpsilon"
 		); 
 
@@ -120,10 +120,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// HtoJPsi
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoJPsi_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoJPsi_Cat0_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoJPsi_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoJPsi_Cat0_ZZZZZZ.root",
 		"HtoJPsi"
 		); 
 
@@ -134,10 +134,10 @@
 
 	//////////////////////////////////////////////////////////////////
 	// HtoUpsilon
-	plotter_ZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoUpsilon_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon_Cat0_ZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoUpsilon_Cat0_ZZZZZ.root",
+	plotter_HZtoUpsilonPhoton(
+		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoUpsilon_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_HToUpsilonGamma_HtoUpsilon_Cat0_ZZZZZZ.root",
+		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoUpsilon_Cat0_ZZZZZZ.root",
 		"HtoUpsilon"
 		); 
 

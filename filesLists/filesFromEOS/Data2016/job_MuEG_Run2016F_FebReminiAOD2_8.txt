@@ -1,0 +1,6 @@
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_17.root
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_26.root
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_35.root
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_44.root
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_53.root
+root://eoscms.cern.ch//store/user/ftorresd/ggNtuples/13TeV/data/V08_00_26_06/job_MuEG_Run2016F_FebReminiAOD2/MuonEG/crab_job_MuEG_Run2016F_FebReminiAOD2/170714_151220/0000/ggtree_data_7.root

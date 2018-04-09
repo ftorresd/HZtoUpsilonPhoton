@@ -35,7 +35,7 @@ outputJSONFinalYields = {
 
 for branch in samplesBranchesFinalYields:
 	for sample in samplesBranchesFinalYields[branch]:
-		f = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZ.json","r")  
+		f = open("evtsCountFiles/evtsCountFile_"+ sample +"_"+ branch +"_ZZZZZZ_default.json","r")  
 		counts = json.load(f)
 		outputJSONFinalYields[branch].append({
 			"Analysis Branch": counts["analysisBranch"]+"Photon",
@@ -282,6 +282,12 @@ Cat0 & @@HZ-ELECTRON-VETO-1S-CAT0@@\% & @@HZ-ELECTRON-VETO-2S-CAT0@@\% & @@HZ-EL
 Cat1 & @@HZ-ELECTRON-VETO-1S-CAT1@@\% & @@HZ-ELECTRON-VETO-2S-CAT1@@\% & @@HZ-ELECTRON-VETO-3S-CAT1@@\% & @@HZ-ELECTRON-VETO-PEAKBKG-CAT1@@\% \\
 Cat2 & @@HZ-ELECTRON-VETO-1S-CAT2@@\% & @@HZ-ELECTRON-VETO-2S-CAT2@@\% & @@HZ-ELECTRON-VETO-3S-CAT2@@\% & @@HZ-ELECTRON-VETO-PEAKBKG-CAT2@@\% \\
 Cat3 & @@HZ-ELECTRON-VETO-1S-CAT3@@\% & @@HZ-ELECTRON-VETO-2S-CAT3@@\% & @@HZ-ELECTRON-VETO-3S-CAT3@@\% & @@HZ-ELECTRON-VETO-PEAKBKG-CAT3@@\% \\
+\hline\hline
+Polarization  & \multicolumn{4}{l}{} \\ \hline
+Cat0 & @@HZ-POLARIZATION-1S-CAT0@@\% & @@HZ-POLARIZATION-2S-CAT0@@\% & @@HZ-POLARIZATION-3S-CAT0@@\% & - \\
+Cat1 & @@HZ-POLARIZATION-1S-CAT1@@\% & @@HZ-POLARIZATION-2S-CAT1@@\% & @@HZ-POLARIZATION-3S-CAT1@@\% & - \\
+Cat2 & @@HZ-POLARIZATION-1S-CAT2@@\% & @@HZ-POLARIZATION-2S-CAT2@@\% & @@HZ-POLARIZATION-3S-CAT2@@\% & - \\
+Cat3 & @@HZ-POLARIZATION-1S-CAT3@@\% & @@HZ-POLARIZATION-2S-CAT3@@\% & @@HZ-POLARIZATION-3S-CAT3@@\% & - \\
 \hline\hline
 
 \end{tabular}

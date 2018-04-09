@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <math.h>  
 
+
+
 #include "TFile.h"
 #include "TLorentzVector.h"
 #include "TTree.h"
@@ -26,6 +28,8 @@
 #include "TRandom3.h"
 #include "TROOT.h"
 #include "TObjString.h"
+#include "TDirectory.h"
+
 
 
 #include "plugins/ggNtuplesFilesReader.h"
@@ -36,6 +40,8 @@
 #include "plugins/upsilonPolarizationAngle.h"
 #include "plugins/getSF.h"
 #include "plugins/getR9Transform.h"
+#include "plugins/getMeanVariance.h"
+#include "plugins/translShapeSyst.h"
 
 
 #ifdef __CINT__
@@ -47,12 +53,17 @@
 using namespace std;
 
 
-void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string outFileAppend = "", bool isMC = false, string puFile = "")  
+void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string outFileAppend = "", bool isMC = false, string puFile = "", string shapeSystMask = "default")  
 {
+	
 	// output tree
 	// TFile outFile("outTree_ZtoUpsilonPhoton.root","RECREATE","ZtoUpsilonPhoton output analysis tree");
-	string outputFileName = "outputFiles/outTree_ZtoUpsilonPhoton_"+ outFileAppend + ".root";
+	string outputFileName = "outputFiles/outTree_ZtoUpsilonPhoton_"+ outFileAppend + "_" + shapeSystMask+".root";
+	// string outputFileName = "outputFiles/outTree_ZtoUpsilonPhoton_"+ outFileAppend + "_shapeSystMask_" + shapeSystMask + ".root";
 	TFile * outFile  = new TFile(outputFileName.c_str(),"RECREATE","ZtoUpsilonPhoton output analysis tree");
+	// TFile * outFile  = new TFile(outputFileName.c_str(),"UPDATE","ZtoUpsilonPhoton output analysis tree");
+	TDirectory * shapeSystDirectory = outFile->mkdir(shapeSystMask.c_str());
+	shapeSystDirectory->cd();
 	TTree * outTree = new TTree("outTree_ZtoUpsilonPhoton","ZtoUpsilonPhoton output analysis tree");
 
 	// loads the ggNtuples 
@@ -61,6 +72,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	}
 	TTreeReader * dataReader = ggNtuplesFilesReader( ggNtuplesFiles, "ggNtuplizer/EventTree" );
 	TTree * dataTree = dataReader->GetTree();
+	dataTree->AddFriend("muonsRands", ("data/muonsRands/muonsRands_"+outFileAppend+".root").c_str());
 
 	////////////////////////////////////////////////////////////////////
 	// define readers
@@ -76,6 +88,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	TTreeReaderArray< float > muPhi(*dataReader, "muPhi");
 	TTreeReaderArray< int > muCharge(*dataReader, "muCharge");
 	TTreeReaderArray< int > muType(*dataReader, "muType");
+	TTreeReaderArray< double > rand1(*dataReader, "rand1");
+	TTreeReaderArray< double > rand2(*dataReader, "rand2");
  	// Types of muons
 	// REF: https://github.com/cms-sw/cmssw/blob/master/DataFormats/MuonReco/interface/Muon.h
 	// muon type - type of the algorithm that reconstructed this muon
@@ -118,6 +132,18 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	TTreeReaderArray< unsigned short > phoIDbit(*dataReader, "phoIDbit");
 	TTreeReaderArray< int > phoEleVeto(*dataReader, "phoEleVeto");
 
+	TTreeReaderArray< float > phoScale_stat_up(*dataReader, "phoScale_stat_up");
+	TTreeReaderArray< float > phoScale_stat_dn(*dataReader, "phoScale_stat_dn");
+	TTreeReaderArray< float > phoScale_syst_up(*dataReader, "phoScale_syst_up");
+	TTreeReaderArray< float > phoScale_syst_dn(*dataReader, "phoScale_syst_dn");
+	TTreeReaderArray< float > phoScale_gain_up(*dataReader, "phoScale_gain_up");
+	TTreeReaderArray< float > phoScale_gain_dn(*dataReader, "phoScale_gain_dn");
+	TTreeReaderArray< float > phoResol_rho_up(*dataReader, "phoResol_rho_up");
+	TTreeReaderArray< float > phoResol_rho_dn(*dataReader, "phoResol_rho_dn");
+	TTreeReaderArray< float > phoResol_phi_up(*dataReader, "phoResol_phi_up");
+	TTreeReaderArray< float > phoResol_phi_dn(*dataReader, "phoResol_phi_dn");
+
+
 	//MC info
 	#ifdef IS_MC
 		TTreeReaderArray< float > puTrue(*dataReader, "puTrue");
@@ -153,12 +179,12 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	outTree->Branch("leadingPhoton",&leadingPhoton);
 
 	//output objects - PHOTONS
-	TLorentzVector recoUpsilon = TLorentzVector();
-	outTree->Branch("recoUpsilon",&recoUpsilon);
+	// TLorentzVector recoUpsilon = TLorentzVector();
+	// outTree->Branch("recoUpsilon",&recoUpsilon);
 
 	//output objects - PHOTONS
-	TLorentzVector recoZ = TLorentzVector();
-	outTree->Branch("recoZ",&recoZ);
+	// TLorentzVector recoZ = TLorentzVector();
+	// outTree->Branch("recoZ",&recoZ);
 
 	//output objects - isGoodEvent
 	bool isGoodEvent = true;
@@ -207,8 +233,14 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	outTree->Branch("genPhoton",&genPhoton);
 
 	//output objects -  polarization weight
-	double polWgt = 1.0;
-	outTree->Branch("polWgt",&polWgt);	
+	double polWgt_Nominal = 1.0;
+	outTree->Branch("polWgt_Nominal",&polWgt_Nominal);	
+
+	double polWgt_PLUS = 1.0;
+	outTree->Branch("polWgt_PLUS",&polWgt_PLUS);	
+
+	double polWgt_MINUS = 1.0;
+	outTree->Branch("polWgt_MINUS",&polWgt_MINUS);	
 
 	//output objects -  muonID SF
 	pair<double,double> muonIDSF = {1.0, 0.0};
@@ -275,7 +307,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	// main loop
 	auto iEvt = 0;
 	while (dataReader->Next()) { // loop over events
-		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outFileAppend <<  "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
+		if (iEvt % printEvery == 0) cout << "----------------------------------------> Events read (" << outFileAppend <<  " - " << shapeSystMask << "): " << iEvt << " / " << totalEvts << " - ~"<< round(((float)iEvt/(float)totalEvts)*100) << "%"<< endl;
 		iEvt++;
 
 		////////////////////////////////////////////////////////////////////
@@ -283,15 +315,17 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		leadingMuon.clear();
 		trailingMuon.clear();
 		leadingPhoton.clear();
-		recoUpsilon.SetPtEtaPhiM(-99,-99,-99,-99);
-		recoZ.SetPtEtaPhiM(-99,-99,-99,-99); 
+		// recoUpsilon.SetPtEtaPhiM(-99,-99,-99,-99);
+		// recoZ.SetPtEtaPhiM(-99,-99,-99,-99); 
 		genMuPlus.clear();
 		genMuMinus.clear();
 		genPhoton.clear();
 		puWgt_nominal = 1.0;
 		puWgt_up = 1.0;
 		puWgt_down = 1.0;
-		polWgt = 1.0;
+		polWgt_Nominal = 1.0;
+		polWgt_PLUS = 1.0;
+		polWgt_MINUS = 1.0;
 		muonIDSF = {1.0, 0.0};
 		photonMVAIDSF = {1.0, 0.0};
 		photonEleVetoSF = {1.0, 0.0};
@@ -518,7 +552,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 			// polarization weight
 			auto cosAngle = upsilonPolarizationAngle(genMuPlus, genMuMinus);
-			polWgt = (3./4.)*(1.+pow(cosAngle,2));
+			polWgt_Nominal = 1.0; // unpolarized
+			polWgt_PLUS = (3./4.)*(1.+pow(cosAngle,2)); // transverse 
+			polWgt_MINUS = (3./2.)*(1.-pow(cosAngle,2)); // longitudinal
 			// cout << "polWgt: " << polWgt << endl;
 			#endif
 			// puWeight = puInfo->getWeight(999); 
@@ -536,43 +572,154 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// muons analysis  
 		vector< anaMuon > muonsCandCollection;
+		// vector < vector< anaMuon > > muonsCandCollection = {{}, {}, {}, {}, {}, {}, {}, {}, {}};
 		for (int iMuon = 0; iMuon < *nMu; iMuon++) { //loop over muons
 			////////////////////////////////////////////////////////////////////
 			// apply rochester corrections and get the corrected muons candidates collection
 			// get RocCor SF
 			// TRandom *rand3 = new TRandom3();
-			shared_ptr<TRandom3> rand3(new TRandom3);
+			// unique_ptr<TRandom3> rand3(new TRandom3);
 
+			unique_ptr<std::map<int, double>> rocCorSF(new std::map<int, double>());
+			(*rocCorSF)[translRocCor("default")] = 1.0;
+			(*rocCorSF)[translRocCor("statRocCorError_UP")] = 0.0;
+			(*rocCorSF)[translRocCor("statRocCorError_DOWN")] = 0.0;
+			(*rocCorSF)[translRocCor("refRocCorError_UP")] = 0.0;
+			(*rocCorSF)[translRocCor("refRocCorError_DOWN")] = 0.0;
+			(*rocCorSF)[translRocCor("profMassRocCorError_UP")] = 0.0;
+			(*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = 0.0;
+			(*rocCorSF)[translRocCor("rfitMassRocCorError_UP")] = 0.0;
+			(*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = 0.0;
+
+
+			////////////////////////////////////////////////////////////////////////////////////////
+			// Get the many scales/Smear for MC/DATA muons
+			if (isMC) {
+				// auto getRocCorRandom1 = rand3->Rndm();
+				auto getRocCorRandom1 = rand1[iMuon];
+				// auto getRocCorRandom2 = rand3->Rndm();
+				auto getRocCorRandom2 = rand2[iMuon];
+
+				// Default
+				double rocCorDefault = rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 0, 0);
+
+				// statistical uncert
+				vector< double > statRocCor;
+				for (int i = 0; i < 100; i++) {
+					statRocCor.push_back(rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 1, i));
+				}
+				double statRocCorError = sqrt(getMeanVariance(statRocCor).second);
+
+				// correction without reweighting reference to data
+				double refRocCorError = fabs(rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 2, 0) - rocCorDefault);
+
+				// profiled mass window
+				vector< double > profRocCor;
+				for (int i = 0; i < 5; i++) {
+					profRocCor.push_back(fabs(rocCorDefault - rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 4, i)));
+				}
+				double profMassRocCorError = *max_element(std::begin(profRocCor), std::end(profRocCor));
+
+				// fitting mass window
+				vector< double > fitRocCor;
+				for (int i = 0; i < 5; i++) {
+					fitRocCor.push_back(fabs(rocCorDefault - rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 5, i)));
+				}
+				double fitMassRocCorError = *max_element(std::begin(fitRocCor), std::end(fitRocCor));
+
+				// update rocCorSF map
+				(*rocCorSF)[translRocCor("default")] = rocCorDefault;
+				(*rocCorSF)[translRocCor("statRocCorError_UP")] = statRocCorError;
+				(*rocCorSF)[translRocCor("statRocCorError_DOWN")] = (-1.0)*statRocCorError;
+				(*rocCorSF)[translRocCor("refRocCorError_UP")] = refRocCorError;
+				(*rocCorSF)[translRocCor("refRocCorError_DOWN")] = (-1.0)*refRocCorError;
+				(*rocCorSF)[translRocCor("profMassRocCorError_UP")] = profMassRocCorError;
+				(*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = (-1.0)*profMassRocCorError;
+				(*rocCorSF)[translRocCor("rfitMassRocCorError_UP")] = fitMassRocCorError;
+				(*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = (-1.0)*fitMassRocCorError;
+
+			} else {
+				// update rocCorSF map
+				(*rocCorSF)[translRocCor("default")] = rc.kScaleDT(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], 0, 0);
+			}			
+			// <END> Get the many scales/Smear for MC/DATA muons
+			////////////////////////////////////////////////////////////////////////////////////////
 			
-			auto getRocCorRandom1 = rand3->Rndm();
-			auto getRocCorRandom2 = rand3->Rndm();
-			double rocCorSF = 1.0;
-			if (isMC) rocCorSF = rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 0, 0);
-			else rocCorSF = rc.kScaleDT(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], 0, 0);
+
+			// if (isMC) rocCorSF = rc.kScaleAndSmearMC(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], muTrkLayers[iMuon], getRocCorRandom1, getRocCorRandom2, 0, 0);
+			// else rocCorSF = rc.kScaleDT(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], 0, 0);
 
 			// apply the corrections save muon candidate
 			// anaMuon * muonCand = new anaMuon(muPt[iMuon]*rocCorSF, muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon);
-			shared_ptr<anaMuon> muonCand(new anaMuon(muPt[iMuon]*rocCorSF, muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// unique_ptr<anaMuon> muonCand(new anaMuon(muPt[iMuon]*rocCorSF["default"], muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// unique_ptr<vector <anaMuon> > muonCand(new vector<anaMuon>());
 
+			double rocCorError = 0.0;
+			if (shapeSystMask != "default") rocCorError = (*rocCorSF)[translRocCor(shapeSystMask)];
+			// default: 0
+			muonsCandCollection.push_back(anaMuon(muPt[iMuon]*((*rocCorSF)[translRocCor("default")]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
 
-			// cout << muonCand->Pt();
-			muonsCandCollection.push_back(*muonCand);
+			// // statRocCorError_UP: 1
+			// rocCorError = (*rocCorSF)["statRocCorError"];
+			// muonsCandCollection[1].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// // statRocCorError_DOWN: 2
+			// rocCorError = -(*rocCorSF)["statRocCorError"];
+			// muonsCandCollection[2].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			
+			// // refRocCorError_UP: 3
+			// rocCorError = (*rocCorSF)["refRocCorError"];
+			// muonsCandCollection[3].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// // refRocCorError_DOWN: 4
+			// rocCorError = -(*rocCorSF)["refRocCorError"];
+			// muonsCandCollection[4].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			
+			// // profMassRocCorError_UP: 5
+			// rocCorError = (*rocCorSF)["profMassRocCorError"];
+			// muonsCandCollection[5].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// // profMassRocCorError_DOWN: 6
+			// rocCorError = -(*rocCorSF)["profMassRocCorError"];
+			// muonsCandCollection[6].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			
+			// // rfitMassRocCorError_UP: 7
+			// rocCorError = (*rocCorSF)["fitMassRocCorError"];
+			// muonsCandCollection[7].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// // fitMassRocCorError_DOWN: 8
+			// rocCorError = -(*rocCorSF)["fitMassRocCorError"];
+			// muonsCandCollection[8].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+
+			// // push the muon candidate into the muons collection
+			// muonsCandCollection.push_back(*muonCand);
 		}
 		sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[1].begin(), muonsCandCollection[1].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[2].begin(), muonsCandCollection[2].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[3].begin(), muonsCandCollection[3].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[4].begin(), muonsCandCollection[4].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[5].begin(), muonsCandCollection[5].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[6].begin(), muonsCandCollection[6].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[7].begin(), muonsCandCollection[7].end(),greater<anaMuon>()); // re-sort muon collection
+		// sort(muonsCandCollection[8].begin(), muonsCandCollection[8].end(),greater<anaMuon>()); // re-sort muon collection
+
 		
 		////////////////////////////////////////////////////////////////////
 		// muons pre-selection
 		// sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
 		goodMuonPairPreSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
+			// cout << "n: " << goodMuonPairPreSel << endl;
 			goodMuonPairPreSel *= (muonsCandCollection[0].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
 			// goodMuonPairPreSel *= (muonsCandCollection[0].Pt() > 10.) ? true : false; // leading muon pT > 20.0 GeV
-			goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
+			goodMuonPairPreSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
+			// cout << "eta lead: " << goodMuonPairPreSel << endl;
 			goodMuonPairPreSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
-			goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
+			// cout << "pt trail: " << goodMuonPairPreSel << endl;
+			goodMuonPairPreSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4
+			// cout << "eta trail: " << goodMuonPairPreSel << endl; 
 		} else {
 			goodMuonPairPreSel = false;
 		}
+
+
 
 		//////////////////////////////////////////////////////////////////////
 		// muons ID
@@ -628,8 +775,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		goodMuonPairSel = true; // muon pair pre-selection
 		if (muonsCandCollection.size() >= 2) {
 			for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {
-				// if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
-				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 10.0) {
+				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
+				// if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 10.0) {
 					indexLeadCand = iLeadMuon;
 					break;
 				}
@@ -666,10 +813,22 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		////////////////////////////////////////////////////////////////////
 		// photon analysis  
 		vector< anaPhoton > photonsCandCollection;
+		double photonCalibEnergy = 0.0;
 		for (int iPhoton = 0; iPhoton < *nPho; iPhoton++) { //loop over muons
 			// apply the calibrations save photon candidate
-			// anaPhoton * photonCand = new anaPhoton(phoCalibEt[iPhoton], phoEta[iPhoton], phoPhi[iPhoton], iPhoton);
-			shared_ptr<anaPhoton> photonCand(new anaPhoton(phoCalibEt[iPhoton], phoEta[iPhoton], phoPhi[iPhoton], iPhoton));
+			if (shapeSystMask == "phoScale_stat_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_stat_up[iPhoton];
+			else if (shapeSystMask == "phoScale_stat_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_stat_dn[iPhoton];
+			else if (shapeSystMask == "phoScale_syst_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_syst_up[iPhoton];
+			else if (shapeSystMask == "phoScale_syst_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_syst_dn[iPhoton];
+			else if (shapeSystMask == "phoScale_gain_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_gain_up[iPhoton];
+			else if (shapeSystMask == "phoScale_gain_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_gain_dn[iPhoton];
+			else if (shapeSystMask == "phoResol_rho_UP") photonCalibEnergy =  phoCalibEt[iPhoton] + phoResol_rho_up[iPhoton];
+			else if (shapeSystMask == "phoResol_rho_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] - phoResol_rho_dn[iPhoton];
+			else if (shapeSystMask == "phoResol_phi_UP") photonCalibEnergy =  phoCalibEt[iPhoton] + phoResol_phi_up[iPhoton];
+			else if (shapeSystMask == "phoResol_phi_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] - phoResol_phi_dn[iPhoton];
+			else photonCalibEnergy =  phoCalibEt[iPhoton];
+
+			unique_ptr<anaPhoton> photonCand(new anaPhoton(photonCalibEnergy, phoEta[iPhoton], phoPhi[iPhoton], iPhoton));
 			photonsCandCollection.push_back(*photonCand);
 		}
 		sort(photonsCandCollection.begin(), photonsCandCollection.end(),greater<anaPhoton>()); // re-sort photon collection
@@ -707,32 +866,15 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 		//////////////////////////////////////////////////////////////////////
 		// reconstructed UpsilonSetPtEtaPhiM
-		if (goodMuonPairSel && goodPhotonSel) recoUpsilon.SetPtEtaPhiM((leadingMuon + trailingMuon).Pt(), (leadingMuon + trailingMuon).Eta(), (leadingMuon + trailingMuon).Phi(), (leadingMuon + trailingMuon).M());
+		// if (goodMuonPairSel && goodPhotonSel) recoUpsilon.SetPtEtaPhiM((leadingMuon + trailingMuon).Pt(), (leadingMuon + trailingMuon).Eta(), (leadingMuon + trailingMuon).Phi(), (leadingMuon + trailingMuon).M());
 		// auto goodUpsilon = ( (recoUpsilon.M() > 7.0) && (recoUpsilon.M() < 12.0) ) ? true : false;
 
 		//////////////////////////////////////////////////////////////////////
 		// reconstructed Z
-		if (goodMuonPairSel && goodPhotonSel) recoZ.SetPtEtaPhiM((recoUpsilon + leadingPhoton).Pt(), (recoUpsilon + leadingPhoton).Eta(), (recoUpsilon + leadingPhoton).Phi(), (recoUpsilon + leadingPhoton).M());
+		// if (goodMuonPairSel && goodPhotonSel) recoZ.SetPtEtaPhiM((recoUpsilon + leadingPhoton).Pt(), (recoUpsilon + leadingPhoton).Eta(), (recoUpsilon + leadingPhoton).Phi(), (recoUpsilon + leadingPhoton).M());
 		// auto goodZ = ( (recoZ.M() > 7) && (recoZ.M() < 12.0) ) ? true : false;
 
-		//////////////////////////////////////////////////////////////////////
-		// muons ghost cleaning
-		// REF: https://github.com/cms-analysis/MuonAnalysis-MuonAssociators/blob/master/plugins/MuonCleanerBySegments.cc
-		// for (unsigned int iCandMuon = 0; iCandMuon < muonsCandCollection.size(); iCandMuon++) { //loop over muons
-		// 	auto iMuIndex = muonsCandCollection[iCandMuon].muonIndex; //get global muon index
-		// 	// for (auto i = muPixelLayers[iMuIndex].begin(); i != muPixelLayers[iMuIndex].end(); ++i)
-  //   			std::cout << muPixelLayers[iMuIndex] << ' ';		
-		// 	if ( (muType[iMuIndex] & TrackerMuon)  && !(muType[iMuIndex] & GlobalMuon) ) {
-		// 		for (unsigned int jCandMuon = iCandMuon+1; jCandMuon < muonsCandCollection.size(); jCandMuon++) { //loop over muons
-		// 			auto jMuIndex = muonsCandCollection[jCandMuon].muonIndex; //get global muon index
-		// 			if (iMuIndex != jMuIndex) { // not the same muon
-		// 				if ( (muType[jMuIndex] & TrackerMuon)  && !(muType[jMuIndex] & GlobalMuon) ) {
 
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 
 
@@ -752,8 +894,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// cout << "photonMVAIDSF: " << photonMVAIDSF.first << endl;
 			photonEleVetoSF = getPhotonEleVetoSF(isMC, leadingPhoton); // photon electron veto
 			// cout << "photonEleVetoSF: " << photonEleVetoSF.first << endl;
-			// triggerSF = getTriggerSF(isMC, leadingMuon, leadingPhoton, sfTriggerFile); // photon electron veto
-			triggerSF = {1.,0.}; // photon electron veto
+			triggerSF = getTriggerSF(isMC, leadingMuon, leadingPhoton, sfTriggerFile); // photon electron veto
+			// triggerSF = {1.,0.}; // photon electron veto
 			// cout << "triggerSF: " << triggerSF.first << endl;
 		}
 		// fill the tree
@@ -768,6 +910,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
     cout << "\n\n\nWriting output file... (" << outFileAppend <<  ")"  << endl;
     // outTree->Print();
     outFile->Write();
+    outFile->Close();
     cout << "\nDone  (" << outFileAppend <<  ")" << "!\n\n\n\n\n" << endl;
 
 } //end ana_ZtoUpsilonPhoton
