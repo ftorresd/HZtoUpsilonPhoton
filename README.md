@@ -1,4 +1,4 @@
-# ZtoUpsilonPhoton
+# HZtoUpsilonPhoton
 ZtoUpsilonPhoton @ CMS
 
 ## Analysis Code
@@ -22,19 +22,58 @@ git push origin 2016Data
 
 ### Analysis Workflow
 Produce HZToUpsilonGGNtuples (after propper configurarion for MC or Data):
+
+Submit LSF jobs:
 ```
-./runZToUpsilonPhoton_ana.sh
+./runHZToUpsilonPhoton_ana_LXBATCH.sh 
 ```
 
-Produce Histograms and TTres for fitting:
+Check job status:
 ```
-./runZToUpsilonPhoton_plots.sh
+./collectResults_LXBATCH.py MC check
+./collectResults_LXBATCH.py Data check
+```
+
+Colelct results (only when all jobs are OK):
+```
+./collectResults_LXBATCH.py MC merge
+./collectResults_LXBATCH.py Data merge
+```
+
+
+Produce histograms:
+
+Submit LSF jobs:
+```
+./runHZToUpsilonPhoton_plots.sh 
+```
+
+Check job status (only for Data. MC needs to be done manually):
+```
+./runHZToUpsilonPhoton_plots.sh check
+```
+
+Collect results (only when all jobs are OK):
+```
+./runHZToUpsilonPhoton_plots.sh collect
+```
+
+Merge results :
+```
+./runHZToUpsilonPhoton_plots.sh merge
 ```
 
 Produce plots:
 ```
-./runZToUpsilonPhoton_plotter.sh
+./runHZToUpsilonPhoton_plotter.sh
 ```
+
+
+relevant outputs:
+```outputFiles```: HZToUpsilonGGNtuples.
+```outputHistos```: histrograms and trees to fit.
+```evtsCountFiles```: JSONs with event counts and .latex with numbers (tables).
+```outputPlots```: .png, .pdf and .root with plots.
 
 <!-- Fitting:
 ```

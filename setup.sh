@@ -4,4 +4,5 @@ mkdir outputFiles
 mkdir outputHistos
 mkdir outputPlots
 mkdir evtsCountFiles
-mkdir fits/fitPlotFiles
+mkdir LSFJobs
+# mkdir fits/fitPlotFiles
