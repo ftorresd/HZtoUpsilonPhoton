@@ -1,5 +1,5 @@
 # HZtoUpsilonPhoton
-ZtoUpsilonPhoton @ CMS
+HZtoUpsilonPhoton @ CMS
 
 ## Analysis Code
 
