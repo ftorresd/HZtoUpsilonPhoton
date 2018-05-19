@@ -3,8 +3,7 @@
 // ######################################################
 // Analysis Code
 // Description:  - Read the ggNtuples
-//               - Skim the sample
-//               - Apply corrections and cuts           
+//               - Apply corrections           
 //               - Produces a ntuple ready for plotting  
 // ######################################################
 
@@ -198,6 +197,11 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	bool goodMuonPairSel = true;
 	outTree->Branch("goodMuonPairSel",&goodMuonPairSel);
 
+	//output objects - goodMuonPairSel
+	bool goodMuonPairId = false;
+	outTree->Branch("goodMuonPairId",&goodMuonPairId);
+	
+
 	//output objects - goodMuonPairPreSel
 	bool goodMuonPairPreSel = true;
 	outTree->Branch("goodMuonPairPreSel",&goodMuonPairPreSel);
@@ -295,6 +299,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 	auto totalEvts = dataTree->GetEntries();
 	// auto printEvery = 100000;
 	auto printEvery = 10000;
+	// auto printEvery = 1;
 	if (!isMC) printEvery = 1000000;
 	cout << "\nN. Entries (" << outFileAppend <<  "): " << totalEvts << endl;
 	cout << "\nPrinting every: " << printEvery << " events" << endl;
@@ -407,6 +412,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 				// cout << "(genMuPlus+genMuMinus+genPhoton).M(): " << (genMuPlus+genMuMinus+genPhoton).M() << endl;
 				if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) continue;
 				// if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) cout << "Menor que 50 GeV!" << endl;
+				// if ((genMuPlus+genMuMinus+genPhoton).M() > 50.) cout << "Maior que 50 GeV!" << endl;
 			}			
 
 			// ZToMuMuGamma - Background
@@ -432,8 +438,9 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 								// cout << "oi!" << endl;
 							}
 						}
-					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 23) {
-						// cout << "Photon!" << endl;
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart] == 23) ) {
+					// } else if ((mcPID[iPart]) == 22 ) {
+						// cout << "Photon: " << mcMomPID[iPart] << endl;
 						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
 						genPhoton.charge = 0;
 						genPhoton.partIndex = iPart;
@@ -582,15 +589,16 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 			unique_ptr<std::map<int, double>> rocCorSF(new std::map<int, double>());
 			(*rocCorSF)[translRocCor("default")] = 1.0;
-			(*rocCorSF)[translRocCor("statRocCorError_UP")] = 0.0;
-			(*rocCorSF)[translRocCor("statRocCorError_DOWN")] = 0.0;
-			(*rocCorSF)[translRocCor("refRocCorError_UP")] = 0.0;
-			(*rocCorSF)[translRocCor("refRocCorError_DOWN")] = 0.0;
-			(*rocCorSF)[translRocCor("profMassRocCorError_UP")] = 0.0;
-			(*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = 0.0;
-			(*rocCorSF)[translRocCor("rfitMassRocCorError_UP")] = 0.0;
-			(*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = 0.0;
-
+			// (*rocCorSF)[translRocCor("statRocCorError_UP")] = 0.0;
+			// (*rocCorSF)[translRocCor("statRocCorError_DOWN")] = 0.0;
+			// (*rocCorSF)[translRocCor("refRocCorError_UP")] = 0.0;
+			// (*rocCorSF)[translRocCor("refRocCorError_DOWN")] = 0.0;
+			// (*rocCorSF)[translRocCor("profMassRocCorError_UP")] = 0.0;
+			// (*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = 0.0;
+			// (*rocCorSF)[translRocCor("fitMassRocCorError_UP")] = 0.0;
+			// (*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = 0.0;
+			(*rocCorSF)[translRocCor("RocCorError_UP")] = 0.0;
+			(*rocCorSF)[translRocCor("RocCorError_DOWN")] = 0.0;
 
 			////////////////////////////////////////////////////////////////////////////////////////
 			// Get the many scales/Smear for MC/DATA muons
@@ -629,19 +637,25 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 				// update rocCorSF map
 				(*rocCorSF)[translRocCor("default")] = rocCorDefault;
-				(*rocCorSF)[translRocCor("statRocCorError_UP")] = statRocCorError;
-				(*rocCorSF)[translRocCor("statRocCorError_DOWN")] = (-1.0)*statRocCorError;
-				(*rocCorSF)[translRocCor("refRocCorError_UP")] = refRocCorError;
-				(*rocCorSF)[translRocCor("refRocCorError_DOWN")] = (-1.0)*refRocCorError;
-				(*rocCorSF)[translRocCor("profMassRocCorError_UP")] = profMassRocCorError;
-				(*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = (-1.0)*profMassRocCorError;
-				(*rocCorSF)[translRocCor("rfitMassRocCorError_UP")] = fitMassRocCorError;
-				(*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = (-1.0)*fitMassRocCorError;
+				// (*rocCorSF)[translRocCor("statRocCorError_UP")] = statRocCorError;
+				// (*rocCorSF)[translRocCor("statRocCorError_DOWN")] = (-1.0)*statRocCorError;
+				// (*rocCorSF)[translRocCor("refRocCorError_UP")] = refRocCorError;
+				// (*rocCorSF)[translRocCor("refRocCorError_DOWN")] = (-1.0)*refRocCorError;
+				// (*rocCorSF)[translRocCor("profMassRocCorError_UP")] = profMassRocCorError;
+				// (*rocCorSF)[translRocCor("profMassRocCorError_DOWN")] = (-1.0)*profMassRocCorError;
+				// (*rocCorSF)[translRocCor("fitMassRocCorError_UP")] = fitMassRocCorError;
+				// (*rocCorSF)[translRocCor("fitMassRocCorError_DOWN")] = (-1.0)*fitMassRocCorError;
+				(*rocCorSF)[translRocCor("RocCorError_UP")] = (sqrt(pow(statRocCorError,2)+pow(refRocCorError,2)+pow(profMassRocCorError,2)+pow(fitMassRocCorError,2)));
+				(*rocCorSF)[translRocCor("RocCorError_DOWN")] = (-1.0)*(sqrt(pow(statRocCorError,2)+pow(refRocCorError,2)+pow(profMassRocCorError,2)+pow(fitMassRocCorError,2)));
+				// if (muPt[iMuon] > 30.) 
+				// 	cout << "---> RocCor uncert: " << (sqrt(pow(statRocCorError,2)+pow(refRocCorError,2)+pow(profMassRocCorError,2)+pow(fitMassRocCorError,2)))/(rocCorDefault)*100. << endl;		
 
 			} else {
 				// update rocCorSF map
 				(*rocCorSF)[translRocCor("default")] = rc.kScaleDT(muCharge[iMuon], muPt[iMuon], muEta[iMuon], muPhi[iMuon], 0, 0);
-			}			
+			}	
+
+			
 			// <END> Get the many scales/Smear for MC/DATA muons
 			////////////////////////////////////////////////////////////////////////////////////////
 			
@@ -655,51 +669,14 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// unique_ptr<vector <anaMuon> > muonCand(new vector<anaMuon>());
 
 			double rocCorError = 0.0;
-			if (shapeSystMask != "default") rocCorError = (*rocCorSF)[translRocCor(shapeSystMask)];
-			// default: 0
-			muonsCandCollection.push_back(anaMuon(muPt[iMuon]*((*rocCorSF)[translRocCor("default")]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
+			// if (shapeSystMask == "statRocCorError_UP" ||  shapeSystMask == "statRocCorError_DOWN" ||  shapeSystMask == "refRocCorError_UP" ||  shapeSystMask == "refRocCorError_DOWN" ||  shapeSystMask == "profMassRocCorError_UP" ||  shapeSystMask == "profMassRocCorError_DOWN" ||  shapeSystMask == "fitMassRocCorError_UP" ||  shapeSystMask == "fitMassRocCorError_DOWN") {
+			if (shapeSystMask == "RocCorError_UP" ||  shapeSystMask == "RocCorError_UP") {
+				rocCorError = (*rocCorSF)[translRocCor(shapeSystMask)];
+			}
 
-			// // statRocCorError_UP: 1
-			// rocCorError = (*rocCorSF)["statRocCorError"];
-			// muonsCandCollection[1].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			// // statRocCorError_DOWN: 2
-			// rocCorError = -(*rocCorSF)["statRocCorError"];
-			// muonsCandCollection[2].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			
-			// // refRocCorError_UP: 3
-			// rocCorError = (*rocCorSF)["refRocCorError"];
-			// muonsCandCollection[3].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			// // refRocCorError_DOWN: 4
-			// rocCorError = -(*rocCorSF)["refRocCorError"];
-			// muonsCandCollection[4].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			
-			// // profMassRocCorError_UP: 5
-			// rocCorError = (*rocCorSF)["profMassRocCorError"];
-			// muonsCandCollection[5].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			// // profMassRocCorError_DOWN: 6
-			// rocCorError = -(*rocCorSF)["profMassRocCorError"];
-			// muonsCandCollection[6].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			
-			// // rfitMassRocCorError_UP: 7
-			// rocCorError = (*rocCorSF)["fitMassRocCorError"];
-			// muonsCandCollection[7].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-			// // fitMassRocCorError_DOWN: 8
-			// rocCorError = -(*rocCorSF)["fitMassRocCorError"];
-			// muonsCandCollection[8].push_back(anaMuon(muPt[iMuon]*((*rocCorSF)["default"]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
-
-			// // push the muon candidate into the muons collection
-			// muonsCandCollection.push_back(*muonCand);
+			muonsCandCollection.push_back(anaMuon(muPt[iMuon], muPt[iMuon]*((*rocCorSF)[translRocCor("default")]+rocCorError), muEta[iMuon], muPhi[iMuon], muCharge[iMuon], iMuon));
 		}
 		sort(muonsCandCollection.begin(), muonsCandCollection.end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[1].begin(), muonsCandCollection[1].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[2].begin(), muonsCandCollection[2].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[3].begin(), muonsCandCollection[3].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[4].begin(), muonsCandCollection[4].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[5].begin(), muonsCandCollection[5].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[6].begin(), muonsCandCollection[6].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[7].begin(), muonsCandCollection[7].end(),greater<anaMuon>()); // re-sort muon collection
-		// sort(muonsCandCollection[8].begin(), muonsCandCollection[8].end(),greater<anaMuon>()); // re-sort muon collection
-
 		
 		////////////////////////////////////////////////////////////////////
 		// muons pre-selection
@@ -723,46 +700,95 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 		//////////////////////////////////////////////////////////////////////
 		// muons ID
+		// https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsZZ4l2017#Muons
 		for (unsigned int iCandMuon = 0; iCandMuon < muonsCandCollection.size(); iCandMuon++) { //loop over muons
-			auto muIndex = muonsCandCollection[iCandMuon].muonIndex; //get global muon index
+			auto muIndex = muonsCandCollection[iCandMuon].muonIndex; //get event muon index
+
+			// global muon: muType[] = 1 ; ((muType[] >> 1) &1) = 1 -> global muon
+			// tracker muon: muType[] = 2 ; ((muType[] >> 2) &1) = 1 -> tracker muon
+			// PF muon: muType[] = 5 ; ((muType[] >> 5) &1) = 1 -> PF muon
+
 
 			// loose ID
-			auto isMuonLooseID = true; //candidate muon loose id
-			isMuonLooseID *= (muonsCandCollection[iCandMuon].Pt() > 4.0) ? true : false; // pT > 4.0 GeV
-		 	isMuonLooseID *= (fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) ? true : false;  //abs(eta) < 2.4
-		 	isMuonLooseID *= (fabs(muD0[muIndex]) < 0.5) ? true : false;  //dxy < 2.4
-		 	isMuonLooseID *= (fabs(muDz[muIndex]) < 1.0) ? true : false;  //dz < 1.0
-		 	isMuonLooseID *= (muBestTrkType[muIndex] != 2) ? true : false;  //muBestTrkType != 2
-		 	isMuonLooseID *= (muMatches[muIndex] > 0 ) ? true : false;
-		 	isMuonLooseID *= ( (muType[muIndex] & GlobalMuon) || (muType[muIndex] & TrackerMuon) ) ? true : false;
-		 	isMuonLooseID *= (muSIP[muIndex]) < 4 ? true : false;  //muon |SIP| < 4
+			auto isMuonLooseID = false; //candidate muon loose id
+			// if ((muType[muIndex] & GlobalMuon) || ( (muType[muIndex] & TrackerMuon) && (muMatches[muIndex] > 0) )) {
+			if ( (((muType[muIndex] >> 1) & 1) == 1) || ( (((muType[muIndex] >> 2) & 1) == 1) && (muMatches[muIndex] > 0) )) {
+				if (muBestTrkType[muIndex] != 2) {
+					if ((fabs(muD0[muIndex]) < 0.5) && (fabs(muDz[muIndex]) < 1.0)) {
+						if (muSIP[muIndex] < 4) {
+							if ((muonsCandCollection[iCandMuon].Pt() > 4.0) && (fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4)) {
+								isMuonLooseID = true;
+							}
+						}
+					}
+				}
+			}
+			// isMuonLooseID *= (muonsCandCollection[iCandMuon].Pt() > 4.0) ? true : false; // pT > 4.0 GeV
+		 // 	isMuonLooseID *= (fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) ? true : false;  //abs(eta) < 2.4
+		 	// isMuonLooseID *= (fabs(muD0[muIndex]) < 0.5) ? true : false;  //dxy < 2.4
+		 	// isMuonLooseID *= (fabs(muDz[muIndex]) < 1.0) ? true : false;  //dz < 1.0
+		 	// isMuonLooseID *= (muBestTrkType[muIndex] != 2) ? true : false;  //muBestTrkType != 2
+		 	// isMuonLooseID *= (muMatches[muIndex] > 0 ) ? true : false;
+		 	// isMuonLooseID *= ( (muType[muIndex] & GlobalMuon) || (muType[muIndex] & TrackerMuon) ) ? true : false;
+		 	// isMuonLooseID *= (muSIP[muIndex]) < 4 ? true : false;  //muon |SIP| < 4
 		 	muonsCandCollection[iCandMuon].muonIsLooseID = isMuonLooseID; // set loose ID flag
 
 		 	//tightID
-			auto isMuonTightID = isMuonLooseID; //candidate muon tight id
-			if (muonsCandCollection[iCandMuon].Pt() < 200.0) { //pT below 200 GeV
-				isMuonTightID *= ( (muType[muIndex] & PFMuon) ) ? true : false; //is PF muon
-			} else {
-				auto isTrackerHighPtID = true; //candidate muon tight id
-				isTrackerHighPtID *= (muMatches[muIndex] >= 2) ? true : false;  // number of matches in the muon stations > 2
-				isTrackerHighPtID *= (muBestTrkPtError[muIndex]/muBestTrkPt[muIndex]  < 0.3) ? true : false;  // good pT measurement	
-				isTrackerHighPtID *= (fabs(muD0[muIndex]) < 0.2) ? true : false;  //dxy < 0.2
-	 			isTrackerHighPtID *= (fabs(muDz[muIndex]) < 0.5) ? true : false;  //dz < 0.5	
-	 			isTrackerHighPtID *= (muPixelHits[muIndex] >= 1) ? true : false;  // at least one pixel hit	
-	 			isTrackerHighPtID *= (muTrkLayers[muIndex] >= 6) ? true : false;  // at least 6 tracker layer hits
+		 	auto isMuonTightID = false;
+		 	if (muonsCandCollection[iCandMuon].muonIsLooseID) {
+		 		if (muPt[iCandMuon] < 200.0) {
+		 			// if (muType[muIndex] & PFMuon) {
+		 			if (((muType[muIndex] >> 5) & 1) == 1) {
+		 				isMuonTightID = true;
+		 			}
+		 		} else {
+		 			auto isTrackerHighPtID = false;
+		 			// if (muType[muIndex] & TrackerMuon) {
+		 			if (((muType[muIndex] >> 2) & 1) == 1) {
+		 				if (muMatches[muIndex] >= 2) {
+		 					if (muBestTrkPtError[muIndex]/muBestTrkPt[muIndex]  < 0.3) {
+		 						if ((fabs(muD0[muIndex]) < 0.2) && (fabs(muDz[muIndex]) < 0.5)) {
+		 							if ((muPixelHits[muIndex] >= 1) && (muTrkLayers[muIndex] >= 6)) {
+		 								isTrackerHighPtID = true;
+		 							}
+		 						}
+		 					}
+		 				}
+		 			}
+		 			// if ( (muType[muIndex] & PFMuon) || isTrackerHighPtID) {
+		 			if ( (((muType[muIndex] >> 5) & 1) == 1) || isTrackerHighPtID) {
+		 				isMuonTightID = true;
+		 			}
+		 		}
+		 	}
 
-				isMuonTightID *= ( (muType[muIndex] & PFMuon) || isTrackerHighPtID ) ? true : false; //is PF muon OR tracker high pT ID
-			}
+
+			// auto isMuonTightID = isMuonLooseID; //candidate muon tight id
+			// if (muonsCandCollection[iCandMuon].Pt() < 200.0) { //pT below 200 GeV
+			// 	isMuonTightID *= ( (muType[muIndex] & PFMuon) ) ? true : false; //is PF muon
+			// } else {
+			// 	auto isTrackerHighPtID = true; //candidate muon tight id
+			// 	isTrackerHighPtID *= (muMatches[muIndex] >= 2) ? true : false;  // number of matches in the muon stations > 2
+			// 	isTrackerHighPtID *= (muBestTrkPtError[muIndex]/muBestTrkPt[muIndex]  < 0.3) ? true : false;  // good pT measurement	
+			// 	isTrackerHighPtID *= (fabs(muD0[muIndex]) < 0.2) ? true : false;  //dxy < 0.2
+	 	// 		isTrackerHighPtID *= (fabs(muDz[muIndex]) < 0.5) ? true : false;  //dz < 0.5	
+	 	// 		isTrackerHighPtID *= (muPixelHits[muIndex] >= 1) ? true : false;  // at least one pixel hit	
+	 	// 		isTrackerHighPtID *= (muTrkLayers[muIndex] >= 6) ? true : false;  // at least 6 tracker layer hits
+
+			// 	isMuonTightID *= ( (muType[muIndex] & PFMuon) || isTrackerHighPtID ) ? true : false; //is PF muon OR tracker high pT ID
+			// }
 			muonsCandCollection[iCandMuon].muonIsTightID = isMuonTightID; // set tight ID flag
+			// muonsCandCollection[iCandMuon].muonIsTightID = true; // set tight ID flag
 
-			// Relative PF Iso
-			auto isMuonISO = true;
-			auto relPFIsoLeadingMuon =(muPFChIso03[muIndex] + max((muPFNeuIso03[muIndex]+muPFPhoIso03[muIndex]-0.5*muPFPUIso03[muIndex]),0.0))/(muonsCandCollection[iCandMuon].Pt());
-			isMuonISO *= (relPFIsoLeadingMuon < 0.35) ? true : false;  //Relative PF Iso < 0.35
-			muonsCandCollection[iCandMuon].muonIsISO = isMuonISO; 
+			// // Relative PF Iso
+			// auto isMuonISO = true;
+			// auto relPFIsoLeadingMuon =(muPFChIso03[muIndex] + max((muPFNeuIso03[muIndex]+muPFPhoIso03[muIndex]-0.5*muPFPUIso03[muIndex]),0.0))/(muPt[iCandMuon]);
+			// isMuonISO *= (relPFIsoLeadingMuon < 0.35) ? true : false;  //Relative PF Iso < 0.35
+			// muonsCandCollection[iCandMuon].muonIsISO = isMuonISO; 
 
 			// clean muon collection 
-			if (!(muonsCandCollection[iCandMuon].muonIsTightID) || !(fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) || !(muonsCandCollection[iCandMuon].Pt() > 4.0)) {
+			// if (!(muonsCandCollection[iCandMuon].muonIsLooseID) || !(muonsCandCollection[iCandMuon].muonIsTightID) || !(fabs(muonsCandCollection[iCandMuon].Eta()) < 2.4) || !(muonsCandCollection[iCandMuon].Pt() > 4.0)) {
+			if ( !(muonsCandCollection[iCandMuon].muonIsTightID) ) {
 				muonsCandCollection.erase(muonsCandCollection.begin() + iCandMuon);
 			}
 		}
@@ -773,34 +799,76 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		int indexLeadCand = -99;
 		int indexTrailCand = -99;
 		goodMuonPairSel = true; // muon pair pre-selection
+		vector< pair < int, int > > dimuonCandCollection = {};
+		goodMuonPairId = false;
 		if (muonsCandCollection.size() >= 2) {
-			for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {
-				if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 20.0) {
-				// if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 10.0) {
-					indexLeadCand = iLeadMuon;
-					break;
-				}
-				// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].muonIsISO) ? true : false; // leading muon is ISO
-				// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
-				// goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
-				// for (unsigned int iTrailMuon == 1; muonsCandCollection.size(); iTrailMuon++) {
-				// 	if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[0].charge) < 1.0){
-				// 	}
-				// }
-			}
-			if (indexLeadCand != -99) {
-				for (unsigned int iTrailMuon = indexLeadCand+1; iTrailMuon < muonsCandCollection.size(); iTrailMuon++) {
-					if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[indexLeadCand].charge) < 0){ //oposite charge
-						indexTrailCand = iTrailMuon;
-						break;
+			goodMuonPairId = true;
+			// make dimuon pair
+			for (unsigned int iLeadMuon = 0; iLeadMuon < (muonsCandCollection.size() - 1); iLeadMuon++) {
+				for (unsigned int iTrailMuon = iLeadMuon+1; iTrailMuon < muonsCandCollection.size(); iTrailMuon++) {
+					if ((muonsCandCollection[iLeadMuon].Pt() >= 20.) && (muonsCandCollection[iTrailMuon].Pt() >= 4.)) { //pT cut
+						if ((fabs(muonsCandCollection[iLeadMuon].Eta()) < 2.4) && (fabs(muonsCandCollection[iTrailMuon].Eta()) < 2.4)) { // eta cut
+							if ((muonsCandCollection[iLeadMuon].charge * muonsCandCollection[iTrailMuon].charge) < 0.0) { // opposite charges
+								dimuonCandCollection.push_back({iLeadMuon, iTrailMuon});
+							}
+						}
 					}
 				}
 			}
-			// goodMuonPairSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
-			// goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
+			// look for dimuon pairs
+			// if (dimuonCandCollection.size() > 1) cout << "----> dimuonCandCollection.size(): " << dimuonCandCollection.size() << endl;
+			if (dimuonCandCollection.size() > 0) {
+				for (unsigned int iDimuon = 0; iDimuon < dimuonCandCollection.size(); iDimuon++) {
+					auto isLeadIso = false;
+					auto isTrailIso = false;
+					auto relPFIsoMuon = 99999.9;
+					if (deltaR(muonsCandCollection[dimuonCandCollection[iDimuon].first].Eta(), muonsCandCollection[dimuonCandCollection[iDimuon].first].Phi(), muonsCandCollection[dimuonCandCollection[iDimuon].second].Eta(), muonsCandCollection[dimuonCandCollection[iDimuon].second].Phi()) > 0.3) {
+						// lead muon
+						relPFIsoMuon = (muPFChIso03[dimuonCandCollection[iDimuon].first] + max((muPFNeuIso03[dimuonCandCollection[iDimuon].first]+muPFPhoIso03[dimuonCandCollection[iDimuon].first]-0.5*muPFPUIso03[dimuonCandCollection[iDimuon].first]),0.0))/(muPt[dimuonCandCollection[iDimuon].first]);
+						isLeadIso = (relPFIsoMuon < 0.35) ? true : false;  //Relative PF Iso < 0.35
+						muonsCandCollection[dimuonCandCollection[iDimuon].first].muonIsISO = isLeadIso; 
+						// cout << "isLeadIso: " << isLeadIso << endl;
+
+						// trail muon
+						relPFIsoMuon = (muPFChIso03[dimuonCandCollection[iDimuon].second] + max((muPFNeuIso03[dimuonCandCollection[iDimuon].second]+muPFPhoIso03[dimuonCandCollection[iDimuon].second]-0.5*muPFPUIso03[dimuonCandCollection[iDimuon].second]),0.0))/(muPt[dimuonCandCollection[iDimuon].second]);
+						isTrailIso = (relPFIsoMuon < 0.35) ? true : false;  //Relative PF Iso < 0.35
+						// muonsCandCollection[dimuonCandCollection[iDimuon].second].muonIsISO = isTrailIso; 
+						muonsCandCollection[dimuonCandCollection[iDimuon].second].muonIsISO = true; 
+						// cout << "isTrailIso: " << isTrailIso << endl;
+					} else {
+						// lead muon
+						// relPFIsoMuon = (muPFChIso03[dimuonCandCollection[iDimuon].first] + max((muPFNeuIso03[dimuonCandCollection[iDimuon].first]+muPFPhoIso03[dimuonCandCollection[iDimuon].first]-0.5*muPFPUIso03[dimuonCandCollection[iDimuon].first]),0.0) - muPt[dimuonCandCollection[iDimuon].second])/(muPt[dimuonCandCollection[iDimuon].first]);
+						relPFIsoMuon = (muPFChIso03[dimuonCandCollection[iDimuon].first] + max((muPFNeuIso03[dimuonCandCollection[iDimuon].first]+muPFPhoIso03[dimuonCandCollection[iDimuon].first]-0.5*muPFPUIso03[dimuonCandCollection[iDimuon].first]),0.0))/(muPt[dimuonCandCollection[iDimuon].first]);
+						isLeadIso *= (relPFIsoMuon < 0.35) ? true : false;  //Relative PF Iso < 0.35
+						muonsCandCollection[dimuonCandCollection[iDimuon].first].muonIsISO = isLeadIso; 
+
+						// trail muon
+						muonsCandCollection[dimuonCandCollection[iDimuon].second].muonIsISO = true; 
+					}
+				}
+				int goodPairIndex = -99;
+				double maxPt = 0.0;
+				for (unsigned int iDimuon = 0; iDimuon < dimuonCandCollection.size(); iDimuon++) {
+					// cout << "Foi!" << endl;
+					if ((muonsCandCollection[dimuonCandCollection[iDimuon].first].muonIsISO == true) && (muonsCandCollection[dimuonCandCollection[iDimuon].second].muonIsISO == true)) {
+						// cout << "Vai!" << endl;
+						if ((muonsCandCollection[dimuonCandCollection[iDimuon].first]+muonsCandCollection[dimuonCandCollection[iDimuon].second]).Pt() > maxPt) {
+							goodPairIndex = iDimuon;
+							maxPt = (muonsCandCollection[dimuonCandCollection[iDimuon].first]+muonsCandCollection[dimuonCandCollection[iDimuon].second]).Pt();
+							// if (dimuonCandCollection.size() > 1) cout << "---> maxPt: " << maxPt << endl;
+						}
+					}
+				}
+				if (goodPairIndex != -99) {
+					indexLeadCand = dimuonCandCollection[goodPairIndex].first;
+					indexTrailCand = dimuonCandCollection[goodPairIndex].second;
+				}
+			}
+
 		} else {
 			goodMuonPairSel = false;
 		}
+
 		if (indexLeadCand != -99 && indexTrailCand != -99) {
 			goodMuonPairSel = true;
 			leadingMuon = muonsCandCollection[indexLeadCand];
@@ -809,26 +877,78 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			goodMuonPairSel = false;
 		}
 
+		// if (muonsCandCollection.size() >= 2) {
+		// 	for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {
+		// 		if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() >= 20.0) {
+		// 		// if (muonsCandCollection[iLeadMuon].muonIsISO && muonsCandCollection[iLeadMuon].Pt() > 10.0) {
+		// 			indexLeadCand = iLeadMuon;
+		// 			break;
+		// 		}
+		// 		// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].muonIsISO) ? true : false; // leading muon is ISO
+		// 		// goodMuonPairSel *= (muonsCandCollection[iLeadMuon].Pt() > 20.) ? true : false; // leading muon pT > 20.0 GeV
+		// 		// goodMuonPairSel *= (fabs(muonsCandCollection[0].Eta()) < 2.4) ? true : false; // leading muon abs(eta) < 2.4 
+		// 		// for (unsigned int iTrailMuon == 1; muonsCandCollection.size(); iTrailMuon++) {
+		// 		// 	if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[0].charge) < 1.0){
+		// 		// 	}
+		// 		// }
+		// 	}
+		// 	if (indexLeadCand != -99) {
+		// 		for (unsigned int iTrailMuon = indexLeadCand+1; iTrailMuon < muonsCandCollection.size(); iTrailMuon++) {
+		// 			if ((muonsCandCollection[iTrailMuon].charge * muonsCandCollection[indexLeadCand].charge) < 0){ //oposite charge
+		// 				indexTrailCand = iTrailMuon;
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// 	// goodMuonPairSel *= (muonsCandCollection[1].Pt() > 4.) ? true : false; // trailing muon pT > 4.0 GeV
+		// 	// goodMuonPairSel *= (fabs(muonsCandCollection[1].Eta()) < 2.4) ? true : false; // trailing muon abs(eta) < 2.4 
+		// } else {
+		// 	goodMuonPairSel = false;
+		// }
+
+		// if (indexLeadCand != -99 && indexTrailCand != -99) {
+		// 	goodMuonPairSel = true;
+		// 	leadingMuon = muonsCandCollection[indexLeadCand];
+		// 	trailingMuon = muonsCandCollection[indexTrailCand];
+		// } else {
+		// 	goodMuonPairSel = false;
+		// }
+
 
 		////////////////////////////////////////////////////////////////////
-		// photon analysis  
+		// photon selection  
 		vector< anaPhoton > photonsCandCollection;
 		double photonCalibEnergy = 0.0;
+		TRandom3 * rgen_ = new TRandom3(0);
 		for (int iPhoton = 0; iPhoton < *nPho; iPhoton++) { //loop over muons
 			// apply the calibrations save photon candidate
-			if (shapeSystMask == "phoScale_stat_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_stat_up[iPhoton];
-			else if (shapeSystMask == "phoScale_stat_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_stat_dn[iPhoton];
-			else if (shapeSystMask == "phoScale_syst_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_syst_up[iPhoton];
-			else if (shapeSystMask == "phoScale_syst_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_syst_dn[iPhoton];
-			else if (shapeSystMask == "phoScale_gain_UP") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_gain_up[iPhoton];
-			else if (shapeSystMask == "phoScale_gain_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] * phoScale_gain_dn[iPhoton];
-			else if (shapeSystMask == "phoResol_rho_UP") photonCalibEnergy =  phoCalibEt[iPhoton] + phoResol_rho_up[iPhoton];
-			else if (shapeSystMask == "phoResol_rho_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] - phoResol_rho_dn[iPhoton];
-			else if (shapeSystMask == "phoResol_phi_UP") photonCalibEnergy =  phoCalibEt[iPhoton] + phoResol_phi_up[iPhoton];
-			else if (shapeSystMask == "phoResol_phi_DOWN") photonCalibEnergy =  phoCalibEt[iPhoton] - phoResol_phi_dn[iPhoton];
-			else photonCalibEnergy =  phoCalibEt[iPhoton];
+			// https://twiki.cern.ch/twiki/bin/viewauth/CMS/EGMSmearer
+			// https://twiki.cern.ch/twiki/bin/viewauth/CMS/Egamma2017DataRecommendations#Energy_Scale_and_Smearing_System
+			// https://github.com/cmkuo/ggAnalysis/blob/master/ggNtuplizer/plugins/ggNtuplizer_photons.cc
+			if (shapeSystMask == "phoScale_stat_UP") photonCalibEnergy =  phoEt[iPhoton] * phoScale_stat_up[iPhoton];
+			else if (shapeSystMask == "phoScale_stat_DOWN") photonCalibEnergy =  phoEt[iPhoton] * phoScale_stat_dn[iPhoton];
+			
+			else if (shapeSystMask == "phoScale_syst_UP") photonCalibEnergy =  phoEt[iPhoton] * phoScale_syst_up[iPhoton];
+			else if (shapeSystMask == "phoScale_syst_DOWN") photonCalibEnergy =  phoEt[iPhoton] * phoScale_syst_dn[iPhoton];
+			
+			else if (shapeSystMask == "phoScale_gain_UP") photonCalibEnergy =  phoEt[iPhoton] * phoScale_gain_up[iPhoton];
+			else if (shapeSystMask == "phoScale_gain_DOWN") photonCalibEnergy =  phoEt[iPhoton] * phoScale_gain_dn[iPhoton];
+			
+			else if (shapeSystMask == "phoResol_rho_UP") photonCalibEnergy =  phoEt[iPhoton]*(rgen_->Gaus(1, phoResol_rho_up[iPhoton]));
+			else if (shapeSystMask == "phoResol_rho_DOWN") photonCalibEnergy =  phoEt[iPhoton]*(rgen_->Gaus(1, phoResol_rho_dn[iPhoton]));
+			
+			else if (shapeSystMask == "phoResol_phi_UP") photonCalibEnergy =  phoEt[iPhoton]*(rgen_->Gaus(1, phoResol_phi_up[iPhoton]));
+			else if (shapeSystMask == "phoResol_phi_DOWN") photonCalibEnergy =  phoEt[iPhoton]*(rgen_->Gaus(1, phoResol_phi_dn[iPhoton]));
+			
+			// else photonCalibEnergy =  phoCalibEt[iPhoton];
+			else photonCalibEnergy =  phoEt[iPhoton];
 
-			unique_ptr<anaPhoton> photonCand(new anaPhoton(photonCalibEnergy, phoEta[iPhoton], phoPhi[iPhoton], iPhoton));
+			// cout << "#################################" << endl;
+			// cout << "shapeSystMask: " << shapeSystMask << endl;
+			// cout << "photonCalibEnergy: " << photonCalibEnergy << endl;
+
+
+			unique_ptr<anaPhoton> photonCand(new anaPhoton(phoEt[iPhoton], photonCalibEnergy, phoEta[iPhoton], phoPhi[iPhoton], iPhoton));
 			photonsCandCollection.push_back(*photonCand);
 		}
 		sort(photonsCandCollection.begin(), photonsCandCollection.end(),greater<anaPhoton>()); // re-sort photon collection
@@ -875,7 +995,18 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 		// auto goodZ = ( (recoZ.M() > 7) && (recoZ.M() < 12.0) ) ? true : false;
 
 
+		// if (goodTriggerEvt && goodMuonPairSel && goodPhotonSel) {
+		// 	TLorentzVector recoZ = leadingPhoton + leadingMuon + trailingMuon;
+		// 	cout << "##########################" << endl;
+		// 	cout << "leadingPhoton: " << leadingPhoton.Pt() << endl;
+		// 	// cout << "muonsCandCollection[indexTrailCand]: " << muonsCandCollection[0].Pt() << endl;
+		// 	cout << "leadingMuon: " << leadingMuon.Pt() << endl;
+		// 	cout << "trailingMuon: " << trailingMuon.Pt() << endl;
+		// 	cout << "recoZ - pT: " << recoZ.Pt() << endl;
+		// 	cout << "recoZ - Mass: " << recoZ.M() << endl;
+		// }
 
+		
 
 
 

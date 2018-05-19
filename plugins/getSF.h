@@ -12,14 +12,14 @@ pair<double,double> getTriggerSF(bool isMC, anaMuon muon, anaPhoton photon, TFil
 	// MC
 	if(fabs(photon.photonSCEta) < 1.4442) {
 		auto sfHisto = (TH2D*)sfFile->Get("hM_Eff_MuPtPhoEt_DataMCRatio_DYJetsToLL_aMCatNLO_PU_nominal_EB"); 	
-		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.Pt(), photon.Pt()));
-		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.Pt(), photon.Pt()));
+		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
 		//clean up memory
 		delete sfHisto;
 	} else {
 		auto sfHisto = (TH2D*)sfFile->Get("hM_Eff_MuPtPhoEt_DataMCRatio_DYJetsToLL_aMCatNLO_PU_nominal_EE"); 	
-		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.Pt(), photon.Pt()));
-		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.Pt(), photon.Pt()));
+		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
 		//clean up memory
 		delete sfHisto;
 	}
@@ -35,9 +35,9 @@ pair<double,double> getMuonIDSF(bool isMC, anaMuon muon, TFile * sfFile) {
 
 	// MC
 	auto sfHistoValue = (TH2D*)sfFile->Get("FINAL"); 	
-	sf.first = sfHistoValue->GetBinContent(sfHistoValue->FindBin(muon.Eta(), muon.Pt()));
+	sf.first = sfHistoValue->GetBinContent(sfHistoValue->FindBin(muon.Eta(), muon.muonUnCorrPt));
 	auto sfHistoError = (TH2D*)sfFile->Get("ERROR"); 
-	sf.second = sfHistoError->GetBinError(sfHistoError->FindBin(muon.Eta(), muon.Pt()));
+	sf.second = sfHistoError->GetBinError(sfHistoError->FindBin(muon.Eta(), muon.muonUnCorrPt));
 	return sf;
 
 	//clean up memory
@@ -53,8 +53,8 @@ pair<double,double> getPhotonMVAIDSF(bool isMC, anaPhoton photon, TFile * sfFile
 
 	// MC
 	auto sfHisto = (TH2D*)sfFile->Get("EGamma_SF2D"); 	
-	sf.first = sfHisto->GetBinContent(sfHisto->FindBin(photon.photonSCEta, photon.Pt()));
-	sf.second = sfHisto->GetBinError(sfHisto->FindBin(photon.photonSCEta, photon.Pt()));
+	sf.first = sfHisto->GetBinContent(sfHisto->FindBin(photon.photonSCEta, photon.photonUnCorrPt));
+	sf.second = sfHisto->GetBinError(sfHisto->FindBin(photon.photonSCEta, photon.photonUnCorrPt));
 	return sf;
 
 	//clean up memory

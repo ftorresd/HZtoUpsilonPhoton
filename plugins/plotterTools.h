@@ -33,6 +33,103 @@ using namespace std;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // PLOTTER FUNCTIONS
 
+void plotter_Pol_extremes(string analysisBranch, TH1D * h_PolNominal, TH1D * h_PolPlus, TH1D * h_PolMinus, string outputFilePath, bool isLogY = false, bool isLogX = false) {
+	setTDRStyle();
+
+	h_PolNominal->Scale(1.0/(h_PolNominal->Integral()));
+	h_PolNominal->SetLineWidth(4);
+	h_PolNominal->SetLineColor(kOrange+8);
+	h_PolNominal->SetLineStyle(1);
+
+	h_PolPlus->Scale(1.0/(h_PolPlus->Integral()));
+	h_PolPlus->SetLineWidth(4);
+	h_PolPlus->SetLineColor(kAzure+7);
+	h_PolPlus->SetLineStyle(1);
+
+	h_PolMinus->Scale(1.0/(h_PolMinus->Integral()));
+	h_PolMinus->SetLineWidth(4);
+	h_PolMinus->SetLineColor(kGray+2);
+	h_PolMinus->SetLineStyle(1);
+
+	auto c1 = new TCanvas("c1","c1",1050*2.0,750*2.0);	
+
+	if (isLogY) c1->SetLogy();
+	if (isLogX) c1->SetLogx();
+
+	if (h_PolNominal->GetMaximum() > h_PolPlus->GetMaximum()) {
+		h_PolNominal->SetMaximum(h_PolNominal->GetMaximum()*1.3);
+		h_PolNominal->Draw("hist");	
+		h_PolNominal->GetXaxis()->SetTitleSize(.08);
+		h_PolNominal->GetYaxis()->SetTitle("a.u.");
+		h_PolNominal->GetXaxis()->SetTitleOffset(1.0);
+		h_PolNominal->GetYaxis()->SetTitleOffset(1.5);
+		h_PolPlus->Draw("hist same");	
+		h_PolMinus->Draw("hist same");	
+	} else {
+		h_PolPlus->SetMaximum(h_PolPlus->GetMaximum()*1.3);
+		h_PolPlus->Draw("hist");	
+		h_PolPlus->GetXaxis()->SetTitleSize(.08);
+		h_PolPlus->GetYaxis()->SetTitle("a.u.");
+		h_PolPlus->GetXaxis()->SetTitleOffset(1.0);
+		h_PolPlus->GetYaxis()->SetTitleOffset(1.5);
+		h_PolNominal->Draw("hist same");	
+		h_PolMinus->Draw("hist same");			
+	}
+	
+
+	// auto legend = new TLegend(0.1,0.7,0.48,0.9, "", "NB");
+	// auto legend = new TLegend(0.67,0.76,0.96,0.93, "Z #rightarrow #Upsilon + #gamma #rightarrow #mu#mu + #gamma");
+	auto legend = new TLegend(0.67,0.76,0.96,0.93);
+	if (analysisBranch == "ZtoJPsi")
+		legend->SetHeader("Z #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "HtoJPsi")
+		legend->SetHeader("H #rightarrow J/#Psi + #gamma Analysis");
+	if (analysisBranch == "ZtoUpsilon")
+		legend->SetHeader("Z #rightarrow #Upsilon + #gamma Analysis");
+	if (analysisBranch == "HtoUpsilon")
+		legend->SetHeader("H #rightarrow #Upsilon + #gamma Analysis");
+	legend->SetBorderSize(0);
+	legend->SetFillStyle(0);
+	legend->AddEntry(h_PolNominal, "Unpolarized", "l");
+	legend->AddEntry(h_PolPlus, "Transverse Polarization", "l");
+	legend->AddEntry(h_PolMinus, "Longitudinal Polarization", "l");
+	legend->Draw();
+
+    auto latex = new TLatex();
+    latex->SetNDC();
+    latex->SetTextFont(61);
+    latex->SetTextSize(0.05);
+    latex->DrawLatex(.17, 0.96, "CMS");
+    latex->SetTextFont(52);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(11);
+    latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->SetTextFont(42);
+    latex->SetTextSize(0.04);
+    latex->SetTextAlign(31);
+    latex->DrawLatex(0.99, 0.96, "35.86 fb^{-1} (13 TeV, 2016) ");
+
+	// h_MC->GetXaxis()->SetTitleSize(.08);
+	// gPad->SetLeftMargin(0.17); 
+	// gPad->SetRightMargin(0.05); 
+	// gPad->SetTopMargin(0.08);
+	gPad->SetBottomMargin(0.2);
+
+	c1->Update();
+
+	system(("mkdir -p  `dirname plotFiles/"+outputFilePath+".png`").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".png").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".pdf").c_str());
+	c1->SaveAs(("plotFiles/"+outputFilePath+".root").c_str());
+
+	delete c1;
+	delete legend;
+	delete latex;
+}
+
+
+
+
 void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string outputFilePath, bool isLogY = false, bool isLogX = false) {
 	setTDRStyle();
 

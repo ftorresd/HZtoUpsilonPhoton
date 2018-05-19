@@ -2,13 +2,15 @@
 
 int translRocCor(string shapeSystMask) {
 	if      (shapeSystMask == "statRocCorError_UP") return 1;
-	else if (shapeSystMask == "statRocCorError_DOWN") return 2;
-	else if (shapeSystMask == "refRocCorError_UP") return 3;
-	else if (shapeSystMask == "refRocCorError_DOWN") return 4;
-	else if (shapeSystMask == "profMassRocCorError_UP") return 5;
-	else if (shapeSystMask == "profMassRocCorError_DOWN") return 6;
-	else if (shapeSystMask == "rfitMassRocCorError_UP") return 7;
-	else if (shapeSystMask == "fitMassRocCorError_DOWN") return 8;
+	// else if (shapeSystMask == "statRocCorError_DOWN") return 2;
+	// else if (shapeSystMask == "refRocCorError_UP") return 3;
+	// else if (shapeSystMask == "refRocCorError_DOWN") return 4;
+	// else if (shapeSystMask == "profMassRocCorError_UP") return 5;
+	// else if (shapeSystMask == "profMassRocCorError_DOWN") return 6;
+	// else if (shapeSystMask == "fitMassRocCorError_UP") return 7;
+	// else if (shapeSystMask == "fitMassRocCorError_DOWN") return 8;
+	else if (shapeSystMask == "RocCorError_UP") return 7;
+	else if (shapeSystMask == "RocCorError_DOWN") return 8;
 	else return 0;
 }
 

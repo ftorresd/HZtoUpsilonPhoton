@@ -14,8 +14,9 @@ class anaMuon: public TLorentzVector {
     bool muonIsLooseID;
     bool muonIsTightID;
     bool muonIsISO;
+    double muonUnCorrPt;
     anaMuon();
-    anaMuon(float, float, float, int, int, float);
+    anaMuon(float, float, float, float, int, int, float);
     void clear();
     bool operator > (const anaMuon& compMuon) const
     {
@@ -33,15 +34,17 @@ anaMuon::anaMuon () {
   muonIsLooseID = false;
   muonIsTightID = false;
   muonIsISO = false;
+  muonUnCorrPt = -99.0;
 }
 
-anaMuon::anaMuon (float pt, float eta, float phi , int c, int i, float mass = muonMass) {
+anaMuon::anaMuon (float unCorrPt, float pt, float eta, float phi , int c, int i, float mass = muonMass) {
   this->SetPtEtaPhiM(pt, eta, phi, mass);
   charge = c;
   muonIndex = i;
   muonIsLooseID = false;
   muonIsTightID = false;
   muonIsISO = false;
+  muonUnCorrPt = unCorrPt;
 }
 
 void anaMuon::clear () {
@@ -51,6 +54,7 @@ void anaMuon::clear () {
   muonIsLooseID = false;
   muonIsTightID = false;
   muonIsISO = false;
+  muonUnCorrPt = -99.0;
 }
 
 
@@ -61,8 +65,9 @@ class anaPhoton: public TLorentzVector {
     int photonIndex;
     float photonR9;
     float photonSCEta;
+    double photonUnCorrPt;
     anaPhoton();
-    anaPhoton(float, float, float, int, float);
+    anaPhoton(float, float, float, float, int, float);
     void clear();
     bool operator > (const anaPhoton& compPhoton) const
     {
@@ -78,13 +83,15 @@ anaPhoton::anaPhoton () {
   photonIndex = -99;
   photonR9 = -99;
   photonSCEta = -99;
+  photonUnCorrPt = -99.0;
 }
 
-anaPhoton::anaPhoton (float pt, float eta, float phi, int i, float mass = 0.0) {
+anaPhoton::anaPhoton (float unCorrPt, float pt, float eta, float phi, int i, float mass = 0.0) {
   this->SetPtEtaPhiM(pt, eta, phi, mass);
   photonIndex = i;
   photonR9 = -99;
   photonSCEta = -99;
+  photonUnCorrPt = unCorrPt;
 }
 
 void anaPhoton::clear () {
@@ -92,6 +99,7 @@ void anaPhoton::clear () {
   photonIndex = -99;
   photonR9 = -99;
   photonSCEta = -99;
+  photonUnCorrPt = -99.0;
 }
 
 

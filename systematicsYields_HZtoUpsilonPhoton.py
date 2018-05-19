@@ -7,7 +7,10 @@ def getSysterror(nominal, up, down):
 	diff_down = down - nominal
 	max_diff = max(abs(diff_down), abs(diff_up))
 	# return float(format(max_diff/nominal*100, '.2f'))
-	return max_diff/nominal*100.0
+	if (nominal != 0):
+		return max_diff/nominal*100.0
+	else:
+		return 0.
 
 
 
@@ -133,7 +136,10 @@ for branch in samplesBranches:
 		countsZZZZZM = json.load(ZZZZZMFile)
 
 		# print branch +" - "+ sample
-
+		# print "---> branch: " + branch
+		# print "---> sample: " + sample
+		# print "countsZZZZZZ: " + str(countsZZZZZZ["hz_mass_cut"])
+		# print "#"*200
 		outputJSON[branch].append({
 			"Analysis Branch": countsZZZZZZ["analysisBranch"]+"Photon",
 			"Analysis Sample": countsZZZZZZ["sample"],
@@ -143,7 +149,7 @@ for branch in samplesBranches:
 			"Muon ID": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZPZZZ["hz_mass_cut"], countsZZMZZZ["hz_mass_cut"]),
 			"Photon ID": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZPZZ["hz_mass_cut"], countsZZZMZZ["hz_mass_cut"]),
 			"Electron Veto": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZZPZ["hz_mass_cut"], countsZZZZMZ["hz_mass_cut"]),
-			"Polarization": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZZZZ["hz_mass_cut"], countsZZZZZZ["hz_mass_cut"]),
+			"Polarization": getSysterror(countsZZZZZZ["hz_mass_cut"], countsZZZZZP["hz_mass_cut"], countsZZZZZM["hz_mass_cut"]),
 			})
 
 		ZZZZZZFile.close()

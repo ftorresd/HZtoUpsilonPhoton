@@ -11,7 +11,7 @@ std::pair<double,double> getMeanVariance(const std::vector<double>& vec) {
     for(size_t i = 0; i < n; ++i) {
         diffs += pow(vec[i]-mean, 2);
     }
-    variance = diffs/((double)(n-1));
+    variance = diffs/((double)(n));
 
     return std::make_pair(mean, variance);
 }

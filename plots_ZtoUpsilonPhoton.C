@@ -68,7 +68,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 	// 					"refRocCorError_DOWN",
 	// 					"profMassRocCorError_UP",
 	// 					"profMassRocCorError_DOWN",
-	// 					"rfitMassRocCorError_UP",
+	// 					"fitMassRocCorError_UP",
 	// 					"fitMassRocCorError_DOWN",
 	// 					"phoScale_stat_UP",
 	// 					"phoScale_stat_DOWN",
@@ -1010,7 +1010,7 @@ void plots_ZtoUpsilonPhoton(vector<string> ntuplesToPlotFilesData, string outHis
 
 
 		cout << "\n\n\nWriting output file: (" << outHistoAppend << " - " << analysisBranch << " - " << selCategory << " - " << systMaskYields << " - " << *itShapeSystMask << ")" << endl;
-		if ( (*itShapeSystMask == "default") && (systMaskYields == "ZZZZZZ") ) outFile->Write();
+		if ( (*itShapeSystMask == "default") && ((systMaskYields == "ZZZZZZ") || (systMaskYields == "ZZZZZP") || (systMaskYields == "ZZZZZM"))) outFile->Write();
 		if ( (systMaskYields == "ZZZZZZ") ) outputTreeFile->Write();
 
 		outFile->Close();

@@ -25,7 +25,7 @@ git push origin 2016Data
 
 Submit LSF jobs:
 ```
-./runHZToUpsilonPhoton_ana_LXBATCH.sh 
+./submitterHZToUpsilonPhoton_ana_LXBATCH.py
 ```
 
 Check job status:
@@ -45,7 +45,7 @@ Colelct results (only when all jobs are OK):
 
 Submit LSF jobs:
 ```
-./runHZToUpsilonPhoton_plots.sh 
+./runHZToUpsilonPhoton_plots.sh lxbatch
 ```
 
 Check job status (only for Data. MC needs to be done manually):

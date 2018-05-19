@@ -15,116 +15,116 @@ fileHeader = '''
 	
 	/*
 	vector<string> ntuplesToPlotFilesData = {
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D.root", 
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2.root",  
-						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3.root"
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D.root", 
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2.root",  
+						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3.root"
 					};
 	*/
 	vector<string> ntuplesToPlotFilesData = {
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B_9.root", 
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_9.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E_9.root",
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G_9.root", 
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C_9.root", 
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F1_9.root", 
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H2_9.root", 
 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_0.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_1.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_2.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_3.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_4.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_5.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_6.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_7.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_8.root", 
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_9.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_0.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_1.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_2.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_3.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_4.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_5.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_6.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_7.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_8.root", 
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D_9.root", 
 					
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_0.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_1.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_2.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_3.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_4.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_5.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_6.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_7.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_8.root",  
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_9.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_0.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_1.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_2.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_3.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_4.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_5.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_6.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_7.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_8.root",  
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F2_9.root",  
 					
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_0.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_1.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_2.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_3.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_4.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_5.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_6.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_7.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_8.root",
-					"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_9.root"
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_0.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_1.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_2.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_3.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_4.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_5.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_6.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_7.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_8.root",
+					"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H3_9.root"
 				};
 
 
@@ -133,14 +133,16 @@ fileHeader = '''
 	vector<string> shapeSystMaskDefault = {"default"};
 	vector<string> shapeSystMask =  {
 	 					"default",
-	 					"statRocCorError_UP",
-	 					"statRocCorError_DOWN",
-	 					"refRocCorError_UP",
-	 					"refRocCorError_DOWN",
-	 					"profMassRocCorError_UP",
-	 					"profMassRocCorError_DOWN",
-	 					"rfitMassRocCorError_UP",
-						"fitMassRocCorError_DOWN",
+	 					//"statRocCorError_UP",
+	 					//"statRocCorError_DOWN",
+	 					//"refRocCorError_UP",
+	 					//"refRocCorError_DOWN",
+	 					//"profMassRocCorError_UP",
+	 					//"profMassRocCorError_DOWN",
+	 					//"fitMassRocCorError_UP",
+						//"fitMassRocCorError_DOWN",
+						"RocCorError_UP",
+						"RocCorError_DOWN",
 						"phoScale_stat_UP",
 	     				"phoScale_stat_DOWN",
 				        "phoScale_syst_UP",
@@ -170,13 +172,13 @@ fileHeader = '''
 # 	// system("rm -fr evtsCountFiles; mkdir evtsCountFiles");
 	
 # 	vector<string> ntuplesToPlotFilesData = {
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016C.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016D.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016E.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016F.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016G.root", 
-# 						"outputFiles/outTree_ZtoUpsilonPhoton_Run2016H.root"
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016B.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016C.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016D.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016E.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016F.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016G.root", 
+# 						"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_Run2016H.root"
 # 					};
 # '''
 
@@ -216,15 +218,15 @@ h_Cat0_MC = '''
 
 	// MC - H
 	while(itShapeSystMask != shapeSystMask.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon1SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon2SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon3SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HToJPsiGamma_"+*itShapeSystMask+".root"}, "HToJPsiGamma", "HtoJPsi", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon1SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon2SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "HToUpsilon3SGamma", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HToJPsiGamma_"+*itShapeSystMask+".root"}, "HToJPsiGamma", "HtoJPsi", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
 		itShapeSystMask++;
 	}
 	while(itShapeSystMaskDefault != shapeSystMaskDefault.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HDalitz_"+*itShapeSystMaskDefault+".root"}, "HDalitz", "HtoJPsi", "Cat0", "ZZZZZZ",  false, false); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_HDalitz_"+*itShapeSystMaskDefault+".root"}, "HDalitz", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HDalitz_"+*itShapeSystMaskDefault+".root"}, "HDalitz", "HtoJPsi", "Cat0", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_HDalitz_"+*itShapeSystMaskDefault+".root"}, "HDalitz", "HtoUpsilon", "Cat0", "ZZZZZZ",  false, false); //MC
 		itShapeSystMaskDefault++;
 	}
 '''
@@ -263,15 +265,15 @@ z_Cat0_MC = '''
 
 	// MC - Z
 	while(itShapeSystMask != shapeSystMask.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ", false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ", false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat0", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
 		itShapeSystMask++;
 	}
 	while(itShapeSystMaskDefault != shapeSystMaskDefault.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, false); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat0", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat0", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat0", "ZZZZZZ",  false, false); //MC
 		itShapeSystMaskDefault++;
 	}
 '''
@@ -311,15 +313,15 @@ z_Cat1_MC = '''
 	plots_ZtoUpsilonPhoton(ntuplesToPlotFilesData, "Data", "ZtoUpsilon", "Cat1"); // Data
 	// MC - Z
 	while(itShapeSystMask != shapeSystMask.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ", false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ", false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat1", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
 		itShapeSystMask++;
 	}
 	while(itShapeSystMaskDefault != shapeSystMaskDefault.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, false); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat1", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat1", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat1", "ZZZZZZ",  false, false); //MC
 		itShapeSystMaskDefault++;
 	}
 '''
@@ -359,15 +361,15 @@ z_Cat2_MC = '''
 
 	// MC - Z
 	while(itShapeSystMask != shapeSystMask.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ", false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ", false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat2", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
 		itShapeSystMask++;
 	}
 	while(itShapeSystMaskDefault != shapeSystMaskDefault.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, false); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat2", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat2", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat2", "ZZZZZZ",  false, false); //MC
 		itShapeSystMaskDefault++;
 	}
 '''
@@ -405,15 +407,15 @@ with open( "run_Plots_Z_Cat3_Data_Upsilon.C", "w") as fileZ_Cat3_Data_Upsilon:
 z_Cat3_MC = '''
 	// Z - Cat3			
 	while(itShapeSystMask != shapeSystMask.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ", false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon1SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon1SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ", false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon2SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon2SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToUpsilon3SGamma_"+*itShapeSystMask+".root"}, "ZToUpsilon3SGamma", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZToJPsiGamma_"+*itShapeSystMask+".root"}, "ZToJPsiGamma", "ZtoJPsi", "Cat3", "ZZZZZZ",  false, true, *itShapeSystMask); //MC
 		itShapeSystMask++;
 	}
 	while(itShapeSystMaskDefault != shapeSystMaskDefault.end()) {
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, false); //MC
-		plots_ZtoUpsilonPhoton({"outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat3", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoUpsilon", "Cat3", "ZZZZZZ",  false, false); //MC
+		plots_ZtoUpsilonPhoton({"/afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton/outputFiles/outTree_ZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_"+*itShapeSystMaskDefault+".root"}, "ZGTo2MuG_MMuMu-2To15", "ZtoJPsi", "Cat3", "ZZZZZZ",  false, false); //MC
 		itShapeSystMaskDefault++;
 	}
 '''

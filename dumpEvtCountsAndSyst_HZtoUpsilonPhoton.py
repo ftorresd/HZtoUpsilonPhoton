@@ -211,6 +211,7 @@ def makeLatexSyst(systStr, HorZ):
 		"MUON-ID" : "Muon ID",
 		"PHOTON-ID" : "Photon ID",
 		"TRIGGER" : "Trigger",
+		"POLARIZATION" : "Polarization",
 		}
 
 	# loop over systs

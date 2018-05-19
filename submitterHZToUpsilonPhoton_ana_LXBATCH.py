@@ -183,14 +183,16 @@ filesMC_MuonEG_fromEOS = [
 
 shapeSystMasks = [
 		"default",
-		"statRocCorError_UP",
-		"statRocCorError_DOWN",
-		"refRocCorError_UP",
-		"refRocCorError_DOWN",
-		"profMassRocCorError_UP",
-		"profMassRocCorError_DOWN",
-		"rfitMassRocCorError_UP",
-		"fitMassRocCorError_DOWN",
+		# "statRocCorError_UP",
+		# "statRocCorError_DOWN",
+		# "refRocCorError_UP",
+		# "refRocCorError_DOWN",
+		# "profMassRocCorError_UP",
+		# "profMassRocCorError_DOWN",
+		# "fitMassRocCorError_UP",
+		# "fitMassRocCorError_DOWN",
+		"RocCorError_UP",
+		"RocCorError_DOWN",
 		"phoScale_stat_UP",
 		"phoScale_stat_DOWN",
 		"phoScale_syst_UP",
@@ -216,12 +218,13 @@ def doMakeMuonsRands(filesList):
 	makeMuonsRands(listVec, filesList[1]);
 
 
-# print "generating Rocherter random numbers... MC"
+print "generating Rocherter random numbers... MC"
 # poolRand = Pool() 
 # # resultsAna = poolRand.map(doMakeMuonsRands, filesMC_MuonEG_fromEOS)
 # poolRand.close() 
 # poolRand.join()
-# map(doMakeMuonsRands, filesMC_MuonEG_fromEOS)
+map(doMakeMuonsRands, filesMC_MuonEG_fromEOS)
+print "\n\n"
 
 
 # print "generating Rocherter random numbers... Data"
