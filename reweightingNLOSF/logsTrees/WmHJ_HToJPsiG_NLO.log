@@ -1,0 +1,79 @@
+####### <BEGIN> WmHJ_HToJPsiG_NLO
+
+
+### Source Files:
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/883950FA-FB44-E811-A2A2-40F2E9C6AD90.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/6E14AB96-EE44-E811-8140-7CD30AD0A636.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/0A6B7A40-A248-E811-B3D0-A4BF0112DE3C.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/10000/94681ACB-4E49-E811-AB07-0242AC1C0503.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/EC0FB560-C944-E811-8152-0CC47AA53D76.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/0C4016D4-C244-E811-BB67-E0071B6C9DD0.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/B0F94EA4-3746-E811-A53F-D4AE52901D6F.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/5E1AB1E6-1A45-E811-946D-008CFAC93E18.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/4CE3CBE8-6D46-E811-8C61-0025905B85EE.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/64FE79CB-A248-E811-AE5C-68CC6EA5BDF2.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/70EDD886-D744-E811-B42D-0025909082B6.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/80B72F26-F844-E811-A21F-002590D60000.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/40000/F8D5A675-C344-E811-9ACF-E0DB55FC1139.root
+
+--> WmHJ_HToJPsiG_NLO: Event 0: run      1, lumi    5, event          708
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 221.870727539, eta: 0.526405036449, eta: -0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 1: run      1, lumi    5, event          709
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 49.9163475037, eta: -3.91962909698, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 2: run      1, lumi    5, event          713
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 34.5484161377, eta: -2.89945149422, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 3: run      1, lumi    5, event          704
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 121.926597595, eta: 0.801241338253, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 4: run      1, lumi    5, event          703
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 31.7544612885, eta: 2.41457653046, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 5: run      1, lumi    5, event          706
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 299.75112915, eta: 0.470199257135, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 6: run      1, lumi    5, event          710
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 246.543197632, eta: -1.84329020977, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 7: run      1, lumi    5, event          705
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 108.071807861, eta: 1.65498101711, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 8: run      1, lumi    5, event          715
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 112.327354431, eta: -0.781779110432, eta: 0.563804984093
+
+--> WmHJ_HToJPsiG_NLO: Event 9: run      1, lumi    5, event          711
+--> WmHJ_HToJPsiG_NLO: The Boson!
+--> WmHJ_HToJPsiG_NLO: Boson -  pt 70.4115371704, eta: 2.56593728065, eta: 0.563804984093
+******************************************************************************
+*Tree    :bosonTree : bosonTree                                              *
+*Entries :       10 : Total =            2376 bytes  File  Size =          0 *
+*        :          : Tree compression factor =   1.00                       *
+******************************************************************************
+*Br    0 :bosonEta  : bosonEta/F                                             *
+*Entries :       10 : Total  Size=        702 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+*Br    1 :bosonPt   : bosonPt/F                                              *
+*Entries :       10 : Total  Size=        696 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+*Br    2 :weight    : weight/F                                               *
+*Entries :       10 : Total  Size=        690 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+####### <END> WmHJ_HToJPsiG_NLO
+
+
+
+

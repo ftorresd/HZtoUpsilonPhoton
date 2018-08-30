@@ -14,7 +14,8 @@ cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src
 echo "copying from AFS..."
 # cp -rv /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton .
-rsync -av /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton . --exclude outputFiles
+# rsync -av /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton . --exclude outputFiles
+rsync -av /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton . --exclude outputFiles
 
 
 echo "cmsenv..."
@@ -65,8 +66,10 @@ root -b -q -l run_Plots_$1.C+
 
 
 echo "copy - BEGIN"
-cp -r outputHistos/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/outputHistos_FromLSF/.
-cp -r evtsCountFiles/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/evtsCountFiles_FromLSF/.
+# cp -r outputHistos/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/outputHistos_FromLSF/.
+cp -r outputHistos/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/outputHistos_FromLSF/.
+# cp -r evtsCountFiles/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/evtsCountFiles_FromLSF/.
+cp -r evtsCountFiles/* /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/evtsCountFiles_FromLSF/.
 echo "copy - END"
 
 # ls /afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/outTree_ZtoUpsilonPhoton_$2_$3.root

@@ -32,3 +32,5 @@ puWeight/*.root
 Plots_*.err
 Plots_*.out
 LSFJobs/
+
+reweightingNLOSF/logsTrees
