@@ -1,0 +1,73 @@
+####### <BEGIN> ZToUpsilon1SG_LO
+
+
+### Source Files:
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/18E2BF65-BD89-E711-B394-0CC47A0AD456.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/B6D3C8C0-C088-E711-A316-E0071B7A9800.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/0849ABC5-9889-E711-B8F9-E0071B6C9DF0.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/3E546233-7588-E711-B4FF-7CD30AC0372C.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/823B5C89-BC89-E711-92DE-6C3BE5B580C8.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/641E65A6-BD89-E711-AB8E-485B3919F0DC.root
+root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ZToUpsilon1SGamma-TuneCUETP8M1_13TeV-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v2/10000/704858AF-BD89-E711-BFEB-90B11C0BCDAD.root
+
+--> ZToUpsilon1SG_LO: Event 0: run      1, lumi  595, event        80526
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 34.0316162109, eta: 1.72469055653, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 1: run      1, lumi  595, event        80525
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 41.3267288208, eta: 1.21525943279, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 2: run      1, lumi  595, event        80521
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 30.5179290771, eta: 3.37184214592, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 3: run      1, lumi  595, event        80524
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 12.3163328171, eta: -3.56946706772, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 4: run      1, lumi  595, event        80527
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 10.7945413589, eta: 2.95332193375, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 5: run      1, lumi  595, event        80537
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 17.957818985, eta: -3.1008234024, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 6: run      1, lumi  595, event        80541
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 5.69909572601, eta: -2.97269821167, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 7: run      1, lumi  595, event        80531
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 50.7780189514, eta: -0.890200972557, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 8: run      1, lumi  595, event        80545
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 42.7287902832, eta: 1.8872692585, eta: 1.0
+
+--> ZToUpsilon1SG_LO: Event 9: run      1, lumi  595, event        80543
+--> ZToUpsilon1SG_LO: The Boson!
+--> ZToUpsilon1SG_LO: Boson -  pt 18.1716270447, eta: 0.981470882893, eta: 1.0
+******************************************************************************
+*Tree    :bosonTree : bosonTree                                              *
+*Entries :       10 : Total =            2376 bytes  File  Size =          0 *
+*        :          : Tree compression factor =   1.00                       *
+******************************************************************************
+*Br    0 :bosonEta  : bosonEta/F                                             *
+*Entries :       10 : Total  Size=        702 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+*Br    1 :bosonPt   : bosonPt/F                                              *
+*Entries :       10 : Total  Size=        696 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+*Br    2 :weight    : weight/F                                               *
+*Entries :       10 : Total  Size=        690 bytes  One basket in memory    *
+*Baskets :        0 : Basket Size=      32000 bytes  Compression=   1.00     *
+*............................................................................*
+####### <END> ZToUpsilon1SG_LO
+
+
+
+

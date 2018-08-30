@@ -14,8 +14,8 @@ echo "cmsrel..."
 cmsrel CMSSW_8_0_26_patch1
 cd CMSSW_8_0_26_patch1/src
 echo "copying from AFS..."
-cp -r /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton .
-
+cp -r /afs/cern.ch/work/f/ftorresd/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/HZtoUpsilonPhoton .
+	
 echo "cmsenv..."
 cmsenv
 echo "scram b..."
@@ -44,11 +44,11 @@ echo "running..."
 # ls
 
 echo "copy - BEGIN"
-cp outputFiles/outTree_ZtoUpsilonPhoton_$2_$3.root /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/.
+cp outputFiles/outTree_ZtoUpsilonPhoton_$2_$3.root /afs/cern.ch/work/f/ftorresd/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/.
 # cp outputFiles_LXBTACH_$2_$3.tar.gz /afs/cern.ch/user/f/ftorresd/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/.
 echo "copy - END"
 
-ls /afs/cern.ch/user/${user:0:1}/$user/workSpace/private/HZUpsilonPhoton2016/CMSSW_8_0_26_patch1/src/outTree_ZtoUpsilonPhoton_$2_$3.root
+ls /afs/cern.ch/work/f/ftorresd/private/HZUpsilonPhoton2016/Fit2D/CMSSW_8_0_26_patch1/src/outTree_ZtoUpsilonPhoton_$2_$3.root
 echo "finishing..."
 echo $1
 echo $2
