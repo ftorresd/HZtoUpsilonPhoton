@@ -12,12 +12,12 @@ samplesBranchesFinalYields = {
 		"ZtoUpsilon_Cat1":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoUpsilon_Cat2":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"ZtoUpsilon_Cat3":["Data", "ZToUpsilon1SGamma", "ZToUpsilon2SGamma", "ZToUpsilon3SGamma", "ZToUpsilonGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoJPsi_Cat0":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoJPsi_Cat1":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoJPsi_Cat2":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
-		"ZtoJPsi_Cat3":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
+		# "ZtoJPsi_Cat0":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
+		# "ZtoJPsi_Cat1":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
+		# "ZtoJPsi_Cat2":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
+		# "ZtoJPsi_Cat3":["Data", "ZToJPsiGamma", "ZGTo2MuG_MMuMu-2To15"],
 		"HtoUpsilon_Cat0":["Data", "HToUpsilon1SGamma", "HToUpsilon2SGamma", "HToUpsilon3SGamma", "HToUpsilonGamma", "HDalitz"],
-		"HtoJPsi_Cat0":["Data", "HToJPsiGamma", "HDalitz"]
+		# "HtoJPsi_Cat0":["Data", "HToJPsiGamma", "HDalitz"]
 		}
 
 outputJSONFinalYields = {
@@ -25,12 +25,12 @@ outputJSONFinalYields = {
 				"ZtoUpsilon_Cat1":[],
 				"ZtoUpsilon_Cat2":[],
 				"ZtoUpsilon_Cat3":[],
-				"ZtoJPsi_Cat0":[],
-				"ZtoJPsi_Cat1":[],
-				"ZtoJPsi_Cat2":[],
-				"ZtoJPsi_Cat3":[],
+				# "ZtoJPsi_Cat0":[],
+				# "ZtoJPsi_Cat1":[],
+				# "ZtoJPsi_Cat2":[],
+				# "ZtoJPsi_Cat3":[],
 				"HtoUpsilon_Cat0":[],
-				"HtoJPsi_Cat0":[]
+				# "HtoJPsi_Cat0":[]
 				}
 
 for branch in samplesBranchesFinalYields:

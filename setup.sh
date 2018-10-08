@@ -8,4 +8,5 @@ mkdir LSFJobs
 mkdir -p data/muonsRands
 mkdir ../outputHistos_FromLSF
 mkdir ../evtsCountFiles_FromLSF
+mkdir ../outputFiles_FromLSF
 # mkdir fits/fitPlotFiles

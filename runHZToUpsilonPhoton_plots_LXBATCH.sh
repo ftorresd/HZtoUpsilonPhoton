@@ -30,10 +30,6 @@ rm -rf  tmpdir/*
 rm -rf evtsCountFiles/*
 rm -rf outputHistos/*
 
-echo "running..."
-rm -rf evtsCountFiles/*
-rm -rf outputHistos/*
-
 rm run_Plots_Dummy.C
 rm run_Plots_H_Cat0_Data_JPsi.C
 rm run_Plots_H_Cat0_Data_Upsilon.C
@@ -56,7 +52,7 @@ rm run_Plots_Z_Cat3_Data_Upsilon.C
 rm run_Plots_Z_Cat3_MC.C
 
 
-
+echo "running..."
 python runZToUpsilonPhoton_plots.py
 
 

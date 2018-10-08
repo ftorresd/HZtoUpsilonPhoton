@@ -123,7 +123,7 @@ samplesData = [
 	"Run2016H3_9",
 	]
 
-samplesMC = [
+samplesMC_OLD = [
 	"ZToUpsilon1SGamma",
 	"ZToUpsilon2SGamma",
 	"ZToUpsilon3SGamma",
@@ -135,6 +135,33 @@ samplesMC = [
 	"HDalitz",
 	"ZGTo2MuG_MMuMu-2To15",
 	]
+
+samplesMC = [
+				"ttH_HToUps3SG_NLO",
+				"ttH_HToUps2SG_NLO",
+				"ttH_HToUps1SG_NLO",
+				"ggH_HToUps3SG_NLO",
+				"ggH_HToUps2SG_NLO",
+				"ggH_HToUps1SG_NLO",
+				"ZToUpsilon3SGamma_NLO",
+				"ZToUpsilon2SGamma_NLO",
+				"ZToUpsilon1SGamma_NLO",
+				"ZH_HToUps3SG_NLO",
+				"ZH_HToUps2SG_NLO",
+				"ZH_HToUps1SG_NLO",
+				"ZGTo2MuG_MMuMu-2To15",
+				"WpH_HToUps3SG_NLO",
+				"WpH_HToUps2SG_NLO",
+				"WpH_HToUps1SG_NLO",
+				"WmH_HToUps3SG_NLO",
+				"WmH_HToUps2SG_NLO",
+				"WmH_HToUps1SG_NLO",
+				"VBFH_HToUps3SG_NLO",
+				"VBFH_HToUps2SG_NLO",
+				"VBFH_HToUps1SG_NLO",
+				"HDalitzNLO",
+				]
+
 
 shapeSystMasks = []
 if (source == "MC"):
@@ -188,8 +215,8 @@ if (arg == "check"):
 							isGood = True
 			except IOError:
 				isGood = False
-			if (os.system("ls -lha ../outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root  > /dev/null 2>&1") == 0):
-				if (os.path.getsize("../outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root") >= 10*1024*1024):
+			if (os.system("ls -lha ../outputFiles_FromLSF/outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root  > /dev/null 2>&1") == 0):
+				if (os.path.getsize("../outputFiles_FromLSF/outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root") >= 10*1024*1024):
 					isGood = True * isGood
 			else:
 				isGood = False 
@@ -209,7 +236,8 @@ if (arg == "merge"):
 	# os.system("rm -rf outputFiles/*  > /dev/null 2>&1")
 	for sample in samplesSource:
 		for shape in shapeSystMasks:
-			os.system("cp ../outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root outputFiles/.")	
+			print "----> Copying: " + "../outputFiles_FromLSF/outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root"
+			os.system("cp ../outputFiles_FromLSF/outTree_ZtoUpsilonPhoton_"+sample+"_"+shape+".root outputFiles/.")	
 	os.system("rm -rf outputFiles/._out*root ")
 	if (source == "MC"):
 		for sample in samplesSource:

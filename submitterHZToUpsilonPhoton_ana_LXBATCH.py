@@ -168,7 +168,7 @@ filesData_MuonEG_fromEOS = [
 	["filesLists/filesFromEOS/Data2016/job_MuEG_Run2016H_PRv3_9.txt", "Run2016H3_9"],
 ]
 
-filesMC_MuonEG_fromEOS = [
+filesMC_MuonEG_fromEOS_OLD = [
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon1SGamma.txt", "ZToUpsilon1SGamma", "puWeight/pu_ZToUpsilon1SGamma.root"],
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon2SGamma.txt", "ZToUpsilon2SGamma", "puWeight/pu_ZToUpsilon2SGamma.root"],
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon3SGamma.txt", "ZToUpsilon3SGamma", "puWeight/pu_ZToUpsilon3SGamma.root"],
@@ -180,6 +180,34 @@ filesMC_MuonEG_fromEOS = [
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/HDalitz.txt", "HDalitz", "puWeight/pu_HDalitz.root"],
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZGTo2MuG_MMuMu-2To15.txt", "ZGTo2MuG_MMuMu-2To15", "puWeight/pu_ZGTo2MuG_MMuMu-2To15.root"],
 	]
+
+filesMC_MuonEG_fromEOS = [
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/HDalitzNLO.txt", "HDalitzNLO", "puWeight/pu_HDalitzNLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZGTo2MuG_MMuMu-2To15.txt", "ZGTo2MuG_MMuMu-2To15", "puWeight/pu_ZGTo2MuG_MMuMu-2To15.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps3SG_NLO.txt", "ttH_HToUps3SG_NLO", "puWeight/pu_ttH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps2SG_NLO.txt", "ttH_HToUps2SG_NLO", "puWeight/pu_ttH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps1SG_NLO.txt", "ttH_HToUps1SG_NLO", "puWeight/pu_ttH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps3SG_NLO.txt", "ggH_HToUps3SG_NLO", "puWeight/pu_ggH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps2SG_NLO.txt", "ggH_HToUps2SG_NLO", "puWeight/pu_ggH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps1SG_NLO.txt", "ggH_HToUps1SG_NLO", "puWeight/pu_ggH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon3SGamma_NLO.txt", "ZToUpsilon3SGamma_NLO", "puWeight/pu_ZToUpsilon3SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon2SGamma_NLO.txt", "ZToUpsilon2SGamma_NLO", "puWeight/pu_ZToUpsilon2SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon1SGamma_NLO.txt", "ZToUpsilon1SGamma_NLO", "puWeight/pu_ZToUpsilon1SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps3SG_NLO.txt", "ZH_HToUps3SG_NLO", "puWeight/pu_ZH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps2SG_NLO.txt", "ZH_HToUps2SG_NLO", "puWeight/pu_ZH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps1SG_NLO.txt", "ZH_HToUps1SG_NLO", "puWeight/pu_ZH_HToUps1SG_NLO.root"],
+						# ["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZGTo2MuG_MMuMu-2To15.txt", "ZGTo2MuG_MMuMu-2To15", "puWeight/pu_ZGTo2MuG_MMuMu-2To15.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps3SG_NLO.txt", "WpH_HToUps3SG_NLO", "puWeight/pu_WpH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps2SG_NLO.txt", "WpH_HToUps2SG_NLO", "puWeight/pu_WpH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps1SG_NLO.txt", "WpH_HToUps1SG_NLO", "puWeight/pu_WpH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps3SG_NLO.txt", "WmH_HToUps3SG_NLO", "puWeight/pu_WmH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps2SG_NLO.txt", "WmH_HToUps2SG_NLO", "puWeight/pu_WmH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps1SG_NLO.txt", "WmH_HToUps1SG_NLO", "puWeight/pu_WmH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps3SG_NLO.txt", "VBFH_HToUps3SG_NLO", "puWeight/pu_VBFH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps2SG_NLO.txt", "VBFH_HToUps2SG_NLO", "puWeight/pu_VBFH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps1SG_NLO.txt", "VBFH_HToUps1SG_NLO", "puWeight/pu_VBFH_HToUps1SG_NLO.root"],
+						# ["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/HDalitzNLO.txt", "HDalitzNLO", "puWeight/pu_HDalitzNLO.root"],
+					]
 
 shapeSystMasks = [
 		"default",
@@ -234,14 +262,19 @@ print "\n\n"
 # poolRand.join()
 # # map(doMakeMuonsRands, filesData_MuonEG_fromEOS)
 
-print "Submiting... Data"
-os.system("rm -rf LSFJobs/LSFJobs_Data*")
-for s in filesData_MuonEG_fromEOS:
-	os.system("bsub -R \"rusage[mem=32800]\" -R \"pool>30000\" -q 8nh -oo LSFJobs_Data_"+s[1]+"_default.out -eo LSFJobs_Data_"+s[1]+"_default.error -J Data_" + s[1] + "_default runHZToUpsilonPhoton_ana_LXBATCH.sh Data " + s[1] +" default")
 
 print "Submiting... MC"
+os.system("rm -rf LSFJobs_MC*")
 os.system("rm -rf LSFJobs/LSFJobs_MC*")
 for s in filesMC_MuonEG_fromEOS:
 	for mask in shapeSystMasks:
 		os.system("bsub -R \"rusage[mem=32800]\" -R \"pool>30000\" -q 8nh -oo LSFJobs_MC_"+s[1]+"_"+mask+".out -eo LSFJobs_MC_"+s[1]+"_"+mask+".error -J MC_" + s[1] + "_"+mask+" runHZToUpsilonPhoton_ana_LXBATCH.sh MC " + s[1] + " " + mask)
+
+
+print "Submiting... Data"
+os.system("rm -rf LSFJobs_Data*")
+os.system("rm -rf LSFJobs/LSFJobs_Data*")
+for s in filesData_MuonEG_fromEOS:
+	os.system("bsub -R \"rusage[mem=32800]\" -R \"pool>30000\" -q 8nh -oo LSFJobs_Data_"+s[1]+"_default.out -eo LSFJobs_Data_"+s[1]+"_default.error -J Data_" + s[1] + "_default runHZToUpsilonPhoton_ana_LXBATCH.sh Data " + s[1] +" default")
+
 

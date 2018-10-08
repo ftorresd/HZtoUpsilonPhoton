@@ -175,7 +175,7 @@ filesData_MuonEG_fromEOS = [
 	["filesLists/filesFromEOS/Data2016/job_MuEG_Run2016H_PRv3_9.txt", "Run2016H3_9"],
 ]
 
-filesMC_MuonEG_fromEOS = [
+filesMC_MuonEG_fromEOS_OLD = [
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon1SGamma.txt", "ZToUpsilon1SGamma", "puWeight/pu_ZToUpsilon1SGamma.root"],
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon2SGamma.txt", "ZToUpsilon2SGamma", "puWeight/pu_ZToUpsilon2SGamma.root"],
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZToUpsilon3SGamma.txt", "ZToUpsilon3SGamma", "puWeight/pu_ZToUpsilon3SGamma.root"],
@@ -188,8 +188,31 @@ filesMC_MuonEG_fromEOS = [
 	["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/ZGTo2MuG_MMuMu-2To15.txt", "ZGTo2MuG_MMuMu-2To15", "puWeight/pu_ZGTo2MuG_MMuMu-2To15.root"],
 	]
 
-
-
+filesMC_MuonEG_fromEOS = [
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps3SG_NLO.txt", "ttH_HToUps3SG_NLO", "puWeight/pu_ttH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps2SG_NLO.txt", "ttH_HToUps2SG_NLO", "puWeight/pu_ttH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps1SG_NLO.txt", "ttH_HToUps1SG_NLO", "puWeight/pu_ttH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps3SG_NLO.txt", "ggH_HToUps3SG_NLO", "puWeight/pu_ggH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps2SG_NLO.txt", "ggH_HToUps2SG_NLO", "puWeight/pu_ggH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps1SG_NLO.txt", "ggH_HToUps1SG_NLO", "puWeight/pu_ggH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon3SGamma_NLO.txt", "ZToUpsilon3SGamma_NLO", "puWeight/pu_ZToUpsilon3SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon2SGamma_NLO.txt", "ZToUpsilon2SGamma_NLO", "puWeight/pu_ZToUpsilon2SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon1SGamma_NLO.txt", "ZToUpsilon1SGamma_NLO", "puWeight/pu_ZToUpsilon1SGamma_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps3SG_NLO.txt", "ZH_HToUps3SG_NLO", "puWeight/pu_ZH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps2SG_NLO.txt", "ZH_HToUps2SG_NLO", "puWeight/pu_ZH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps1SG_NLO.txt", "ZH_HToUps1SG_NLO", "puWeight/pu_ZH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZGTo2MuG_MMuMu-2To15.txt", "ZGTo2MuG_MMuMu-2To15", "puWeight/pu_ZGTo2MuG_MMuMu-2To15.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps3SG_NLO.txt", "WpH_HToUps3SG_NLO", "puWeight/pu_WpH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps2SG_NLO.txt", "WpH_HToUps2SG_NLO", "puWeight/pu_WpH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps1SG_NLO.txt", "WpH_HToUps1SG_NLO", "puWeight/pu_WpH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps3SG_NLO.txt", "WmH_HToUps3SG_NLO", "puWeight/pu_WmH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps2SG_NLO.txt", "WmH_HToUps2SG_NLO", "puWeight/pu_WmH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps1SG_NLO.txt", "WmH_HToUps1SG_NLO", "puWeight/pu_WmH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps3SG_NLO.txt", "VBFH_HToUps3SG_NLO", "puWeight/pu_VBFH_HToUps3SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps2SG_NLO.txt", "VBFH_HToUps2SG_NLO", "puWeight/pu_VBFH_HToUps2SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps1SG_NLO.txt", "VBFH_HToUps1SG_NLO", "puWeight/pu_VBFH_HToUps1SG_NLO.root"],
+						["filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/HDalitzNLO.txt", "HDalitzNLO", "puWeight/pu_HDalitzNLO.root"],
+					]
 
 
 

@@ -1,0 +1,94 @@
+{
+    "VBFH_HToUps3SG_NLO": {
+        "effNGen": 116810.0, 
+        "xSec": 7.5027e-11
+    }, 
+    "ggH_HToUps3SG_NLO": {
+        "effNGen": 162183.0, 
+        "xSec": 9.6373e-10
+    }, 
+    "ttH_HToUps1SG_NLO": {
+        "effNGen": 71734.0, 
+        "xSec": 6.5647e-11
+    }, 
+    "WmH_HToUps3SG_NLO": {
+        "effNGen": 83929.0, 
+        "xSec": 1.057e-11
+    }, 
+    "ZToUpsilon3SGamma_NLO": {
+        "effNGen": 465057.0, 
+        "xSec": 2.34e-05
+    }, 
+    "WmH_HToUps2SG_NLO": {
+        "effNGen": 87233.0, 
+        "xSec": 1.4602e-11
+    }, 
+    "ttH_HToUps2SG_NLO": {
+        "effNGen": 88592.0, 
+        "xSec": 1.3898e-11
+    }, 
+    "WpH_HToUps3SG_NLO": {
+        "effNGen": 82643.0, 
+        "xSec": 1.6664e-11
+    }, 
+    "VBFH_HToUps2SG_NLO": {
+        "effNGen": 139041.0, 
+        "xSec": 1.0365e-10
+    }, 
+    "HDalitzNLO": {
+        "effNGen": 696538.0, 
+        "xSec": 0.0021337
+    }, 
+    "ttH_HToUps3SG_NLO": {
+        "effNGen": 64457.0, 
+        "xSec": 1.006e-11
+    }, 
+    "ggH_HToUps2SG_NLO": {
+        "effNGen": 186790.0, 
+        "xSec": 1.3314e-09
+    }, 
+    "ZToUpsilon2SGamma_NLO": {
+        "effNGen": 479896.0, 
+        "xSec": 2.6887e-05
+    }, 
+    "VBFH_HToUps1SG_NLO": {
+        "effNGen": 121789.0, 
+        "xSec": 4.896e-10
+    }, 
+    "WpH_HToUps1SG_NLO": {
+        "effNGen": 72182.0, 
+        "xSec": 1.0874e-10
+    }, 
+    "ZH_HToUps2SG_NLO": {
+        "effNGen": 87259.0, 
+        "xSec": 2.4224e-11
+    }, 
+    "ggH_HToUps1SG_NLO": {
+        "effNGen": 180785.0, 
+        "xSec": 6.289e-09
+    }, 
+    "ZH_HToUps3SG_NLO": {
+        "effNGen": 80533.0, 
+        "xSec": 1.7535e-11
+    }, 
+    "ZToUpsilon1SGamma_NLO": {
+        "effNGen": 421469.0, 
+        "xSec": 6.7965e-05
+    }, 
+    "WmH_HToUps1SG_NLO": {
+        "effNGen": 79396.0, 
+        "xSec": 6.8974e-11
+    }, 
+    "ZGTo2MuG_MMuMu-2To15": {
+        "effNGen": 196862.0, 
+        "xSec": 0.07926
+    }, 
+    "WpH_HToUps2SG_NLO": {
+        "effNGen": 77138.0, 
+        "xSec": 2.3021e-11
+    }, 
+    "ZH_HToUps1SG_NLO": {
+        "effNGen": 87365.0, 
+        "xSec": 1.1443e-10
+    }
+}

@@ -7,18 +7,18 @@
     // clear 
 	system(("rm -rf outputPlots/*"));
 
-	//////////////////////////////////////////////////////////////////
-	// ZtoJPsi - Cat0
-	plotter_HZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat0_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat0_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat0_ZZZZZZ.root",
-		"ZtoJPsi"
-		); 
+	// //////////////////////////////////////////////////////////////////
+	// // ZtoJPsi - Cat0
+	// plotter_HZtoUpsilonPhoton(
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"ZtoJPsi"
+	// 	); 
 
-	system(("mkdir -p outputPlots/ZtoJPsi_Cat0_ZZZZZ"));
-	system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat0_ZZZZZ/."));
-	system(("rm -rf plotFiles"));
+	// system(("mkdir -p outputPlots/ZtoJPsi_Cat0_ZZZZZ"));
+	// system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat0_ZZZZZ/."));
+	// system(("rm -rf plotFiles"));
 
 
 	//////////////////////////////////////////////////////////////////
@@ -34,18 +34,18 @@
 	system(("mv plotFiles/* outputPlots/ZtoUpsilon_Cat0_ZZZZZ/."));
 	system(("rm -rf plotFiles"));
 
-	//////////////////////////////////////////////////////////////////
-	// ZtoJPsi - Cat1
-	plotter_HZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat1_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat1_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat1_ZZZZZZ.root",
-		"ZtoJPsi"
-		); 
+	// //////////////////////////////////////////////////////////////////
+	// // ZtoJPsi - Cat1
+	// plotter_HZtoUpsilonPhoton(
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat1_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat1_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat1_ZZZZZZ.root",
+	// 	"ZtoJPsi"
+	// 	); 
 
-	system(("mkdir -p outputPlots/ZtoJPsi_Cat1_ZZZZZ"));
-	system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat1_ZZZZZ/."));
-	system(("rm -rf plotFiles"));
+	// system(("mkdir -p outputPlots/ZtoJPsi_Cat1_ZZZZZ"));
+	// system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat1_ZZZZZ/."));
+	// system(("rm -rf plotFiles"));
 
 
 	//////////////////////////////////////////////////////////////////
@@ -62,18 +62,18 @@
 	system(("rm -rf plotFiles"));
 
 
-	//////////////////////////////////////////////////////////////////
-	// ZtoJPsi - Cat2
-	plotter_HZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat2_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat2_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat2_ZZZZZZ.root",
-		"ZtoJPsi"
-		); 
+	// //////////////////////////////////////////////////////////////////
+	// // ZtoJPsi - Cat2
+	// plotter_HZtoUpsilonPhoton(
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat2_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat2_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat2_ZZZZZZ.root",
+	// 	"ZtoJPsi"
+	// 	); 
 
-	system(("mkdir -p outputPlots/ZtoJPsi_Cat2_ZZZZZ"));
-	system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat2_ZZZZZ/."));
-	system(("rm -rf plotFiles"));
+	// system(("mkdir -p outputPlots/ZtoJPsi_Cat2_ZZZZZ"));
+	// system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat2_ZZZZZ/."));
+	// system(("rm -rf plotFiles"));
 
 
 	//////////////////////////////////////////////////////////////////
@@ -90,18 +90,18 @@
 	system(("rm -rf plotFiles"));
 
 
-	//////////////////////////////////////////////////////////////////
-	// ZtoJPsi - Cat3
-	plotter_HZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat3_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat3_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat3_ZZZZZZ.root",
-		"ZtoJPsi"
-		); 
+	// //////////////////////////////////////////////////////////////////
+	// // ZtoJPsi - Cat3
+	// plotter_HZtoUpsilonPhoton(
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_Data_ZtoJPsi_Cat3_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZToJPsiGamma_ZtoJPsi_Cat3_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_ZGTo2MuG_MMuMu-2To15_ZtoJPsi_Cat3_ZZZZZZ.root",
+	// 	"ZtoJPsi"
+	// 	); 
 
-	system(("mkdir -p outputPlots/ZtoJPsi_Cat3_ZZZZZ"));
-	system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat3_ZZZZZ/."));
-	system(("rm -rf plotFiles"));
+	// system(("mkdir -p outputPlots/ZtoJPsi_Cat3_ZZZZZ"));
+	// system(("mv plotFiles/* outputPlots/ZtoJPsi_Cat3_ZZZZZ/."));
+	// system(("rm -rf plotFiles"));
 
 	//////////////////////////////////////////////////////////////////
 	// ZtoUpsilon - Cat3
@@ -118,18 +118,18 @@
 
 
 
-	//////////////////////////////////////////////////////////////////
-	// HtoJPsi
-	plotter_HZtoUpsilonPhoton(
-		"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoJPsi_Cat0_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_Cat0_ZZZZZZ.root",
-		"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoJPsi_Cat0_ZZZZZZ.root",
-		"HtoJPsi"
-		); 
+	// //////////////////////////////////////////////////////////////////
+	// // HtoJPsi
+	// plotter_HZtoUpsilonPhoton(
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_Data_HtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_HToJPsiGamma_HtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"outputHistos/outHistos_HZtoUpsilonPhoton_HDalitz_HtoJPsi_Cat0_ZZZZZZ.root",
+	// 	"HtoJPsi"
+	// 	); 
 
-	system(("mkdir -p outputPlots/HtoJPsi_Cat0_ZZZZZ"));
-	system(("mv plotFiles/* outputPlots/HtoJPsi_Cat0_ZZZZZ/."));
-	system(("rm -rf plotFiles"));
+	// system(("mkdir -p outputPlots/HtoJPsi_Cat0_ZZZZZ"));
+	// system(("mv plotFiles/* outputPlots/HtoJPsi_Cat0_ZZZZZ/."));
+	// system(("rm -rf plotFiles"));
 
 
 	//////////////////////////////////////////////////////////////////

@@ -345,12 +345,13 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			puWgt_down = puInfo->getWeight_down(puTrue[1]); 
 			// puWgtErr = puInfo->getWeightErr(puTrue[1]); 
 
-			// ZToUpsilonGamma - Signal
-			if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma") {
+			// ZToUpsilonGamma - Signal 
+			if (sampleSource.GetString() == "ZToUpsilon3SGamma_NLO" || sampleSource.GetString() == "ZToUpsilon2SGamma_NLO" || sampleSource.GetString() == "ZToUpsilon1SGamma_NLO") {
+			// if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma") {
 			// gen info
 				for (int iPart = 0; iPart < *nMC; iPart++) {
 					if (abs(mcPID[iPart]) == 13) {
-						if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 25) {
+						if (((mcMomPID[iPart]) == 553 || (mcMomPID[iPart]) == 100553 || (mcMomPID[iPart]) == 200553) && (mcGMomPID[iPart]) == 23) {
 						// cout << "Muon!" << endl;
 							if (mcPID[iPart] == 13) {
 								// cout << "Muon +!" << endl;
@@ -366,7 +367,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 								genMuMinus.pdgID = -13;
 							} 
 						}
-					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 23) {
 						// cout << "Photon!" << endl;
 						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
 						genPhoton.charge = 0;
@@ -381,7 +382,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			// gen info
 				for (int iPart = 0; iPart < *nMC; iPart++) {
 					if (abs(mcPID[iPart]) == 13) {
-						if (((mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 25) {
+						if (((mcMomPID[iPart]) == 443) && (mcGMomPID[iPart]) == 23) {
 						// cout << "Muon!" << endl;
 							if (mcPID[iPart] == 13) {
 								// cout << "Muon +!" << endl;
@@ -397,7 +398,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 								genMuMinus.pdgID = -13;
 							} 
 						}
-					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 25) {
+					} else if ((mcPID[iPart]) == 22 && (mcMomPID[iPart]) == 23) {
 						// cout << "Photon!" << endl;
 						genPhoton.SetPtEtaPhiM(mcPt[iPart], mcEta[iPart], mcPhi[iPart], 0);
 						genPhoton.charge = 0;
@@ -408,7 +409,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			}
 
 			// for Z signal samples, exclude events with mass_Z < 50 GeV
-			if (sampleSource.GetString() == "ZToUpsilon1SGamma" || sampleSource.GetString() == "ZToUpsilon3SGamma" || sampleSource.GetString() == "ZToUpsilon2SGamma" || sampleSource.GetString() == "ZToJPsiGamma") {
+			if (sampleSource.GetString() == "ZToUpsilon1SGamma_NLO" || sampleSource.GetString() == "ZToUpsilon2SGamma_NLO" || sampleSource.GetString() == "ZToUpsilon3SGamma_NLO" || sampleSource.GetString() == "ZToJPsiGamma") {
 				// cout << "(genMuPlus+genMuMinus+genPhoton).M(): " << (genMuPlus+genMuMinus+genPhoton).M() << endl;
 				if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) continue;
 				// if ((genMuPlus+genMuMinus+genPhoton).M() < 50.) cout << "Menor que 50 GeV!" << endl;
@@ -455,7 +456,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 
 			// HToUpsilonGamma - Signal
-			if (sampleSource.GetString() == "HToUpsilon1SGamma" || sampleSource.GetString() == "HToUpsilon2SGamma" || sampleSource.GetString() == "HToUpsilon3SGamma") {
+			if (sampleSource.GetString() == "ttH_HToUps1SG_NLO" || sampleSource.GetString() == "ttH_HToUps2SG_NLO" || sampleSource.GetString() == "ttH_HToUps3SG_NLO" || sampleSource.GetString() == "ggH_HToUps1SG_NLO" || sampleSource.GetString() == "ggH_HToUps2SG_NLO" || sampleSource.GetString() == "ggH_HToUps3SG_NLO" || sampleSource.GetString() == "ZH_HToUps1SG_NLO" || sampleSource.GetString() == "ZH_HToUps2SG_NLO" || sampleSource.GetString() == "ZH_HToUps3SG_NLO" || sampleSource.GetString() == "WpH_HToUps1SG_NLO" || sampleSource.GetString() == "WpH_HToUps2SG_NLO" || sampleSource.GetString() == "WpH_HToUps3SG_NLO" || sampleSource.GetString() == "WmH_HToUps1SG_NLO" || sampleSource.GetString() == "WmH_HToUps2SG_NLO" || sampleSource.GetString() == "WmH_HToUps3SG_NLO" || sampleSource.GetString() == "VBFH_HToUps1SG_NLO" || sampleSource.GetString() == "VBFH_HToUps2SG_NLO" || sampleSource.GetString() == "VBFH_HToUps3SG_NLO" ) {
+			// if (sampleSource.GetString() == "HToUpsilon1SGamma" || sampleSource.GetString() == "HToUpsilon2SGamma" || sampleSource.GetString() == "HToUpsilon3SGamma") {
 			// gen info
 				for (int iPart = 0; iPart < *nMC; iPart++) {
 					if (abs(mcPID[iPart]) == 13) {
@@ -517,7 +519,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			}
 
 			// HDalitz - Background
-			if (sampleSource.GetString() == "HDalitz") {
+			if (sampleSource.GetString() == "HDalitzNLO") {
 				// gen info
 				// bool hasMuPlus = false;
 				// bool hasMuMinus = false;
@@ -670,7 +672,8 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 
 			double rocCorError = 0.0;
 			// if (shapeSystMask == "statRocCorError_UP" ||  shapeSystMask == "statRocCorError_DOWN" ||  shapeSystMask == "refRocCorError_UP" ||  shapeSystMask == "refRocCorError_DOWN" ||  shapeSystMask == "profMassRocCorError_UP" ||  shapeSystMask == "profMassRocCorError_DOWN" ||  shapeSystMask == "fitMassRocCorError_UP" ||  shapeSystMask == "fitMassRocCorError_DOWN") {
-			if (shapeSystMask == "RocCorError_UP" ||  shapeSystMask == "RocCorError_UP") {
+			// if (shapeSystMask == "RocCorError_UP" ||  shapeSystMask == "RocCorError_UP") {
+			if (shapeSystMask == "RocCorError_UP" ||  shapeSystMask == "RocCorError_DOWN") {
 				rocCorError = (*rocCorSF)[translRocCor(shapeSystMask)];
 			}
 
@@ -875,7 +878,7 @@ void ana_ZtoUpsilonPhoton(vector<string> ggNtuplesFiles, int nFiles = -1, string
 			trailingMuon = muonsCandCollection[indexTrailCand];
 		} else {
 			goodMuonPairSel = false;
-		}
+		} 
 
 		// if (muonsCandCollection.size() >= 2) {
 		// 	for (unsigned int iLeadMuon = 0; iLeadMuon < muonsCandCollection.size(); iLeadMuon++) {

@@ -12,6 +12,52 @@
 #   ./makepuhist_v02.py --file_data_nominal MyDataPileupHistogram_v02_NOMINAL.root --file_data_up MyDataPileupHistogram_v02_UP.root --file_data_down MyDataPileupHistogram_v02_DOWN.root --file_ggNtuple_mc ../filesLists/filesFromUERJPOWER/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning/HToJPsiGamma.txt --file_out pu_HToJPsiGamma.root &
 
 
+
+
+# import os
+
+# files = [
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WmH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/VBFH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/HDalitzNLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ggH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZH_HToUps1SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/WpH_HToUps2SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ttH_HToUps3SG_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon3SGamma_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon2SGamma_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZToUpsilon1SGamma_NLO.txt",
+#     "../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/ZGTo2MuG_MMuMu-2To15.txt",
+#     ]
+
+# for f in files:
+#   outName = f.replace("../filesLists/filesFromEOS/HZtoUpsilonPlusPhotonSamples2016_withGhostCleanning_NLO/", "").replace(".txt", "")
+#   print '----> ./makepuhist_v02.py --file_data_nominal MyDataPileupHistogram_v02_NOMINAL.root --file_data_up MyDataPileupHistogram_v02_UP.root --file_data_down MyDataPileupHistogram_v02_DOWN.root --file_ggNtuple_mc '+f+' --file_out pu_'+outName+'.root'
+#   os.system('./makepuhist_v02.py --file_data_nominal MyDataPileupHistogram_v02_NOMINAL.root --file_data_up MyDataPileupHistogram_v02_UP.root --file_data_down MyDataPileupHistogram_v02_DOWN.root --file_ggNtuple_mc '+f+' --file_out pu_'+outName+'.root')
+
+
+
+
+
+
+
+
+
+
+
+
 ## _________                _____.__                            __  .__               
 ## \_   ___ \  ____   _____/ ____\__| ____  __ ______________ _/  |_|__| ____   ____  
 ## /    \  \/ /  _ \ /    \   __\|  |/ ___\|  |  \_  __ \__  \\   __\  |/  _ \ /    \ 
@@ -21,87 +67,101 @@
 import sys
 from array import array
 from optparse import OptionParser
+import os
+
+
+
+def getTempRootFile(options):
+  with open(options.file_mc, 'r') as f:
+    haddSufix = " "
+    for rootFile in f.readlines():
+      haddSufix += rootFile.strip() + " "
+    os.system("hadd -T -f fTemp.root" + haddSufix)
 
 
 def makepuhist(argv) : 
-    parser = OptionParser()
+  parser = OptionParser()
 
-    parser.add_option('--file_data_nominal', type='string', action='store',
-                      dest='file_data_nominal',
-                      help='Input file for data - nominal')
+  parser.add_option('--file_data_nominal', type='string', action='store',
+                    dest='file_data_nominal',
+                    help='Input file for data - nominal')
 
-    parser.add_option('--file_data_up', type='string', action='store',
-                      dest='file_data_up',
-                      help='Input file for data - up')
+  parser.add_option('--file_data_up', type='string', action='store',
+                    dest='file_data_up',
+                    help='Input file for data - up')
 
-    parser.add_option('--file_data_down', type='string', action='store',
-                      dest='file_data_down',
-                      help='Input file for data - down')
+  parser.add_option('--file_data_down', type='string', action='store',
+                    dest='file_data_down',
+                    help='Input file for data - down')
 
-    parser.add_option('--file_ggNtuple_mc', type='string', action='store',
-                      dest='file_mc',
-                      help='Input ggNtuple for MC')
+  parser.add_option('--file_ggNtuple_mc', type='string', action='store',
+                    dest='file_mc',
+                    help='Input ggNtuple for MC')
 
-    parser.add_option('--file_out', type='string', action='store',
-                      dest='file_out',
-                      help='Output file')
-    
-    (options, args) = parser.parse_args(argv)
-    argv = []
+  parser.add_option('--file_out', type='string', action='store',
+                    dest='file_out',
+                    help='Output file')
+  
+  (options, args) = parser.parse_args(argv)
+  argv = []
 
-    print '===== Command line options ====='
-    print options
-    print '================================'
+  getTempRootFile(options)
 
-    import ROOT
+  print '===== Command line options ====='
+  print options
+  print '================================'
 
-    data_nominal = ROOT.TFile(options.file_data_nominal)
-    data_up = ROOT.TFile(options.file_data_up)
-    data_down = ROOT.TFile(options.file_data_down)
-    
-    with open(options.file_mc, 'r') as f:
-      mc = ROOT.TFile(f.readline().strip())
-    
-    out = ROOT.TFile(options.file_out, "RECREATE")
+  import ROOT
 
-    h_data_nominal = data_nominal.Get("pileup")
-    h_data_up = data_up.Get("pileup")
-    h_data_down = data_down.Get("pileup")
+  data_nominal = ROOT.TFile(options.file_data_nominal)
+  data_up = ROOT.TFile(options.file_data_up)
+  data_down = ROOT.TFile(options.file_data_down)
+  
+  # with open(options.file_mc, 'r') as f:
+  #   mc = ROOT.TFile(f.readline().strip())
+  mc = ROOT.TFile("fTemp.root")
 
-    h_data_nominal.SetName("pileup_nominal")
-    h_data_up.SetName("pileup_up")
-    h_data_down.SetName("pileup_down")
+  out = ROOT.TFile(options.file_out, "RECREATE")
 
-    h_mc = mc.Get("ggNtuplizer/hPUTrue")
+  h_data_nominal = data_nominal.Get("pileup")
+  h_data_up = data_up.Get("pileup")
+  h_data_down = data_down.Get("pileup")
 
-    h_data_nominal.Sumw2()
-    h_data_nominal.Scale(1.0 / h_data_nominal.Integral() )
+  h_data_nominal.SetName("pileup_nominal")
+  h_data_up.SetName("pileup_up")
+  h_data_down.SetName("pileup_down")
 
-    h_data_up.Sumw2()
-    h_data_up.Scale(1.0 / h_data_up.Integral() )
-    
-    h_data_down.Sumw2()
-    h_data_down.Scale(1.0 / h_data_down.Integral() )
-    print h_data_down.GetSize()
+  h_mc = mc.Get("ggNtuplizer/hPUTrue")
 
-    h_mc.Sumw2()
-    h_mc.Scale(1.0 / h_mc.Integral() )
-    # h_mc.Print("*")
-    print h_mc.GetSize()
+  h_data_nominal.Sumw2()
+  h_data_nominal.Scale(1.0 / h_data_nominal.Integral() )
+
+  h_data_up.Sumw2()
+  h_data_up.Scale(1.0 / h_data_up.Integral() )
+  
+  h_data_down.Sumw2()
+  h_data_down.Scale(1.0 / h_data_down.Integral() )
+  print h_data_down.GetSize()
+
+  h_mc.Sumw2()
+  h_mc.Scale(1.0 / h_mc.Integral() )
+  # h_mc.Print("*")
+  print h_mc.GetSize()
 
 
-    h_data_nominal.Divide(h_mc)
-    h_data_up.Divide(h_mc)
-    h_data_down.Divide(h_mc)
+  h_data_nominal.Divide(h_mc)
+  h_data_up.Divide(h_mc)
+  h_data_down.Divide(h_mc)
 
-    out.cd()
-    h_data_nominal.Write()
-    h_data_up.Write()
-    h_data_down.Write()
-    out.Close()
+  out.cd()
+  h_data_nominal.Write()
+  h_data_up.Write()
+  h_data_down.Write()
+  out.Close()
 
 
 
 if __name__ == "__main__" :
-    makepuhist(sys.argv)
+  makepuhist(sys.argv)
+  os.system("rm fTemp.root")
 
