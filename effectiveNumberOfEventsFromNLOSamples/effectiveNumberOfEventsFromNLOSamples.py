@@ -104,6 +104,6 @@ with open('effNGen.json', 'w') as fp:
     json.dump(effNGen, fp, indent=4)
 
 
-os.system("rm temp.root")
+os.system("rm temp.root") 
 
 
