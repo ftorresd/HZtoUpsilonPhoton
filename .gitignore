@@ -36,3 +36,5 @@ LSFJobs/
 reweightingNLOSF/logsTrees
 
 reweightingNLOSF/*pyc
+
+reweightingNLOSF/logsTrees/*.log
