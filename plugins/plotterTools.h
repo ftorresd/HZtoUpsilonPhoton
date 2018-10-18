@@ -103,7 +103,7 @@ void plotter_Pol_extremes(string analysisBranch, TH1D * h_PolNominal, TH1D * h_P
     latex->SetTextFont(52);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(11);
-    latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->DrawLatex(.25, 0.96, "Simulation");
     latex->SetTextFont(42);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
@@ -192,7 +192,8 @@ void plotter_Pol(string analysisBranch, TH1D * h_unPol, TH1D * h_Pol, string out
     latex->SetTextFont(52);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(11);
-    latex->DrawLatex(.25, 0.96, "Preliminary");
+    // latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->DrawLatex(.25, 0.96, "Simulation");
     latex->SetTextFont(42);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
@@ -260,7 +261,8 @@ void plotter_Single(string analysisBranch, TH1D * h1, string outputFilePath, str
     latex->SetTextFont(52);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(11);
-    latex->DrawLatex(.25, 0.96, "Preliminary");
+    // latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->DrawLatex(.25, 0.96, "Simulation");
     latex->SetTextFont(42);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);
@@ -347,7 +349,8 @@ void plotter_LeadingTrailing(string analysisBranch, TH1D * h_Lead, TH1D * h_Trai
     latex->SetTextFont(52);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(11);
-    latex->DrawLatex(.25, 0.96, "Preliminary");
+    // latex->DrawLatex(.25, 0.96, "Preliminary");
+    latex->DrawLatex(.25, 0.96, "Simulation");
     latex->SetTextFont(42);
     latex->SetTextSize(0.04);
     latex->SetTextAlign(31);

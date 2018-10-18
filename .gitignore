@@ -34,3 +34,5 @@ Plots_*.out
 LSFJobs/
 
 reweightingNLOSF/logsTrees
+
+reweightingNLOSF/*pyc

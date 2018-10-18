@@ -57,7 +57,7 @@ def getBosons(configuration):
     upsilonPDGId = configuration["upsilonPDGId"]
 
     ### Don't change
-    MAXEVENTS = 10
+    MAXEVENTS = -1
     treeFile = TFile("outputTrees/bosonsTree_"+sampleName+".root", "RECREATE")
     bosonTree = TTree( "bosonTree", "bosonTree" )
 
@@ -148,13 +148,13 @@ if __name__ == "__main__":
         #     "upsilonPDGId" : 200553,
         #     "isZ" : True,
         # },
-        {
-            "sampleName" : "HToUpsilon1SG_LO",
-            "DASName" : "/HToUpsilon1SG_ToMuMuG_allProdMode_M125_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v3/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 553,
-            "isZ" : False,
-        },
+        # {
+        #     "sampleName" : "HToUpsilon1SG_LO",
+        #     "DASName" : "/HToUpsilon1SG_ToMuMuG_allProdMode_M125_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v3/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 553,
+        #     "isZ" : False,
+        # },
         # {
         #     "sampleName" : "HToUpsilon2SG_LO",
         #     "DASName" : "/HToUpsilon2SG_ToMuMuG_allProdMode_M125_TuneCUETP8M1_13TeV_Pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v3/MINIAODSIM",
@@ -183,48 +183,48 @@ if __name__ == "__main__":
             "upsilonPDGId" : 13,
             "isZ" : False,
         },
-        {
-            "sampleName" : "ggH_HToJPsiG_NLO",
-            "DASName" : "/ggH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
-        {
-            "sampleName" : "VBFH_HToJPsiG_NLO",
-            "DASName" : "/VBFH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
-        {
-            "sampleName" : "ZH_HToJPsiG_NLO",
-            "DASName" : "/ZH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
-        {
-            "sampleName" : "WpHJ_HToJPsiG_NLO",
-            "DASName" : "/WpHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
-        {
-            "sampleName" : "WmHJ_HToJPsiG_NLO",
-            "DASName" : "/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
-        {
-            "sampleName" : "ttH_HToJPsiG_NLO",
-            "DASName" : "/ttH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
-            "bosonPDGId" : 25,
-            "upsilonPDGId" : 443,
-            "isZ" : False,
-        },
+        # {
+        #     "sampleName" : "ggH_HToJPsiG_NLO",
+        #     "DASName" : "/ggH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
+        # {
+        #     "sampleName" : "VBFH_HToJPsiG_NLO",
+        #     "DASName" : "/VBFH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
+        # {
+        #     "sampleName" : "ZH_HToJPsiG_NLO",
+        #     "DASName" : "/ZH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
+        # {
+        #     "sampleName" : "WpHJ_HToJPsiG_NLO",
+        #     "DASName" : "/WpHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
+        # {
+        #     "sampleName" : "WmHJ_HToJPsiG_NLO",
+        #     "DASName" : "/WmHJ_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
+        # {
+        #     "sampleName" : "ttH_HToJPsiG_NLO",
+        #     "DASName" : "/ttH_HToJPsiG_M125_NNPDF30_TuneCUETP8M1_13TeV-powheg-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM",
+        #     "bosonPDGId" : 25,
+        #     "upsilonPDGId" : 443,
+        #     "isZ" : False,
+        # },
     ]
 
 

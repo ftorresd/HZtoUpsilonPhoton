@@ -72,3 +72,27 @@ pair<double,double> getPhotonEleVetoSF(bool isMC, anaPhoton photon) {
 	if(fabs(photon.photonSCEta) > 1.566 && fabs(photon.photonSCEta) < 2.5) sf = {0.9875, 0.0044};
 	return sf;
 }
+
+pair<double,double> getNLOSF(bool isMC, double pt, double eta) {
+	pair<double,double> sf = {1.0, 0.0};
+
+	// data
+	if (!isMC) return sf;
+
+	// MC
+	if(fabs(photon.photonSCEta) < 1.4442) {
+		auto sfHisto = (TH2D*)sfFile->Get("hM_Eff_MuPtPhoEt_DataMCRatio_DYJetsToLL_aMCatNLO_PU_nominal_EB"); 	
+		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		//clean up memory
+		delete sfHisto;
+	} else {
+		auto sfHisto = (TH2D*)sfFile->Get("hM_Eff_MuPtPhoEt_DataMCRatio_DYJetsToLL_aMCatNLO_PU_nominal_EE"); 	
+		sf.first = sfHisto->GetBinContent(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		sf.second = sfHisto->GetBinError(sfHisto->FindBin(muon.muonUnCorrPt, photon.photonUnCorrPt));
+		//clean up memory
+		delete sfHisto;
+	}
+
+	return sf;
+}

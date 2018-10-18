@@ -279,11 +279,11 @@ if __name__ == "__main__":
 		# "isZ" : True,
 		# "xSec" : 100.,
 		# },
-		{
-		"sampleName" : "HToUpsilon1SG_LO",
-		"isZ" : False,
-		"xSec" : (4.858E+01+3.782E+00+9.426E-02+5.983E-02+2.982E-02+5.071E-01),
-		},
+		# {
+		# "sampleName" : "HToUpsilon1SG_LO",
+		# "isZ" : False,
+		# "xSec" : (4.858E+01+3.782E+00+9.426E-02+5.983E-02+2.982E-02+5.071E-01),
+		# },
 		# {
 		# "sampleName" : "HToUpsilon2SG_LO",
 		# "isZ" : False,
@@ -304,31 +304,31 @@ if __name__ == "__main__":
 		# "isZ" : True,
 		# "xSec" : 100.,
 		# },
-		{
-		"sampleName" : "ggH_HToJPsiG_NLO",
-		"isZ" : False,
-		"xSec" : 4.858E+01,
-		},
-		{
-		"sampleName" : "VBFH_HToJPsiG_NLO",
-		"isZ" : False,
-		"xSec" : 3.782E+00,
-		},
-		{
-		"sampleName" : "ZH_HToJPsiG_NLO",
-		"isZ" : False,
-		"xSec" : 2.982E-02,
-		},
-		{
-		"sampleName" : "WpHJ_HToJPsiG_NLO",
-		"isZ" : False,
-		"xSec" : 9.426E-02,
-		},
-		{
-		"sampleName" : "WmHJ_HToJPsiG_NLO",
-		"isZ" : False,
-		"xSec" : 5.071E-01,
-		},       
+		# {
+		# "sampleName" : "ggH_HToJPsiG_NLO",
+		# "isZ" : False,
+		# "xSec" : 4.858E+01,
+		# },
+		# {
+		# "sampleName" : "VBFH_HToJPsiG_NLO",
+		# "isZ" : False,
+		# "xSec" : 3.782E+00,
+		# },
+		# {
+		# "sampleName" : "ZH_HToJPsiG_NLO",
+		# "isZ" : False,
+		# "xSec" : 2.982E-02,
+		# },
+		# {
+		# "sampleName" : "WpHJ_HToJPsiG_NLO",
+		# "isZ" : False,
+		# "xSec" : 9.426E-02,
+		# },
+		# {
+		# "sampleName" : "WmHJ_HToJPsiG_NLO",
+		# "isZ" : False,
+		# "xSec" : 5.071E-01,
+		# },       
 		# {
 		# "sampleName" : "ttH_HToJPsiG_NLO",
 		# "isZ" : False,
@@ -341,7 +341,7 @@ if __name__ == "__main__":
 		makeHistos(s)
 
 	# Merging Higgs histograms
-	os.system("hadd -f outputHisto/bosonsHisto_Higgs_NLO.root outputHisto/bosonsHisto*_HToJPsiG_NLO.root")
+	# os.system("hadd -f outputHisto/bosonsHisto_Higgs_NLO.root outputHisto/bosonsHisto*_HToJPsiG_NLO.root")
 
 	# RATIO PLOTS
 	channels = [
@@ -350,11 +350,11 @@ if __name__ == "__main__":
 			"channel2" : "ZToUpsilon2SG_NLO",
 			"bosonName" : "Z",
 		},
-		{
-			"channel1" : "HToUpsilon1SG_LO",
-			"channel2" : "Higgs_NLO",
-			"bosonName" : "Higgs",
-		},
+		# {
+		# 	"channel1" : "HToUpsilon1SG_LO",
+		# 	"channel2" : "Higgs_NLO",
+		# 	"bosonName" : "Higgs",
+		# },
 	]
 
 
